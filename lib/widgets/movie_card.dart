@@ -46,7 +46,6 @@ class _MovieCardState extends State<MovieCard> {
                 )),
           ),
         );
-        print('ID IDA: ${widget.video.id}');
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),

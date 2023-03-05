@@ -8,7 +8,11 @@ class Video with ChangeNotifier {
   final String title;
   final String imageUrl;
   final String bannerUrl;
-  final int rate;
+  final String age;
+  final String rate;
+  final List<String> genre;
+  final List<String> castImages;
+  final List<String> castNames;
 
   Video({
     required this.id,
@@ -16,6 +20,10 @@ class Video with ChangeNotifier {
     required this.title,
     required this.imageUrl,
     required this.bannerUrl,
+    required this.age,
     required this.rate,
+    required this.genre,
+    required this.castImages,
+    required this.castNames,
   });
 }
