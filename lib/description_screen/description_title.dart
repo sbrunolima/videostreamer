@@ -1,12 +1,11 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 
 //Widgets
-import '../widget_description_screen/rate_row.dart';
+import '../description_screen/rate_row.dart';
 import '../providers/video.dart';
 
 class DescriptionTitle extends StatelessWidget {

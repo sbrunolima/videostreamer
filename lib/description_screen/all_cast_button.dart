@@ -11,9 +11,9 @@ import '../providers/video_provider.dart';
 import '../providers/video.dart';
 
 //Widgets
-import '../widget_description_screen/description_title.dart';
-import '../widget_description_screen/rate_row.dart';
-import '../widget_description_screen/play_button.dart';
+import '../description_screen/description_title.dart';
+import '../description_screen/rate_row.dart';
+import '../description_screen/play_button.dart';
 
 //Screens
 import '../screens/cast_screen.dart';

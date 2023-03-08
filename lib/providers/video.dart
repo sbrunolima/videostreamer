@@ -6,6 +6,7 @@ class Video with ChangeNotifier {
   final String id;
   final String author;
   final String title;
+  final String trailerURL;
   final String imageUrl;
   final String bannerUrl;
   final String age;
@@ -18,6 +19,7 @@ class Video with ChangeNotifier {
     required this.id,
     required this.author,
     required this.title,
+    required this.trailerURL,
     required this.imageUrl,
     required this.bannerUrl,
     required this.age,

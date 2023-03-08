@@ -6,8 +6,21 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:ui_training05/providers/video.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:colours/colours.dart';
+import 'package:video_player/video_player.dart';
 
-class PlayButton extends StatelessWidget {
+//Widgets
+import '../screens/video_player_screen.dart';
+
+class PlayButton extends StatefulWidget {
+  final String trailerURL;
+
+  PlayButton({required this.trailerURL});
+
+  @override
+  State<PlayButton> createState() => _PlayButtonState();
+}
+
+class _PlayButtonState extends State<PlayButton> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -53,7 +66,18 @@ class PlayButton extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
               ),
             ),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => VideoPlayerScreen(
+                    videoPlayerController:
+                        VideoPlayerController.asset(widget.trailerURL),
+                    videoURL: widget.trailerURL,
+                  ),
+                ),
+              );
+              print('TRAILER: ${widget.trailerURL}');
+            },
           ),
         ),
       ),

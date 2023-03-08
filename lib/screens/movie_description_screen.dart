@@ -11,11 +11,11 @@ import '../providers/video_provider.dart';
 import '../providers/video.dart';
 
 //Widgets
-import '../widget_description_screen/description_title.dart';
-import '../widget_description_screen/rate_row.dart';
-import '../widget_description_screen/play_button.dart';
-import '../widget_description_screen/all_cast_button.dart';
-import '../widget_description_screen/cast_column.dart';
+import '../description_screen/description_title.dart';
+import '../description_screen/rate_row.dart';
+import '../description_screen/play_button.dart';
+import '../description_screen/all_cast_button.dart';
+import '../description_screen/cast_column.dart';
 
 class MovieDescriptionScreen extends StatefulWidget {
   static const routeName = 'description-screen';
@@ -42,7 +42,7 @@ class _MovieDescriptionScreenState extends State<MovieDescriptionScreen> {
           children: [
             DescriptionTitle(video: widget.video),
             const SizedBox(height: 10),
-            PlayButton(),
+            PlayButton(trailerURL: widget.video.trailerURL),
             const SizedBox(height: 30),
             CastColumn(video: widget.video),
           ],

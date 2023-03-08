@@ -18,6 +18,7 @@ class VideosProvider with ChangeNotifier {
         id: 'x606y4QWrxo1',
         author: 'currentUser',
         title: 'Ad Astra',
+        trailerURL: 'assets/trailers/adastra.mp4',
         imageUrl:
             'https://m.media-amazon.com/images/I/813iyI20fKL._AC_SY550_.jpg',
         bannerUrl:
@@ -56,6 +57,7 @@ class VideosProvider with ChangeNotifier {
         author: 'currentUser',
         id: 'vrPk6LB9bjo2',
         title: 'Blade Runner 2049',
+        trailerURL: '',
         imageUrl:
             'https://images-na.ssl-images-amazon.com/images/M/MV5BNzA1Njg4NzYxOV5BMl5BanBnXkFtZTgwODk5NjU3MzI@._V1_.jpg',
         bannerUrl:
@@ -94,6 +96,7 @@ class VideosProvider with ChangeNotifier {
         id: 'ilX5hnH8XoI3',
         author: 'currentUser',
         title: 'Ex Machina',
+        trailerURL: '',
         imageUrl:
             'https://m.media-amazon.com/images/I/61NXaDOlYpL._AC_SX679_.jpg',
         bannerUrl: 'https://wallpapercave.com/wp/wp2236201.jpg',
@@ -131,6 +134,7 @@ class VideosProvider with ChangeNotifier {
         id: 'ilX5hnH8XoI4',
         author: 'currentUser',
         title: 'Avatar',
+        trailerURL: '',
         imageUrl:
             'https://upload.wikimedia.org/wikipedia/en/thumb/d/d6/Avatar_%282009_film%29_poster.jpg/220px-Avatar_%282009_film%29_poster.jpg',
         bannerUrl: 'https://wallpaperaccess.com/full/1816364.jpg',
@@ -168,6 +172,7 @@ class VideosProvider with ChangeNotifier {
         id: 'ilX5hnH8XoI5',
         author: 'currentUser',
         title: 'Interstellar',
+        trailerURL: '',
         imageUrl:
             'https://m.media-amazon.com/images/I/A1JVqNMI7UL._AC_SL1500_.jpg',
         bannerUrl:
@@ -206,6 +211,7 @@ class VideosProvider with ChangeNotifier {
         id: 'ilX5hnH8XoI6',
         author: 'currentUser',
         title: 'Dune',
+        trailerURL: '',
         imageUrl:
             'https://upload.wikimedia.org/wikipedia/pt/thumb/c/c0/Dune_2020.jpeg/230px-Dune_2020.jpeg',
         bannerUrl:
