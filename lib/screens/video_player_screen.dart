@@ -1,76 +1,78 @@
+import 'dart:convert';
+
+import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:chewie/chewie.dart';
 import 'package:video_player/video_player.dart';
+import 'package:wakelock/wakelock.dart';
+
+//Providers
+import '../providers/video_provider.dart';
+import '../providers/video.dart';
+
+//Widgets
+import '../widgets_player_screen/video_player_widget.dart';
+import '../widgets/my_back_icon.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
-  final VideoPlayerController videoPlayerController;
-  final String videoURL;
-  final bool looping;
+  final Video video;
 
-  const VideoPlayerScreen({
-    super.key,
-    required this.videoPlayerController,
-    required this.videoURL,
-    this.looping = false,
-  });
+  VideoPlayerScreen({required this.video});
 
   @override
   State<VideoPlayerScreen> createState() => _VideoPlayerScreenState();
 }
 
 class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
-  late ChewieController _chewieController;
+  late VideoPlayerController controller;
 
   @override
   void initState() {
     super.initState();
-
-    _chewieController = ChewieController(
-        videoPlayerController: widget.videoPlayerController,
-        autoInitialize: true,
-        aspectRatio: 16 / 9,
-        looping: widget.looping,
-        autoPlay: true,
-        allowFullScreen: false,
-        fullScreenByDefault: true,
-        errorBuilder: ((context, errorMessage) {
-          return Center(
-            child: Text(
-              errorMessage,
-              style: const TextStyle(color: Colors.white),
-            ),
-          );
-        }));
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context).size;
-    return WillPopScope(
-      onWillPop: () async {
-        Navigator.of(context).pop();
-
-        return true;
-      },
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Stack(
-          children: [
-            Icon(Icons.arrow_back, color: Colors.white),
-            Chewie(
-              controller: _chewieController,
-            ),
-          ],
-        ),
-      ),
-    );
+    controller = VideoPlayerController.asset(widget.video.trailerURL)
+      ..addListener(() => setState(() {}))
+      ..setLooping(false)
+      ..initialize().then((_) => controller.play());
+    setLandscape();
   }
 
   @override
   void dispose() {
     super.dispose();
-    widget.videoPlayerController.dispose();
-    _chewieController.dispose();
+    controller.dispose();
+    setAllOrientations();
+  }
+
+  Future setLandscape() async {
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
+
+    await Wakelock.enable();
+  }
+
+  Future setAllOrientations() async {
+    await SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    await SystemChrome.setPreferredOrientations(DeviceOrientation.values);
+
+    await Wakelock.disable();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: SafeArea(
+        child: Column(
+          children: [
+            VideoPlayerWidget(
+              video: widget.video,
+              controller: controller,
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

@@ -11,10 +11,14 @@ import 'package:video_player/video_player.dart';
 //Widgets
 import '../screens/video_player_screen.dart';
 
-class PlayButton extends StatefulWidget {
-  final String trailerURL;
+//Providers
+import '../providers/video_provider.dart';
+import '../providers/video.dart';
 
-  PlayButton({required this.trailerURL});
+class PlayButton extends StatefulWidget {
+  final Video video;
+
+  PlayButton({required this.video});
 
   @override
   State<PlayButton> createState() => _PlayButtonState();
@@ -70,13 +74,10 @@ class _PlayButtonState extends State<PlayButton> {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => VideoPlayerScreen(
-                    videoPlayerController:
-                        VideoPlayerController.asset(widget.trailerURL),
-                    videoURL: widget.trailerURL,
+                    video: widget.video,
                   ),
                 ),
               );
-              print('TRAILER: ${widget.trailerURL}');
             },
           ),
         ),

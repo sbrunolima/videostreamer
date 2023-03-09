@@ -20,7 +20,7 @@ class VideoPlayerWidget extends StatelessWidget {
               child: Stack(
                 children: [
                   AspectRatio(
-                    aspectRatio: controller.value.aspectRatio,
+                    aspectRatio: 16 / 9,
                     child: VideoPlayer(controller),
                   ),
                   Positioned.fill(child: OverlayWidget(controller: controller)),

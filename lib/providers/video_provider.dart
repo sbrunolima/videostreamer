@@ -57,7 +57,7 @@ class VideosProvider with ChangeNotifier {
         author: 'currentUser',
         id: 'vrPk6LB9bjo2',
         title: 'Blade Runner 2049',
-        trailerURL: '',
+        trailerURL: 'assets/trailers/bladerunne2049.mp4',
         imageUrl:
             'https://images-na.ssl-images-amazon.com/images/M/MV5BNzA1Njg4NzYxOV5BMl5BanBnXkFtZTgwODk5NjU3MzI@._V1_.jpg',
         bannerUrl:
@@ -96,7 +96,7 @@ class VideosProvider with ChangeNotifier {
         id: 'ilX5hnH8XoI3',
         author: 'currentUser',
         title: 'Ex Machina',
-        trailerURL: '',
+        trailerURL: 'assets/trailers/exmachina.mp4',
         imageUrl:
             'https://m.media-amazon.com/images/I/61NXaDOlYpL._AC_SX679_.jpg',
         bannerUrl: 'https://wallpapercave.com/wp/wp2236201.jpg',
