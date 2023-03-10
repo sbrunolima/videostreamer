@@ -6,6 +6,7 @@ import '../providers/video_provider.dart';
 
 //Widgets
 import '../widgets/movie_card.dart';
+import '../widgets/action_test.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -28,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final videoData = Provider.of<VideosProvider>(context, listen: false);
     final video = videoData.video;
+
     return Scaffold(
       body: SafeArea(
         child: Column(

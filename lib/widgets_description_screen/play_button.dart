@@ -50,7 +50,7 @@ class _PlayButtonState extends State<PlayButton> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Icon(
-                  EneftyIcons.play_bold,
+                  EneftyIcons.play_outline,
                   color: Colors.white,
                   size: 30,
                 ),

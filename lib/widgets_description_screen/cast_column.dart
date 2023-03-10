@@ -30,7 +30,7 @@ class CastColumn extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'The cast',
+                'Cast',
                 style: GoogleFonts.roboto(
                   color: Colors.white,
                   fontWeight: FontWeight.w500,
@@ -43,7 +43,7 @@ class CastColumn extends StatelessWidget {
         ),
         const SizedBox(height: 15),
         Container(
-          height: 100,
+          height: 160,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -51,20 +51,34 @@ class CastColumn extends StatelessWidget {
             itemBuilder: ((context, index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 6),
-                child: Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: Colors.transparent),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10),
-                    child: Image.network(
-                      video.castImages[index].toString(),
-                      fit: BoxFit.cover,
+                child: Column(
+                  children: [
+                    Container(
+                      height: 120,
+                      width: 100,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.transparent),
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.network(
+                          video.castImages[index].toString(),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                     ),
-                  ),
+                    const SizedBox(height: 10),
+                    SizedBox(
+                      width: 100,
+                      child: Text(
+                        video.castNames[index].toString(),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ],
                 ),
               );
             }),

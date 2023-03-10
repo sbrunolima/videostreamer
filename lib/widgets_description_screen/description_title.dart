@@ -5,8 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 
 //Widgets
-import '../widgets_description_screen/rate_row.dart';
+import '../widgets_description_screen/play_button.dart';
 import '../providers/video.dart';
+import '../widgets/my_back_icon.dart';
 
 class DescriptionTitle extends StatelessWidget {
   final Video video;
@@ -16,6 +17,7 @@ class DescriptionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final titleWidth = MediaQuery.of(context).size.width;
+    const sizedBox = SizedBox(width: 5);
     return Container(
       height: 500,
       child: Stack(
@@ -44,61 +46,150 @@ class DescriptionTitle extends StatelessWidget {
             ),
           ),
           //Back Button
-          Padding(
-            padding: const EdgeInsets.all(17),
-            child: Align(
-              alignment: Alignment.topLeft,
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.transparent),
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.black45,
-                ),
-                child: IconButton(
-                  icon: const Icon(
-                    EneftyIcons.arrow_left_3_outline,
-                    size: 30,
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ),
-            ),
-          ),
+          MyBackIcon(),
           //Movie Title
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: 130,
+              height: 210,
               color: Colors.transparent,
               child: Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      video.title.toString(),
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.roboto(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 40,
-                      ),
-                    ),
+                  movieTitle(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      rate(),
+                      sizedBox,
+                      age(),
+                    ],
                   ),
-                  const SizedBox(height: 10),
-                  //Age, Rate, Genre
-                  RateRow(
-                    age: video.age.toString(),
-                    rate: video.rate.toString(),
-                    genre: video.genre,
+                  const SizedBox(height: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      release(),
+                      sizedBox,
+                      movieTime(),
+                      sizedBox,
+                      genreList(),
+                    ],
                   ),
+                  const SizedBox(height: 17),
+                  PlayButton(video: video),
                 ],
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget movieTitle() => Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          video.title.toString().toUpperCase(),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+          style: GoogleFonts.openSans(
+            color: Colors.white,
+            fontWeight: FontWeight.w600,
+            fontSize: 30,
+          ),
+        ),
+      );
+
+  Widget age() => Card(
+        color: Colors.green,
+        child: SizedBox(
+          height: 17,
+          width: 18,
+          child: Center(
+            child: Text(
+              video.age.toString(),
+              style: GoogleFonts.openSans(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+                fontSize: 10,
+              ),
+            ),
+          ),
+        ),
+      );
+
+  Widget rate() => Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Icon(
+            EneftyIcons.star_bold,
+            color: Colors.yellow,
+            size: 22,
+          ),
+          const SizedBox(width: 5),
+          Text(
+            video.rate.toString().toUpperCase(),
+            style: GoogleFonts.openSans(
+              color: Colors.white,
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
+            ),
+          ),
+        ],
+      );
+
+  Widget movieTime() => Row(
+        children: [
+          const Icon(
+            EneftyIcons.timer_2_bold,
+            size: 20,
+          ),
+          const SizedBox(width: 5),
+          genreText(video.time.toString().toUpperCase()),
+        ],
+      );
+
+  Widget release() => Row(
+        children: [
+          const Icon(
+            EneftyIcons.calendar_2_bold,
+            size: 20,
+          ),
+          const SizedBox(width: 5),
+          genreText(video.release.toString().toUpperCase()),
+        ],
+      );
+
+  Widget genreList() => Row(
+        children: [
+          const Icon(
+            EneftyIcons.video_bold,
+            size: 20,
+          ),
+          const SizedBox(width: 5),
+          Row(
+            children: [
+              genreText(video.genre[0].toString().toUpperCase()),
+              const Text(', '),
+              genreText(video.genre[1].toString().toUpperCase()),
+            ],
+          ),
+        ],
+      );
+
+  Widget textBar() => const Text(
+        ' | ',
+        style: TextStyle(fontSize: 24, fontWeight: FontWeight.w200),
+      );
+
+  Widget genreText(String genre) {
+    return Text(
+      genre,
+      style: GoogleFonts.openSans(
+        color: Colors.white,
+        fontWeight: FontWeight.w400,
+        fontSize: 13,
       ),
     );
   }

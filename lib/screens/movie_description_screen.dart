@@ -16,6 +16,7 @@ import '../widgets_description_screen/rate_row.dart';
 import '../widgets_description_screen/play_button.dart';
 import '../widgets_description_screen/all_cast_button.dart';
 import '../widgets_description_screen/cast_column.dart';
+import '../widgets_description_screen/storyline_widget.dart';
 
 class MovieDescriptionScreen extends StatefulWidget {
   static const routeName = 'description-screen';
@@ -37,13 +38,13 @@ class _MovieDescriptionScreenState extends State<MovieDescriptionScreen> {
     final mediaQuery = MediaQuery.of(context).size;
     final videoData = Provider.of<VideosProvider>(context, listen: false);
     return Scaffold(
+      backgroundColor: Colors.black,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Column(
             children: [
               DescriptionTitle(video: widget.video),
-              const SizedBox(height: 10),
-              PlayButton(video: widget.video),
+              StorylineWidget(video: widget.video),
               const SizedBox(height: 30),
               CastColumn(video: widget.video),
             ],

@@ -25,6 +25,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuary = MediaQuery.of(context).size;
     return Column(
       children: [
         Container(
@@ -75,8 +76,15 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                     ],
                   ),
                 )
-              : const Center(
-                  child: CircularProgressIndicator(color: Colors.green),
+              : Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(height: mediaQuary.height - 220),
+                    const Center(
+                      child: CircularProgressIndicator(color: Colors.white30),
+                    ),
+                  ],
                 ),
         ),
       ],
