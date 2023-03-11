@@ -51,7 +51,7 @@ class DescriptionTitle extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: 210,
+              height: video.title.toString().length > 18 ? 250 : 210,
               color: Colors.transparent,
               child: Column(
                 children: [
@@ -91,8 +91,9 @@ class DescriptionTitle extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Text(
           video.title.toString().toUpperCase(),
-          maxLines: 1,
+          maxLines: video.title.toString().length > 18 ? 2 : 1,
           overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.center,
           style: GoogleFonts.openSans(
             color: Colors.white,
             fontWeight: FontWeight.w600,
@@ -168,13 +169,7 @@ class DescriptionTitle extends StatelessWidget {
             size: 20,
           ),
           const SizedBox(width: 5),
-          Row(
-            children: [
-              genreText(video.genre[0].toString().toUpperCase()),
-              const Text(', '),
-              genreText(video.genre[1].toString().toUpperCase()),
-            ],
-          ),
+          genreText(video.genre.toString().toUpperCase()),
         ],
       );
 

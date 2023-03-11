@@ -10,22 +10,38 @@ import '../providers/video_provider.dart';
 import '../screens/movie_description_screen.dart';
 
 class ActionTest extends StatelessWidget {
+  final String title;
+
+  ActionTest({required this.title});
+
   @override
   Widget build(BuildContext context) {
     final titleWidth = MediaQuery.of(context).size.width;
     final videoData = Provider.of<VideosProvider>(context, listen: false);
+    final video =
+        videoData.video.where((element) => element.genre == title).toList();
 
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Text(
+            '$title Movies',
+            style: GoogleFonts.roboto(
+              color: Colors.white,
+              fontSize: 18,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ),
         Container(
-          height: 220,
+          height: 240,
           child: ListView.builder(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
             scrollDirection: Axis.horizontal,
-            itemCount: 10,
+            itemCount: video.length,
             itemBuilder: ((context, index) {
-              final video = videoData.video
-                  .where((element) => element.genre[index] == 'Action')
-                  .toList();
               return GestureDetector(
                 onTap: () {
                   Navigator.of(context).push(
@@ -39,46 +55,22 @@ class ActionTest extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
-                    height: 200,
-                    width: 150,
+                    height: 240,
+                    width: 160,
                     child: Container(
                       decoration: BoxDecoration(
-                        border: Border.all(color: Colors.white),
-                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(color: Colors.transparent),
+                        borderRadius: BorderRadius.circular(2),
                       ),
                       child: Stack(
                         children: [
                           ClipRRect(
-                            borderRadius: BorderRadius.circular(20),
+                            borderRadius: BorderRadius.circular(2),
                             child: Image.network(
                               video[index].imageUrl.toString(),
-                              height: 200,
-                              width: 150,
+                              height: 240,
+                              width: 160,
                               fit: BoxFit.cover,
-                            ),
-                          ),
-                          ClipRRect(
-                            borderRadius: const BorderRadius.only(
-                              bottomLeft: Radius.circular(20),
-                              bottomRight: Radius.circular(20),
-                            ),
-                            child: Align(
-                              alignment: Alignment.bottomCenter,
-                              child: Container(
-                                height: 50,
-                                width: titleWidth,
-                                color: Colors.black45,
-                                child: Text(
-                                  video[index].title.toString(),
-                                  overflow: TextOverflow.ellipsis,
-                                  textAlign: TextAlign.center,
-                                  style: GoogleFonts.roboto(
-                                    color: Colors.white,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ),
                             ),
                           ),
                         ],

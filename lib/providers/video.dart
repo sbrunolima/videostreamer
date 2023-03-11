@@ -13,7 +13,7 @@ class Video with ChangeNotifier {
   final String release;
   final String rate;
   final String time;
-  final List<String> genre;
+  final String genre;
   final List<String> castImages;
   final List<String> castNames;
   final List<String> storyline;

@@ -20,11 +20,11 @@ class StorylineWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: 65,
+            height: 45,
             width: MediaQuery.of(context).size.width,
             child: Text(
               video.storyline[0].toString(),
-              maxLines: 3,
+              maxLines: 2,
               overflow: TextOverflow.ellipsis,
               style: GoogleFonts.openSans(
                 height: 1.6,

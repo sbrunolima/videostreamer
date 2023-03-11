@@ -1,5 +1,10 @@
+import 'dart:math' as math;
+import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 //Providers
 import '../providers/video_provider.dart';
@@ -7,6 +12,9 @@ import '../providers/video_provider.dart';
 //Widgets
 import '../widgets/movie_card.dart';
 import '../widgets/action_test.dart';
+import '../widgets/banner_widget.dart';
+import '../widgets/carousel_widget.dart';
+import '../widgets/my_app_bar.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -31,19 +39,33 @@ class _HomeScreenState extends State<HomeScreen> {
     final video = videoData.video;
 
     return Scaffold(
-      body: SafeArea(
+      backgroundColor: Colors.black,
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Color.fromARGB(0, 0, 0, 0),
+        elevation: 0,
+        leading: const Icon(
+          EneftyIcons.menu_bold,
+          size: 26,
+        ),
+        title: MyAppBar(),
+        actions: const [
+          Icon(
+            EneftyIcons.profile_circle_outline,
+            size: 26,
+          ),
+          SizedBox(width: 15),
+        ],
+      ),
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            Container(
-              height: 220,
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: video.length,
-                itemBuilder: (context, index) {
-                  return MovieCard(video: video[index]);
-                },
-              ),
-            ),
+            CarouselWidget(),
+            ActionTest(title: 'Action'),
+            ActionTest(title: 'Adventure'),
+            ActionTest(title: 'Comedy'),
+            ActionTest(title: 'SciFi'),
+            ActionTest(title: 'Horror'),
           ],
         ),
       ),

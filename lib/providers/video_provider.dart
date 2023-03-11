@@ -27,10 +27,7 @@ class VideosProvider with ChangeNotifier {
         release: '2019',
         rate: '8.5',
         time: '2h 4m',
-        genre: [
-          'Adventure',
-          'Drama',
-        ],
+        genre: 'Adventure',
         castImages: [
           'https://images.mubicdn.net/images/cast_member/2552/cache-207-1524922850/image-w856.jpg',
           'https://m.media-amazon.com/images/M/MV5BMTkyNjc4MDc0OV5BMl5BanBnXkFtZTcwOTc5OTUwOQ@@._V1_.jpg',
@@ -82,10 +79,7 @@ class VideosProvider with ChangeNotifier {
         release: '2019',
         rate: '8.5',
         time: '2h 4m',
-        genre: [
-          'Action',
-          'Drama',
-        ],
+        genre: 'Action',
         castImages: [
           'https://media.fstatic.com/lhwC16sJLL8yuSeFFX9GCMKhi-k=/full-fit-in/290x478/filters:format(webp)/media/artists/avatar/2016/12/ryan-gosling_a106376_pXORbNR.jpg',
           'https://static.wikia.nocookie.net/ptstarwars/images/d/d4/Harrison.jpg/revision/latest?cb=20061120214705',
@@ -124,10 +118,7 @@ class VideosProvider with ChangeNotifier {
         release: '2019',
         rate: '8.5',
         time: '2h 4m',
-        genre: [
-          'Thriller',
-          'SciFi',
-        ],
+        genre: 'SciFi',
         castImages: [],
         castNames: [
           'Brad Pitt',
@@ -148,7 +139,7 @@ class VideosProvider with ChangeNotifier {
         id: 'ilX5hnH8XoI4',
         author: 'currentUser',
         title: 'Avatar',
-        trailerURL: '',
+        trailerURL: 'assets/trailers/avatar.mp4',
         imageUrl:
             'https://upload.wikimedia.org/wikipedia/en/thumb/d/d6/Avatar_%282009_film%29_poster.jpg/220px-Avatar_%282009_film%29_poster.jpg',
         bannerUrl: 'https://wallpaperaccess.com/full/1816364.jpg',
@@ -156,10 +147,7 @@ class VideosProvider with ChangeNotifier {
         release: '2019',
         rate: '8.5',
         time: '2h 4m',
-        genre: [
-          'Action',
-          'Fantasy',
-        ],
+        genre: 'Action',
         castImages: [
           'https://media.fstatic.com/lhwC16sJLL8yuSeFFX9GCMKhi-k=/full-fit-in/290x478/filters:format(webp)/media/artists/avatar/2016/12/ryan-gosling_a106376_pXORbNR.jpg',
           'https://static.wikia.nocookie.net/ptstarwars/images/d/d4/Harrison.jpg/revision/latest?cb=20061120214705',
@@ -190,7 +178,7 @@ class VideosProvider with ChangeNotifier {
         id: 'ilX5hnH8XoI5',
         author: 'currentUser',
         title: 'Interstellar',
-        trailerURL: '',
+        trailerURL: 'assets/trailers/interstellar.mp4',
         imageUrl:
             'https://m.media-amazon.com/images/I/A1JVqNMI7UL._AC_SL1500_.jpg',
         bannerUrl:
@@ -199,10 +187,7 @@ class VideosProvider with ChangeNotifier {
         release: '2019',
         rate: '8.5',
         time: '2h 4m',
-        genre: [
-          'Adventure',
-          'SciFi',
-        ],
+        genre: 'SciFi',
         castImages: [],
         castNames: [
           'Brad Pitt',
@@ -223,7 +208,7 @@ class VideosProvider with ChangeNotifier {
         id: 'ilX5hnH8XoI6',
         author: 'currentUser',
         title: 'Dune',
-        trailerURL: '',
+        trailerURL: 'assets/trailers/dune.mp4',
         imageUrl:
             'https://upload.wikimedia.org/wikipedia/pt/thumb/c/c0/Dune_2020.jpeg/230px-Dune_2020.jpeg',
         bannerUrl:
@@ -232,10 +217,7 @@ class VideosProvider with ChangeNotifier {
         release: '2019',
         rate: '8.5',
         time: '2h 4m',
-        genre: [
-          'Drama',
-          'Action',
-        ],
+        genre: 'Action',
         castImages: [],
         castNames: [
           'Brad Pitt',
@@ -250,6 +232,156 @@ class VideosProvider with ChangeNotifier {
         ],
         storyline: [
           "A noble family becomes embroiled in a war for control over the galaxy's most valuable asset while its heir becomes troubled by visions of a dark future."
+        ],
+      ),
+      Video(
+        id: 'ilX5hnH8XoI7',
+        author: 'currentUser',
+        title: 'Avatar: The Way of Water',
+        trailerURL: '',
+        imageUrl:
+            'https://a-static.mlcdn.com.br/1500x1500/poster-cartaz-avatar-2-o-caminho-da-agua-a-pop-arte-poster/poparteskins2/15983151125/05b13cd9c00028a453c58a879eceb94e.jpeg',
+        bannerUrl:
+            'https://4kwallpapers.com/images/wallpapers/avatar-the-way-of-water-avatar-2-2022-movies-sam-2732x2732-8963.jpg',
+        age: '13',
+        release: '2022',
+        rate: '8.5',
+        time: '3h 12m',
+        genre: 'Action',
+        castImages: [],
+        castNames: [
+          'Brad Pitt',
+          'Tommy Lee Jones',
+          'Donald Sutherland',
+          'Ruth Negga',
+          'Liv Tyler',
+          'Kayla Adams',
+          'Natasha Lyonne',
+          'Kimberly Elise',
+          'Greg Bryk',
+        ],
+        storyline: [
+          "Jake Sully lives with his newfound family formed on the extrasolar moon Pandora. Once a familiar threat returns to finish what was previously started, Jake must work with Neytiri and the army of the Na'vi race to protect their home.",
+        ],
+      ),
+      Video(
+        id: 'ilX5hnH8XoI8',
+        author: 'currentUser',
+        title: 'Top Gun: Maverick',
+        trailerURL: '',
+        imageUrl:
+            'https://play-lh.googleusercontent.com/oymP-vT3PYv9lSIlJQ8Mz6j10gQiCCxh65JJR0rPGQfk6zlDNVvh4kkq3YQh6g06XdDwqYit0MRaLPF22A',
+        bannerUrl:
+            'https://d2s94cyhu2tzlj.cloudfront.net/assets/photos/2022/top-gun-maverick-the-need-for-speed-continues/_articlePhotoFull/top-gun-maverick-ver5-xlg-2-1.jpg?mtime=20220524091657',
+        age: '13',
+        release: '2022',
+        rate: '8.3',
+        time: '2h 10m',
+        genre: 'Action',
+        castImages: [],
+        castNames: [
+          'Brad Pitt',
+          'Tommy Lee Jones',
+          'Donald Sutherland',
+          'Ruth Negga',
+          'Liv Tyler',
+          'Kayla Adams',
+          'Natasha Lyonne',
+          'Kimberly Elise',
+          'Greg Bryk',
+        ],
+        storyline: [
+          "After thirty years, Maverick is still pushing the envelope as a top naval aviator, but must confront ghosts of his past when he leads TOP GUN's elite graduates on a mission that demands the ultimate sacrifice from those chosen to fly it.",
+        ],
+      ),
+      Video(
+        id: 'ilX5hnH8XoI9',
+        author: 'currentUser',
+        title: 'Ant-Man and the Wasp: Quantumania',
+        trailerURL: '',
+        imageUrl:
+            'https://lumiere-a.akamaihd.net/v1/images/p_antmanquantumania_update_1006_122aeffe.jpeg?region=0%2C0%2C540%2C810',
+        bannerUrl:
+            'https://images.news18.com/ibnlive/uploads/2023/02/paul-rudd-ant-man-3-1.jpg',
+        age: '13',
+        release: '2022',
+        rate: '6.5',
+        time: '2h 4m',
+        genre: 'Action',
+        castImages: [],
+        castNames: [
+          'Brad Pitt',
+          'Tommy Lee Jones',
+          'Donald Sutherland',
+          'Ruth Negga',
+          'Liv Tyler',
+          'Kayla Adams',
+          'Natasha Lyonne',
+          'Kimberly Elise',
+          'Greg Bryk',
+        ],
+        storyline: [
+          "Scott Lang and Hope Van Dyne, along with Hank Pym and Janet Van Dyne, explore the Quantum Realm, where they interact with strange creatures and embark on an adventure that goes beyond the limits of what they thought was possible.",
+        ],
+      ),
+      Video(
+        id: 'ilX5hnH8XoI10',
+        author: 'currentUser',
+        title: 'M3GAN',
+        trailerURL: '',
+        imageUrl:
+            'https://images.fandango.com/ImageRenderer/820/0/redesign/static/img/default_poster.png/0/images/masterrepository/fandango/229737/382738id1c_M3GAN_BusShelter_48x70_RGB.jpg',
+        bannerUrl:
+            'https://pittnews.com/wp-content/uploads/2023/01/C_MeganMovie_Via.png',
+        age: '13',
+        release: '2022',
+        rate: '6.4',
+        time: '1h 42m',
+        genre: 'Horror',
+        castImages: [],
+        castNames: [
+          'Brad Pitt',
+          'Tommy Lee Jones',
+          'Donald Sutherland',
+          'Ruth Negga',
+          'Liv Tyler',
+          'Kayla Adams',
+          'Natasha Lyonne',
+          'Kimberly Elise',
+          'Greg Bryk',
+        ],
+        storyline: [
+          "A robotics engineer at a toy company builds a life-like doll that begins to take on a life of its own.",
+        ],
+      ),
+      Video(
+        id: 'ilX5hnH8XoI11',
+        author: 'currentUser',
+        title: 'Bullet Train',
+        trailerURL: '',
+        imageUrl:
+            'https://upload.wikimedia.org/wikipedia/pt/0/08/Bullet_train_filme.jpg',
+        bannerUrl:
+            'https://d1fmx1rbmqrxrr.cloudfront.net/cnet/optim/i/edit/2022/07/bullet%20train%20critique%20big__w770.jpg',
+        age: 'R',
+        release: '2022',
+        rate: '7.3',
+        time: '2h 7m',
+        genre: 'Comedy',
+        castImages: [],
+        castNames: [
+          'Brad Pitt',
+          'Tommy Lee Jones',
+          'Donald Sutherland',
+          'Ruth Negga',
+          'Liv Tyler',
+          'Kayla Adams',
+          'Natasha Lyonne',
+          'Kimberly Elise',
+          'Greg Bryk',
+        ],
+        storyline: [
+          "Five assassins aboard a swiftly-moving bullet train find out that their missions have something in common.",
         ],
       ),
     ];
