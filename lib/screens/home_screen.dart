@@ -35,6 +35,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    const mySizedBox = SizedBox(height: 20);
     final videoData = Provider.of<VideosProvider>(context, listen: false);
     final video = videoData.video;
 
@@ -50,22 +51,24 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         title: MyAppBar(),
         actions: const [
-          Icon(
-            EneftyIcons.profile_circle_outline,
-            size: 26,
-          ),
-          SizedBox(width: 15),
+          SizedBox(width: 40),
         ],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             CarouselWidget(),
-            ActionTest(title: 'Action'),
-            ActionTest(title: 'Adventure'),
-            ActionTest(title: 'Comedy'),
-            ActionTest(title: 'SciFi'),
-            ActionTest(title: 'Horror'),
+            mySizedBox,
+            ActionTest(movieGenre: 'Action'),
+            mySizedBox,
+            ActionTest(movieGenre: 'Adventure'),
+            mySizedBox,
+            ActionTest(movieGenre: 'Comedy'),
+            mySizedBox,
+            ActionTest(movieGenre: 'SciFi'),
+            mySizedBox,
+            ActionTest(movieGenre: 'Horror'),
+            mySizedBox,
           ],
         ),
       ),

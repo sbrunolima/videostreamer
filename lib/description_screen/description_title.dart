@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 
 //Widgets
-import '../widgets_description_screen/play_button.dart';
+import '../description_screen/play_button.dart';
 import '../providers/video.dart';
 import '../widgets/my_back_icon.dart';
 
@@ -19,7 +19,7 @@ class DescriptionTitle extends StatelessWidget {
     final titleWidth = MediaQuery.of(context).size.width;
     const sizedBox = SizedBox(width: 5);
     return Container(
-      height: 500,
+      height: 550,
       child: Stack(
         children: [
           //Movie banner
@@ -31,22 +31,33 @@ class DescriptionTitle extends StatelessWidget {
                 colors: [Colors.black, Colors.transparent],
                 transform: GradientRotation(math.pi / 1),
               ).createShader(
-                  Rect.fromLTRB(0, 200, rect.width, rect.height - 0));
+                  Rect.fromLTRB(0, 300, rect.width, rect.height - 0));
             },
             blendMode: BlendMode.dstIn,
             child: Column(
               children: [
                 Image.network(
                   video.bannerUrl.toString(),
-                  height: 500,
+                  height: 550,
                   width: titleWidth,
                   fit: BoxFit.cover,
+                  loadingBuilder: (context, Widget child,
+                      ImageChunkEvent? loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Container(
+                      height: 350,
+                      width: titleWidth,
+                      child: const Align(
+                        alignment: Alignment.center,
+                        child: CircularProgressIndicator(color: Colors.white30),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
           ),
-          //Back Button
-          MyBackIcon(),
+
           //Movie Title
           Align(
             alignment: Alignment.bottomCenter,

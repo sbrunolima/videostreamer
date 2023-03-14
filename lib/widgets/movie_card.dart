@@ -48,48 +48,34 @@ class _MovieCardState extends State<MovieCard> {
         );
       },
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 4),
         child: Container(
-          height: 200,
-          width: 150,
+          height: 240,
+          width: 160,
           child: Container(
             decoration: BoxDecoration(
-              border: Border.all(color: Colors.white),
-              borderRadius: BorderRadius.circular(20),
+              border: Border.all(color: Colors.transparent),
+              borderRadius: BorderRadius.circular(2),
             ),
             child: Stack(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(2),
                   child: Image.network(
                     widget.video.imageUrl.toString(),
-                    height: 200,
-                    width: 150,
+                    height: 240,
+                    width: 160,
                     fit: BoxFit.cover,
-                  ),
-                ),
-                ClipRRect(
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
-                  ),
-                  child: Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      height: 50,
-                      width: titleWidth,
-                      color: Colors.black45,
-                      child: Text(
-                        widget.video.title.toString(),
-                        overflow: TextOverflow.ellipsis,
-                        textAlign: TextAlign.center,
-                        style: GoogleFonts.roboto(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                    ),
+                    loadingBuilder: (context, Widget child,
+                        ImageChunkEvent? loadingProgress) {
+                      if (loadingProgress == null) return child;
+                      return Image.asset(
+                        'assets/noimage.png',
+                        height: 240,
+                        width: 160,
+                        fit: BoxFit.cover,
+                      );
+                    },
                   ),
                 ),
               ],

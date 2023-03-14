@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 
 //Screens
 import './screens/home_screen.dart';
+import './screens/start_screen.dart';
 import './screens/movie_description_screen.dart';
 
 //Providers
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           brightness: Brightness.dark,
         ),
-        home: HomeScreen(),
+        home: StartScreen(),
       ),
     );
   }

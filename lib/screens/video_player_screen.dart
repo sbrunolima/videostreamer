@@ -11,7 +11,7 @@ import '../providers/video_provider.dart';
 import '../providers/video.dart';
 
 //Widgets
-import '../widgets_player_screen/video_player_widget.dart';
+import '../player_screen/video_player_widget.dart';
 import '../widgets/my_back_icon.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
@@ -66,9 +66,15 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            VideoPlayerWidget(
-              video: widget.video,
-              controller: controller,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 50),
+              child: Container(
+                width: MediaQuery.of(context).size.width - 50,
+                child: VideoPlayerWidget(
+                  video: widget.video,
+                  controller: controller,
+                ),
+              ),
             ),
           ],
         ),

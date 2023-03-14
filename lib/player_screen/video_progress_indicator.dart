@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 
 //Widgets
-import '../widgets_player_screen/video_title_widget.dart';
+import '../player_screen/video_title_widget.dart';
 
 //Providers
 import '../providers/video_provider.dart';

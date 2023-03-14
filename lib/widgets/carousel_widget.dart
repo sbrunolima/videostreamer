@@ -53,7 +53,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
       children: [
         CarouselSlider.builder(
           options: CarouselOptions(
-            height: 500,
+            height: 550,
             autoPlay: true,
             viewportFraction: 1,
             autoPlayInterval: const Duration(seconds: 20),

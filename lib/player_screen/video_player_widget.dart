@@ -3,7 +3,7 @@ import 'package:video_player/video_player.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 //Widgets
-import '../widgets_player_screen/video_progress_indicator.dart';
+import '../player_screen/video_progress_indicator.dart';
 import '../widgets/my_back_icon.dart';
 
 //Providers
