@@ -4,6 +4,7 @@ import 'package:ionicons/ionicons.dart';
 
 //Screens
 import '../screens/home_screen.dart';
+import '../screens/profile_screen.dart';
 
 class StartScreen extends StatefulWidget {
   static const routeName = '/start-screen';
@@ -23,9 +24,7 @@ class _StartScreenState extends State<StartScreen> {
     Scaffold(
       body: Center(child: Text('All movies')),
     ),
-    Scaffold(
-      body: Center(child: Text('Profile')),
-    ),
+    ProfileScreen(),
   ];
 
   @override

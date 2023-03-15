@@ -1,18 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 //Screens
 import './screens/home_screen.dart';
 import './screens/start_screen.dart';
 import './screens/movie_description_screen.dart';
+import 'screens/login_screen.dart';
 
 //Providers
 import './providers/video_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(VideoStreamer());
 
-class MyApp extends StatelessWidget {
+class VideoStreamer extends StatefulWidget {
+  @override
+  State<VideoStreamer> createState() => _VideoStreamerState();
+}
+
+class _VideoStreamerState extends State<VideoStreamer> {
+  @override
+  void initState() {
+    super.initState();
+    Firebase.initializeApp().whenComplete(() {
+      setState(() {});
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -28,7 +44,15 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           brightness: Brightness.dark,
         ),
-        home: StartScreen(),
+        home: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: ((context, snapshot) {
+            if (snapshot.hasData) {
+              return StartScreen();
+            }
+            return LoginScreen();
+          }),
+        ),
       ),
     );
   }

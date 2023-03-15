@@ -11,14 +11,16 @@ import '../widgets/movie_card.dart';
 
 class RecomendedMoviesWidget extends StatelessWidget {
   final String movieGenre;
+  final String movieID;
 
-  RecomendedMoviesWidget({required this.movieGenre});
+  RecomendedMoviesWidget({required this.movieGenre, required this.movieID});
 
   @override
   Widget build(BuildContext context) {
     final videoData = Provider.of<VideosProvider>(context, listen: false);
     final video = videoData.video
-        .where(((element) => element.genre == movieGenre))
+        .where(
+            ((element) => element.genre == movieGenre && element.id != movieID))
         .toList();
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,

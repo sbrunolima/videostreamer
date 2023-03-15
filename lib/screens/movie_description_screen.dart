@@ -55,7 +55,10 @@ class _MovieDescriptionScreenState extends State<MovieDescriptionScreen> {
             const SizedBox(height: 30),
             CastColumn(video: widget.video),
             const SizedBox(height: 10),
-            RecomendedMoviesWidget(movieGenre: widget.video.genre.toString()),
+            RecomendedMoviesWidget(
+              movieGenre: widget.video.genre,
+              movieID: widget.video.id,
+            ),
           ],
         ),
       ),
