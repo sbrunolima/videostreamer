@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+//Providers
+import '../providers/user_provider.dart';
 
 class SigninForm extends StatefulWidget {
   final bool isLoading;
@@ -32,6 +36,10 @@ class _SigninFormState extends State<SigninForm> {
         _userName.trim(),
         _userPassword.trim(),
         context,
+      );
+
+      Provider.of<UserPovider>(context, listen: false).addUser(
+        'https://i.pinimg.com/originals/b1/92/4d/b1924dce177345b5485bb5490ab3441f.jpg',
       );
     }
   }

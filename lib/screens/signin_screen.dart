@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 
 //Widgets
 import '../auth/signin_form.dart';
 import '../auth/error_dialog.dart';
+
+//Providers
+import '../providers/user_provider.dart';
 
 class SigninScreen extends StatefulWidget {
   @override
@@ -18,7 +22,7 @@ class _SigninScreenState extends State<SigninScreen> {
 
   void _submitAuthForm(
     String email,
-    String userName,
+    String username,
     String password,
     BuildContext ctx,
   ) async {
@@ -33,15 +37,16 @@ class _SigninScreenState extends State<SigninScreen> {
         password: password,
       );
 
-      await FirebaseFirestore.instance
-          .collection('users')
-          .doc(credential.user!.uid)
-          .set(
-        {
-          'userName': userName,
-          'email': email,
-        },
-      );
+      // await FirebaseFirestore.instance
+      //     .collection('users')
+      //     .doc(credential.user!.uid)
+      //     .set(
+      //   {
+      //     'userName': username,
+      //     'email': email,
+      //   },
+      // );
+
     } catch (error) {
       setState(() {
         _isLoading = false;
