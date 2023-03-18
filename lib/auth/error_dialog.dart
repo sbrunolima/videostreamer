@@ -7,17 +7,19 @@ void errorDialog(String message, BuildContext context) {
     context: context,
     builder: (ctx) => AlertDialog(
       backgroundColor: Colors.grey.shade900,
-      title: Column(
-        children: [
-          Text(
-            'ERROR',
-            style: GoogleFonts.openSans(
-              color: Colors.white,
-              fontSize: 20,
+      title: SingleChildScrollView(
+        child: Column(
+          children: [
+            Text(
+              'ERROR',
+              style: GoogleFonts.openSans(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-        ],
+          ],
+        ),
       ),
       content: Text(
         message,

@@ -37,6 +37,13 @@ class _SigninScreenState extends State<SigninScreen> {
         password: password,
       );
 
+      Provider.of<UserPovider>(context, listen: false).addUser(
+        credential.user!.uid,
+        email,
+        username,
+        'https://i.pinimg.com/originals/b1/92/4d/b1924dce177345b5485bb5490ab3441f.jpg',
+      );
+
       // await FirebaseFirestore.instance
       //     .collection('users')
       //     .doc(credential.user!.uid)

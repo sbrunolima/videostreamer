@@ -24,16 +24,6 @@ class MovieCard extends StatefulWidget {
 }
 
 class _MovieCardState extends State<MovieCard> {
-  void _navigate() {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: ((context) => MovieDescriptionScreen(
-              video: widget.video,
-            )),
-      ),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     final titleWidth = MediaQuery.of(context).size.width;

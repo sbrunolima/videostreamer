@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:enefty_icons/enefty_icons.dart';
+import 'package:jumping_dot/jumping_dot.dart';
 
 //Widgets
 import '../description_screen/play_button.dart';
@@ -49,7 +50,10 @@ class DescriptionTitle extends StatelessWidget {
                       width: titleWidth,
                       child: const Align(
                         alignment: Alignment.center,
-                        child: CircularProgressIndicator(color: Colors.white30),
+                        child: JumpingDots(
+                          color: Colors.white54,
+                          radius: 6,
+                        ),
                       ),
                     );
                   },

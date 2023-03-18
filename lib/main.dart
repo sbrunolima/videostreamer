@@ -9,10 +9,13 @@ import './screens/home_screen.dart';
 import './screens/start_screen.dart';
 import './screens/movie_description_screen.dart';
 import 'screens/login_screen.dart';
+import './screens/splash_screen.dart';
 
 //Providers
 import './providers/video_provider.dart';
 import './providers/images_provider.dart';
+import './providers/user_provider.dart';
+import './providers/carousel_provider.dart';
 
 void main() => runApp(VideoStreamer());
 
@@ -41,6 +44,12 @@ class _VideoStreamerState extends State<VideoStreamer> {
         ChangeNotifierProvider(
           create: (ctx) => ImagesProvider(),
         ),
+        ChangeNotifierProvider(
+          create: (ctx) => UserPovider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => CarouselProvider(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

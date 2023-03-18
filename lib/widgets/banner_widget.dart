@@ -13,16 +13,16 @@ import '../screens/movie_description_screen.dart';
 
 class BannerWidget extends StatelessWidget {
   final String imageUrl;
-  final String videoID;
+  final String trailerID;
 
-  BannerWidget({required this.imageUrl, required this.videoID});
+  BannerWidget({required this.imageUrl, required this.trailerID});
 
   @override
   Widget build(BuildContext context) {
     final titleWidth = MediaQuery.of(context).size.width;
     final videoData = Provider.of<VideosProvider>(context, listen: false);
     final video =
-        videoData.video.where((element) => element.id == videoID).toList();
+        videoData.video.where((element) => element.id == trailerID).toList();
     return GestureDetector(
       onTap: () {
         for (int i = 0; i < video.length; i++)

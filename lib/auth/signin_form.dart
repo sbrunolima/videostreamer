@@ -37,10 +37,6 @@ class _SigninFormState extends State<SigninForm> {
         _userPassword.trim(),
         context,
       );
-
-      Provider.of<UserPovider>(context, listen: false).addUser(
-        'https://i.pinimg.com/originals/b1/92/4d/b1924dce177345b5485bb5490ab3441f.jpg',
-      );
     }
   }
 

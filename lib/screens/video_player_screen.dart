@@ -66,14 +66,11 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
       body: SafeArea(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 50),
-              child: Container(
-                width: MediaQuery.of(context).size.width - 50,
-                child: VideoPlayerWidget(
-                  video: widget.video,
-                  controller: controller,
-                ),
+            Container(
+              width: MediaQuery.of(context).size.width - 10,
+              child: VideoPlayerWidget(
+                video: widget.video,
+                controller: controller,
               ),
             ),
           ],

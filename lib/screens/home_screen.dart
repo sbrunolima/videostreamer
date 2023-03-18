@@ -8,6 +8,9 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 //Providers
 import '../providers/video_provider.dart';
+import '../providers/images_provider.dart';
+import '../providers/user_provider.dart';
+import '../providers/carousel_provider.dart';
 
 //Widgets
 import '../widgets/movie_card.dart';
@@ -22,13 +25,29 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var _isLoading = false;
   var _isInit = true;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_isInit) {
-      Provider.of<VideosProvider>(context, listen: false).loadVideos();
+      setState(() {
+        _isLoading = true;
+      });
+
+      Provider.of<VideosProvider>(context, listen: false)
+          .loadVideos()
+          .then((_) async {
+        Provider.of<CarouselProvider>(context, listen: false).loadCarousel();
+        Provider.of<ImagesProvider>(context, listen: false).loadProfileImages();
+        Provider.of<UserPovider>(context, listen: false).loadUsers();
+        setState(() {
+          setState(() {
+            _isLoading = true;
+          });
+        });
+      });
     }
     _isInit = false;
   }

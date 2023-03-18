@@ -1,10 +1,14 @@
-import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:ionicons/ionicons.dart';
+import 'package:provider/provider.dart';
 
 //Screens
 import '../screens/home_screen.dart';
 import '../screens/profile_screen.dart';
+
+//Providers
+import '../providers/video_provider.dart';
+import '../providers/images_provider.dart';
+import '../providers/user_provider.dart';
 
 class StartScreen extends StatefulWidget {
   static const routeName = '/start-screen';
@@ -15,6 +19,16 @@ class StartScreen extends StatefulWidget {
 
 class _StartScreenState extends State<StartScreen> {
   int _pageIndex = 0;
+
+  var _isInit = true;
+
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<VideosProvider>(context, listen: false).loadVideos();
+    Provider.of<ImagesProvider>(context, listen: false).loadProfileImages();
+    Provider.of<UserPovider>(context, listen: false).loadUsers();
+  }
 
   final _screens = [
     HomeScreen(),

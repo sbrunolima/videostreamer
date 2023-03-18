@@ -51,6 +51,7 @@ dependencies:
   firebase_auth: ^4.2.10
   cloud_firestore: ^4.4.4
   firebase_storage: ^11.0.15
+  jumping_dot: ^0.0.4
 
 dev_dependencies:
   flutter_test:
