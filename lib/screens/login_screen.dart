@@ -1,12 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 //Widgets
-import '../auth/login_form.dart';
-import '../auth/error_dialog.dart';
+import '../auth_screen/login_form.dart';
+import '../auth_screen/error_dialog.dart';
+
+//Screens
+import '../screens/start_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -31,6 +31,12 @@ class _LoginScreenState extends State<LoginScreen> {
       credential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
+      );
+
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        StartScreen.routeName,
+        (route) => false,
       );
     } catch (error) {
       setState(() {

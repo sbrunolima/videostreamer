@@ -29,8 +29,8 @@ class _HomeScreenState extends State<HomeScreen> {
   var _isInit = true;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
     if (_isInit) {
       setState(() {
         _isLoading = true;
@@ -87,6 +87,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ActionTest(movieGenre: 'SciFi'),
             mySizedBox,
             ActionTest(movieGenre: 'Horror'),
+            mySizedBox,
+            ActionTest(movieGenre: 'Animation'),
             mySizedBox,
           ],
         ),

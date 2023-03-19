@@ -57,7 +57,7 @@ class _PlayButtonState extends State<PlayButton> {
                 const SizedBox(width: 10),
                 Text(
                   'Watch Movie',
-                  style: GoogleFonts.roboto(
+                  style: GoogleFonts.openSans(
                     color: Colors.white,
                     fontWeight: FontWeight.w500,
                     fontSize: 16,

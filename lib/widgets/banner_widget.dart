@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:jumping_dot/jumping_dot.dart';
 
 //Providers
 import '../providers/video.dart';
@@ -59,7 +60,10 @@ class BannerWidget extends StatelessWidget {
                   width: titleWidth,
                   child: const Align(
                     alignment: Alignment.center,
-                    child: CircularProgressIndicator(color: Colors.white30),
+                    child: JumpingDots(
+                      color: Colors.white54,
+                      radius: 6,
+                    ),
                   ),
                 );
               },

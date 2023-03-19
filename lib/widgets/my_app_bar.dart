@@ -17,7 +17,7 @@ class MyAppBar extends StatelessWidget {
           ),
           const SizedBox(width: 5),
           Text(
-            'TRAILERS',
+            'Cinema Preview',
             style: GoogleFonts.openSans(
               color: Colors.white,
               fontWeight: FontWeight.w700,

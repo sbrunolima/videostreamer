@@ -10,6 +10,7 @@ import './screens/start_screen.dart';
 import './screens/movie_description_screen.dart';
 import 'screens/login_screen.dart';
 import './screens/splash_screen.dart';
+import './screens/auth_screen.dart';
 
 //Providers
 import './providers/video_provider.dart';
@@ -63,9 +64,12 @@ class _VideoStreamerState extends State<VideoStreamer> {
             if (snapshot.hasData) {
               return StartScreen();
             }
-            return LoginScreen();
+            return AuthScreen();
           }),
         ),
+        routes: {
+          StartScreen.routeName: (ctx) => StartScreen(),
+        },
       ),
     );
   }
