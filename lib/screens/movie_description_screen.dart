@@ -59,6 +59,7 @@ class _MovieDescriptionScreenState extends State<MovieDescriptionScreen> {
               movieGenre: widget.video.genre,
               movieID: widget.video.id,
             ),
+            const SizedBox(height: 50),
           ],
         ),
       ),

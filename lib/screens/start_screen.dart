@@ -4,11 +4,13 @@ import 'package:provider/provider.dart';
 //Screens
 import '../screens/home_screen.dart';
 import '../screens/profile_screen.dart';
+import '../screens/all_trailers_screen.dart';
 
 //Providers
 import '../providers/video_provider.dart';
 import '../providers/images_provider.dart';
 import '../providers/user_provider.dart';
+import '../screens/search_screen.dart';
 
 class StartScreen extends StatefulWidget {
   static const routeName = '/start-screen';
@@ -32,12 +34,8 @@ class _StartScreenState extends State<StartScreen> {
 
   final _screens = [
     HomeScreen(),
-    Scaffold(
-      body: Center(child: Text('Search')),
-    ),
-    Scaffold(
-      body: Center(child: Text('All movies')),
-    ),
+    SearchScreen(),
+    AllTrailersScreen(),
     ProfileScreen(),
   ];
 

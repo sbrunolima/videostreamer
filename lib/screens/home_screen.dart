@@ -64,14 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         elevation: 0,
-        leading: const Icon(
-          EneftyIcons.menu_bold,
-          size: 26,
-        ),
         title: MyAppBar(),
-        actions: const [
-          SizedBox(width: 40),
-        ],
       ),
       body: SingleChildScrollView(
         child: Column(

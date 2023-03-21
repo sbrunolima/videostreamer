@@ -47,7 +47,7 @@ class CastColumn extends StatelessWidget {
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             padding: const EdgeInsets.symmetric(horizontal: 15),
-            itemCount: 6,
+            itemCount: video.castImages.length,
             itemBuilder: ((context, index) {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 6),

@@ -8,23 +8,32 @@ class MyAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            'assets/logo2.png',
-            scale: 20,
-          ),
-          const SizedBox(width: 5),
-          Text(
-            'Cinema Preview',
-            style: GoogleFonts.openSans(
-              color: Colors.white,
-              fontWeight: FontWeight.w700,
-              fontSize: 20,
+      child: Container(
+        height: 40,
+        width: 220,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.transparent),
+          borderRadius: BorderRadius.circular(8),
+          color: Colors.black38,
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/logo2.png',
+              scale: 20,
             ),
-          ),
-        ],
+            const SizedBox(width: 5),
+            Text(
+              'Cinema Preview',
+              style: GoogleFonts.openSans(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+                fontSize: 20,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

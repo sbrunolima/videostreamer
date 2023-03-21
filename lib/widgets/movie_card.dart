@@ -45,12 +45,12 @@ class _MovieCardState extends State<MovieCard> {
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(color: Colors.transparent),
-              borderRadius: BorderRadius.circular(2),
+              borderRadius: BorderRadius.circular(5),
             ),
             child: Stack(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(2),
+                  borderRadius: BorderRadius.circular(5),
                   child: Image.network(
                     widget.video.imageUrl.toString(),
                     height: 240,
