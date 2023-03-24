@@ -11,6 +11,7 @@ import '../providers/video_provider.dart';
 import '../providers/images_provider.dart';
 import '../providers/user_provider.dart';
 import '../providers/carousel_provider.dart';
+import '../providers/community_post_provider.dart';
 
 //Widgets
 import '../widgets/movie_card.dart';
@@ -42,6 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Provider.of<CarouselProvider>(context, listen: false).loadCarousel();
         Provider.of<ImagesProvider>(context, listen: false).loadProfileImages();
         Provider.of<UserPovider>(context, listen: false).loadUsers();
+        Provider.of<CommunytPostProvider>(context, listen: false).loadPosts();
         setState(() {
           setState(() {
             _isLoading = true;

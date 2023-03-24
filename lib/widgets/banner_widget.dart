@@ -10,7 +10,7 @@ import '../providers/video_provider.dart';
 //Widgets
 import '../widgets/movie_card.dart';
 import '../widgets/action_test.dart';
-import '../screens/movie_description_screen.dart';
+import '../description_screen/movie_description.dart';
 
 class BannerWidget extends StatelessWidget {
   final String imageUrl;

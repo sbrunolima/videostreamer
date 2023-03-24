@@ -31,7 +31,7 @@ class RecomendedMoviesWidget extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Text(
                 'More like this',
-                style: GoogleFonts.roboto(
+                style: GoogleFonts.openSans(
                   color: Colors.white,
                   fontSize: 18,
                   fontWeight: FontWeight.w500,

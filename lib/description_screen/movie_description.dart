@@ -11,13 +11,13 @@ import '../providers/video_provider.dart';
 import '../providers/video.dart';
 
 //Widgets
-import '../description_screen/description_title.dart';
-import '../description_screen/rate_row.dart';
-import '../description_screen/play_button.dart';
-import '../description_screen/all_cast_button.dart';
-import '../description_screen/cast_column.dart';
-import '../description_screen/storyline_widget.dart';
-import '../description_screen/recomended_movies.dart';
+import 'description_title.dart';
+import 'rate_row.dart';
+import 'play_button.dart';
+import 'all_cast_button.dart';
+import 'cast_column.dart';
+import 'storyline_widget.dart';
+import 'recomended_movies.dart';
 import '../widgets/my_back_icon.dart';
 
 class MovieDescriptionScreen extends StatefulWidget {

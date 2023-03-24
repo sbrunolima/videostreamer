@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../screens/home_screen.dart';
 import '../screens/profile_screen.dart';
 import '../screens/all_trailers_screen.dart';
+import '../screens/community_screen.dart';
 
 //Providers
 import '../providers/video_provider.dart';
@@ -35,7 +36,7 @@ class _StartScreenState extends State<StartScreen> {
   final _screens = [
     HomeScreen(),
     SearchScreen(),
-    AllTrailersScreen(),
+    CommunutyScreen(),
     ProfileScreen(),
   ];
 

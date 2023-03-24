@@ -8,7 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 //Screens
 import './screens/home_screen.dart';
 import './screens/start_screen.dart';
-import './screens/movie_description_screen.dart';
+import 'description_screen/movie_description.dart';
 import 'screens/login_screen.dart';
 import './screens/splash_screen.dart';
 import './screens/auth_screen.dart';
@@ -18,6 +18,7 @@ import './providers/video_provider.dart';
 import './providers/images_provider.dart';
 import './providers/user_provider.dart';
 import './providers/carousel_provider.dart';
+import './providers/community_post_provider.dart';
 
 Future main() async {
   runApp(VideoStreamer());
@@ -61,7 +62,10 @@ class _VideoStreamerState extends State<VideoStreamer> {
         ),
         ChangeNotifierProvider(
           create: (ctx) => CarouselProvider(),
-        )
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => CommunytPostProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -7,7 +7,7 @@ import '../providers/video.dart';
 import '../providers/video_provider.dart';
 
 //Screens
-import '../screens/movie_description_screen.dart';
+import '../description_screen/movie_description.dart';
 
 //Widgets
 import '../widgets/movie_card.dart';
