@@ -16,30 +16,6 @@ class MovieGrid extends StatefulWidget {
 }
 
 class _MovieGridState extends State<MovieGrid> {
-  var _isLoading = false;
-  var _isInit = true;
-
-  @override
-  void initState() {
-    super.initState();
-    if (_isInit) {
-      setState(() {
-        _isLoading = true;
-      });
-
-      Provider.of<VideosProvider>(context, listen: false)
-          .loadVideos()
-          .then((_) async {
-        setState(() {
-          setState(() {
-            _isLoading = true;
-          });
-        });
-      });
-    }
-    _isInit = false;
-  }
-
   @override
   Widget build(BuildContext context) {
     final videoData = Provider.of<VideosProvider>(context, listen: false);
@@ -51,7 +27,7 @@ class _MovieGridState extends State<MovieGrid> {
       child: GridView.builder(
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: video.length,
+        itemCount: 10,
         itemBuilder: (context, index) {
           return MovieCard(video: video[index]);
         },

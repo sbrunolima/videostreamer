@@ -24,9 +24,7 @@ class _SearchBarState extends State<SearchBar> {
       padding: const EdgeInsets.symmetric(horizontal: 5),
       child: TextField(
         onChanged: (value) {
-          setState(() {
-            videoData.findVideo(value.toString());
-          });
+          videoData.findVideo(value.toString());
         },
         style: const TextStyle(color: Colors.black),
         decoration: InputDecoration(

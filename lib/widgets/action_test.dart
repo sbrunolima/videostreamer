@@ -24,7 +24,7 @@ class ActionTest extends StatelessWidget {
     final video = videoData.video
         .where((element) => element.genre == movieGenre)
         .toList();
-    print('VIDEOOO ${video.length}');
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

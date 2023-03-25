@@ -4,6 +4,7 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:ui_training05/community_screen/add_comment.dart';
 
 //Screens
 import './screens/home_screen.dart';
@@ -18,7 +19,8 @@ import './providers/video_provider.dart';
 import './providers/images_provider.dart';
 import './providers/user_provider.dart';
 import './providers/carousel_provider.dart';
-import './providers/community_post_provider.dart';
+import './providers/post_provider.dart';
+import './providers/comments_provider.dart';
 
 Future main() async {
   runApp(VideoStreamer());
@@ -64,7 +66,10 @@ class _VideoStreamerState extends State<VideoStreamer> {
           create: (ctx) => CarouselProvider(),
         ),
         ChangeNotifierProvider(
-          create: (ctx) => CommunytPostProvider(),
+          create: (ctx) => PostProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => CommentProvider(),
         ),
       ],
       child: MaterialApp(

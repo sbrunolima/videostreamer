@@ -7,7 +7,8 @@ import 'package:provider/provider.dart';
 import '../community_screen/post_item.dart';
 
 //Providers
-import '../providers/community_post_provider.dart';
+import '../providers/post_provider.dart';
+import '../providers/comments_provider.dart';
 
 class CommunutyScreen extends StatefulWidget {
   @override
@@ -15,29 +16,23 @@ class CommunutyScreen extends StatefulWidget {
 }
 
 class _CommunutyScreenState extends State<CommunutyScreen> {
-  var _isLoading = false;
+  var _isInit = true;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-
-    setState(() {
-      _isLoading = true;
-    });
-
-    Provider.of<CommunytPostProvider>(context, listen: false)
-        .loadPosts()
-        .then((_) {
-      setState(() {
-        _isLoading = false;
-      });
-    });
+    if (_isInit) {
+      Provider.of<PostProvider>(context, listen: false).loadPosts();
+    }
+    _isInit = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    final postsData = Provider.of<CommunytPostProvider>(context, listen: false);
+    final postsData = Provider.of<PostProvider>(context, listen: false);
     final post = postsData.posts;
+    final commentData = Provider.of<CommentProvider>(context, listen: false);
+    final comment = commentData.comments;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
@@ -55,7 +50,9 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
               itemBuilder: (context, index) {
                 return Column(
                   children: [
-                    PostItem(post: post[index]),
+                    PostItem(
+                      post: post[index],
+                    ),
                     const Divider(),
                   ],
                 );

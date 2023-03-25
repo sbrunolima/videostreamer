@@ -23,16 +23,6 @@ class StartScreen extends StatefulWidget {
 class _StartScreenState extends State<StartScreen> {
   int _pageIndex = 0;
 
-  var _isInit = true;
-
-  @override
-  void initState() {
-    super.initState();
-    Provider.of<VideosProvider>(context, listen: false).loadVideos();
-    Provider.of<ImagesProvider>(context, listen: false).loadProfileImages();
-    Provider.of<UserPovider>(context, listen: false).loadUsers();
-  }
-
   final _screens = [
     HomeScreen(),
     SearchScreen(),
@@ -40,10 +30,18 @@ class _StartScreenState extends State<StartScreen> {
     ProfileScreen(),
   ];
 
+  //Responsible for refreshing the UI
+  Future<void> _refreshSongs(BuildContext context) async {
+    Provider.of<VideosProvider>(context, listen: false).loadVideos();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_pageIndex],
+      body: RefreshIndicator(
+        onRefresh: () => _refreshSongs(context),
+        child: _screens[_pageIndex],
+      ),
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

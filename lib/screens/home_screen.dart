@@ -11,7 +11,8 @@ import '../providers/video_provider.dart';
 import '../providers/images_provider.dart';
 import '../providers/user_provider.dart';
 import '../providers/carousel_provider.dart';
-import '../providers/community_post_provider.dart';
+import '../providers/post_provider.dart';
+import '../providers/comments_provider.dart';
 
 //Widgets
 import '../widgets/movie_card.dart';
@@ -30,8 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
   var _isInit = true;
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     if (_isInit) {
       setState(() {
         _isLoading = true;
@@ -43,10 +44,11 @@ class _HomeScreenState extends State<HomeScreen> {
         Provider.of<CarouselProvider>(context, listen: false).loadCarousel();
         Provider.of<ImagesProvider>(context, listen: false).loadProfileImages();
         Provider.of<UserPovider>(context, listen: false).loadUsers();
-        Provider.of<CommunytPostProvider>(context, listen: false).loadPosts();
+        Provider.of<PostProvider>(context, listen: false).loadPosts();
+        Provider.of<CommentProvider>(context, listen: false).loadComments();
         setState(() {
           setState(() {
-            _isLoading = true;
+            _isLoading = false;
           });
         });
       });
