@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 //Providers
 import '../providers/video_provider.dart';
-import '../providers/video.dart';
+import '../objects/video.dart';
 
 class CastScreen extends StatelessWidget {
   final Video video;

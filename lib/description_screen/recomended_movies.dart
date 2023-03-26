@@ -3,14 +3,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 //Providers
-import '../providers/video.dart';
+import '../objects/video.dart';
 import '../providers/video_provider.dart';
 
 //Widgets
 import '../widgets/movie_card.dart';
 
 class RecomendedMoviesWidget extends StatelessWidget {
-  final String movieGenre;
+  final List<String> movieGenre;
   final String movieID;
 
   RecomendedMoviesWidget({required this.movieGenre, required this.movieID});
@@ -18,10 +18,9 @@ class RecomendedMoviesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final videoData = Provider.of<VideosProvider>(context, listen: false);
-    final video = videoData.video
-        .where(
-            ((element) => element.genre == movieGenre && element.id != movieID))
-        .toList();
+
+    final video = videoData.video;
+
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -41,13 +40,18 @@ class RecomendedMoviesWidget extends StatelessWidget {
           ],
         ),
         Container(
-          height: 250,
+          height: 160,
           child: ListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             scrollDirection: Axis.horizontal,
-            itemCount: video.length,
+            itemCount: 10,
             itemBuilder: (context, index) {
-              return MovieCard(video: video[index]);
+              for (int i = 0; i < video[index].genre.length; i++)
+                if (video[index].genre.contains(movieGenre[i]) &&
+                    video[index].id != movieID) {
+                  return MovieCard(video: video[index]);
+                }
+              return Container();
             },
           ),
         ),

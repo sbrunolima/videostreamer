@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'dart:math';
 
 //Provider
-import '../providers/communit_post.dart';
+import '../objects/communit_post.dart';
 
 class PostMovieContainer extends StatelessWidget {
   final CommunityPost post;

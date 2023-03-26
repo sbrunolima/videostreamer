@@ -4,12 +4,12 @@ import 'package:provider/provider.dart';
 import 'package:jumping_dot/jumping_dot.dart';
 
 //Providers
-import '../providers/video.dart';
+import '../objects/video.dart';
 import '../providers/video_provider.dart';
 
 //Widgets
 import '../widgets/movie_card.dart';
-import '../widgets/action_test.dart';
+import 'genre_rows.dart';
 import '../description_screen/movie_description.dart';
 
 class BannerWidget extends StatelessWidget {
@@ -42,7 +42,7 @@ class BannerWidget extends StatelessWidget {
             end: Alignment.topCenter,
             colors: [Colors.black, Colors.transparent],
             transform: GradientRotation(math.pi / 1),
-          ).createShader(Rect.fromLTRB(0, 450, rect.width, rect.height - 0));
+          ).createShader(Rect.fromLTRB(0, 500, rect.width, rect.height - 0));
         },
         blendMode: BlendMode.dstIn,
         child: Column(

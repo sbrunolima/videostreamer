@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 //Providers
-import '../providers/video.dart';
+import '../objects/video.dart';
 import '../providers/video_provider.dart';
 
 //Screens
@@ -40,8 +40,8 @@ class _MovieCardState extends State<MovieCard> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 4),
         child: Container(
-          height: 240,
-          width: 160,
+          height: 160,
+          width: 120,
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(color: Colors.transparent),
@@ -52,18 +52,25 @@ class _MovieCardState extends State<MovieCard> {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(5),
                   child: Image.network(
-                    widget.video.imageUrl.toString(),
-                    height: 240,
-                    width: 160,
+                    widget.video.coverUrl.toString(),
+                    height: 160,
+                    width: 150,
                     fit: BoxFit.cover,
                     loadingBuilder: (context, Widget child,
                         ImageChunkEvent? loadingProgress) {
                       if (loadingProgress == null) return child;
-                      return Image.asset(
-                        'assets/noimage.png',
-                        height: 240,
-                        width: 160,
-                        fit: BoxFit.cover,
+                      return Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.white10),
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.white30,
+                        ),
+                        child: Image.asset(
+                          'assets/noimage.png',
+                          height: 160,
+                          width: 120,
+                          fit: BoxFit.cover,
+                        ),
                       );
                     },
                   ),

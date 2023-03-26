@@ -14,7 +14,6 @@ class MyAppBar extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: Colors.transparent),
           borderRadius: BorderRadius.circular(8),
-          color: Colors.black38,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

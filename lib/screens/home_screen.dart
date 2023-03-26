@@ -16,7 +16,7 @@ import '../providers/comments_provider.dart';
 
 //Widgets
 import '../widgets/movie_card.dart';
-import '../widgets/action_test.dart';
+import '../widgets/genre_rows.dart';
 import '../widgets/banner_widget.dart';
 import '../widgets/carousel_widget.dart';
 import '../widgets/my_app_bar.dart';
@@ -66,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.black,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        backgroundColor: Color.fromARGB(0, 0, 0, 0),
+        backgroundColor: Colors.black38,
         elevation: 0,
         title: MyAppBar(),
       ),
@@ -74,18 +74,17 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             CarouselWidget(),
+            GenreRows(movieGenre: 'Action'),
             mySizedBox,
-            ActionTest(movieGenre: 'Action'),
+            GenreRows(movieGenre: 'Crime'),
             mySizedBox,
-            ActionTest(movieGenre: 'Adventure'),
+            GenreRows(movieGenre: 'Comedy'),
             mySizedBox,
-            ActionTest(movieGenre: 'Comedy'),
+            GenreRows(movieGenre: 'SciFi'),
             mySizedBox,
-            ActionTest(movieGenre: 'SciFi'),
+            GenreRows(movieGenre: 'Horror'),
             mySizedBox,
-            ActionTest(movieGenre: 'Horror'),
-            mySizedBox,
-            ActionTest(movieGenre: 'Animation'),
+            GenreRows(movieGenre: 'Animation'),
             mySizedBox,
           ],
         ),

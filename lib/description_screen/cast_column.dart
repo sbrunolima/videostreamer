@@ -8,7 +8,7 @@ import 'package:colours/colours.dart';
 
 //Providers
 import '../providers/video_provider.dart';
-import '../providers/video.dart';
+import '../objects/video.dart';
 
 //Widgets
 import '../description_screen/description_title.dart';

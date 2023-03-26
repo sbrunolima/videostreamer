@@ -5,7 +5,7 @@ import 'package:colours/colours.dart';
 
 //Providers
 import '../providers/video_provider.dart';
-import '../providers/video.dart';
+import '../objects/video.dart';
 
 class StorylineWidget extends StatelessWidget {
   final Video video;

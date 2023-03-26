@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 //Providers
-import '../providers/video.dart';
+import '../objects/video.dart';
 import '../providers/video_provider.dart';
 
 //Screens
@@ -12,17 +12,17 @@ import '../description_screen/movie_description.dart';
 //Widgets
 import '../widgets/movie_card.dart';
 
-class ActionTest extends StatelessWidget {
+class GenreRows extends StatelessWidget {
   final String movieGenre;
 
-  ActionTest({required this.movieGenre});
+  GenreRows({required this.movieGenre});
 
   @override
   Widget build(BuildContext context) {
     final titleWidth = MediaQuery.of(context).size.width;
     final videoData = Provider.of<VideosProvider>(context, listen: false);
     final video = videoData.video
-        .where((element) => element.genre == movieGenre)
+        .where((element) => element.genre.contains(movieGenre))
         .toList();
 
     return Column(
@@ -40,7 +40,7 @@ class ActionTest extends StatelessWidget {
           ),
         ),
         Container(
-          height: 240,
+          height: 160,
           child: ListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             scrollDirection: Axis.horizontal,

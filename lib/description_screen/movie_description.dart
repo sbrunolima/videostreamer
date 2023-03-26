@@ -8,17 +8,18 @@ import 'package:colours/colours.dart';
 
 //Providers
 import '../providers/video_provider.dart';
-import '../providers/video.dart';
+import '../objects/video.dart';
 
 //Widgets
-import 'description_title.dart';
-import 'rate_row.dart';
-import 'play_button.dart';
-import 'all_cast_button.dart';
-import 'cast_column.dart';
-import 'storyline_widget.dart';
-import 'recomended_movies.dart';
+import '../description_screen/description_title.dart';
+import '../description_screen/rate_row.dart';
+import '../description_screen/play_button.dart';
+import '../description_screen/all_cast_button.dart';
+import '../description_screen/cast_column.dart';
+import '../description_screen/storyline_widget.dart';
+import '../description_screen/recomended_movies.dart';
 import '../widgets/my_back_icon.dart';
+import '../description_screen/movie_title.dart';
 
 class MovieDescriptionScreen extends StatefulWidget {
   static const routeName = 'description-screen';
@@ -51,6 +52,7 @@ class _MovieDescriptionScreenState extends State<MovieDescriptionScreen> {
         child: Column(
           children: [
             DescriptionTitle(video: widget.video),
+            MovieTitle(video: widget.video),
             StorylineWidget(video: widget.video),
             const SizedBox(height: 30),
             CastColumn(video: widget.video),

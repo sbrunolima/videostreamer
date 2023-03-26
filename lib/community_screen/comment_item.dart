@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 
 //Provider
-import '../providers/communit_post.dart';
+import '../objects/communit_post.dart';
 import '../providers/comments_provider.dart';
 
 class CommentItem extends StatelessWidget {

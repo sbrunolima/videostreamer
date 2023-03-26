@@ -34,7 +34,7 @@ class ContinueButton extends StatelessWidget {
             child: Text(
               'CONTINUE',
               style: GoogleFonts.openSans(
-                color: Colors.black87,
+                color: Colors.white,
                 fontWeight: FontWeight.w700,
                 fontSize: 18,
               ),

@@ -8,7 +8,7 @@ import '../player_screen/video_title_widget.dart';
 
 //Providers
 import '../providers/video_provider.dart';
-import '../providers/video.dart';
+import '../objects/video.dart';
 
 class VideoProgressIdicator extends StatelessWidget {
   final Video video;

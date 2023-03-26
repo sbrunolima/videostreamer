@@ -8,7 +8,7 @@ import 'package:wakelock/wakelock.dart';
 
 //Providers
 import '../providers/video_provider.dart';
-import '../providers/video.dart';
+import '../objects/video.dart';
 
 //Widgets
 import '../player_screen/video_player_widget.dart';

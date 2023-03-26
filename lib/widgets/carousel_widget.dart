@@ -10,7 +10,7 @@ import '../providers/video_provider.dart';
 
 //Widgets
 import '../widgets/movie_card.dart';
-import '../widgets/action_test.dart';
+import 'genre_rows.dart';
 import '../widgets/banner_widget.dart';
 
 //Providers
@@ -68,7 +68,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                 ),
                 itemCount: banner.length,
                 itemBuilder: (context, index, realIndex) {
-                  final imageUrl = banner[index].imageUrl.toString();
+                  final imageUrl = banner[index].coverUrl.toString();
                   final trailerID = banner[index].trailerID.toString();
                   return BannerWidget(imageUrl: imageUrl, trailerID: trailerID);
                 },

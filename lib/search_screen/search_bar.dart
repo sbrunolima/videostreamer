@@ -4,7 +4,7 @@ import 'package:provider/provider.dart';
 
 //Providers
 import '../providers/video_provider.dart';
-import '../providers/video.dart';
+import '../objects/video.dart';
 
 //Widgets
 import '../widgets/movie_card.dart';

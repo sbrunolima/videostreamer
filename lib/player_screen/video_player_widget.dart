@@ -8,7 +8,7 @@ import '../widgets/my_back_icon.dart';
 
 //Providers
 import '../providers/video_provider.dart';
-import '../providers/video.dart';
+import '../objects/video.dart';
 
 class VideoPlayerWidget extends StatefulWidget {
   final Video video;

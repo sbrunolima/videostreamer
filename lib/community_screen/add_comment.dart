@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'dart:math';
 
 //Provider
-import '../providers/communit_post.dart';
+import '../objects/communit_post.dart';
 import '../providers/post_provider.dart';
 import '../providers/comments_provider.dart';
 import '../providers/images_provider.dart';
