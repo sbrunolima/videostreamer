@@ -13,6 +13,7 @@ import '../providers/user_provider.dart';
 import '../providers/carousel_provider.dart';
 import '../providers/post_provider.dart';
 import '../providers/comments_provider.dart';
+import '../providers/likes_provider.dart';
 
 //Widgets
 import '../widgets/movie_card.dart';
@@ -46,6 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Provider.of<UserPovider>(context, listen: false).loadUsers();
         Provider.of<PostProvider>(context, listen: false).loadPosts();
         Provider.of<CommentProvider>(context, listen: false).loadComments();
+        Provider.of<LikeProvider>(context, listen: false).loadLikes();
         setState(() {
           setState(() {
             _isLoading = false;
@@ -58,35 +60,34 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const mySizedBox = SizedBox(height: 20);
+    const mySizedBox = SizedBox(height: 12);
     final videoData = Provider.of<VideosProvider>(context, listen: false);
     final video = videoData.video;
 
-    return Scaffold(
-      backgroundColor: Colors.black,
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.black38,
-        elevation: 0,
-        title: MyAppBar(),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            CarouselWidget(),
-            GenreRows(movieGenre: 'Action'),
-            mySizedBox,
-            GenreRows(movieGenre: 'Crime'),
-            mySizedBox,
-            GenreRows(movieGenre: 'Comedy'),
-            mySizedBox,
-            GenreRows(movieGenre: 'SciFi'),
-            mySizedBox,
-            GenreRows(movieGenre: 'Horror'),
-            mySizedBox,
-            GenreRows(movieGenre: 'Animation'),
-            mySizedBox,
-          ],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.black54,
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              mySizedBox,
+              MyAppBar(),
+              mySizedBox,
+              CarouselWidget(),
+              GenreRows(movieGenre: 'Action'),
+              mySizedBox,
+              GenreRows(movieGenre: 'Crime'),
+              mySizedBox,
+              GenreRows(movieGenre: 'Comedy'),
+              mySizedBox,
+              GenreRows(movieGenre: 'SciFi'),
+              mySizedBox,
+              GenreRows(movieGenre: 'Horror'),
+              mySizedBox,
+              GenreRows(movieGenre: 'Animation'),
+              mySizedBox,
+            ],
+          ),
         ),
       ),
     );

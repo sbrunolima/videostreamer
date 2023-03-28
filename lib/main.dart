@@ -21,6 +21,7 @@ import './providers/user_provider.dart';
 import './providers/carousel_provider.dart';
 import './providers/post_provider.dart';
 import './providers/comments_provider.dart';
+import './providers/likes_provider.dart';
 
 Future main() async {
   runApp(VideoStreamer());
@@ -70,6 +71,9 @@ class _VideoStreamerState extends State<VideoStreamer> {
         ),
         ChangeNotifierProvider(
           create: (ctx) => CommentProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (ctx) => LikeProvider(),
         ),
       ],
       child: MaterialApp(

@@ -34,7 +34,7 @@ class GenreRows extends StatelessWidget {
             '$movieGenre Movies',
             style: GoogleFonts.roboto(
               color: Colors.white,
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.w500,
             ),
           ),

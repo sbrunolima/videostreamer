@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:enefty_icons/enefty_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart';
 import 'package:intl/intl.dart';
@@ -9,6 +11,7 @@ import 'dart:math';
 //Provider
 import '../objects/communit_post.dart';
 import '../providers/comments_provider.dart';
+import '../providers/likes_provider.dart';
 
 //Widgets
 import '../widgets/my_back_icon.dart';
@@ -27,6 +30,8 @@ class PostDescription extends StatefulWidget {
 }
 
 class _PostDescriptionState extends State<PostDescription> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  var _userId;
   var _isInit = true;
   var _isLoading = false;
 
@@ -34,6 +39,9 @@ class _PostDescriptionState extends State<PostDescription> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_isInit) {
+      final User? user = auth.currentUser;
+      _userId = user!.uid;
+
       setState(() {
         _isLoading = true;
       });
@@ -50,17 +58,15 @@ class _PostDescriptionState extends State<PostDescription> {
     _isInit = false;
   }
 
-  void checkComments() {
-    Future.delayed(const Duration(seconds: 1)).then((_) {
-      Provider.of<CommentProvider>(context, listen: false).loadComments();
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final commentData = Provider.of<CommentProvider>(context, listen: false);
+    final likeData = Provider.of<LikeProvider>(context, listen: false);
     final comment = commentData.comments
         .where((loadPost) => loadPost.postID == widget.post.id)
+        .toList();
+    final likes = likeData.like
+        .where((loadlikes) => loadlikes.postID == widget.post.id)
         .toList();
 
     return Scaffold(
@@ -126,29 +132,46 @@ class _PostDescriptionState extends State<PostDescription> {
             ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(vertical: 26),
-        child: FloatingActionButton.extended(
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: ((context) => AddComment(
-                      post: widget.post,
-                      callback: (value) {
-                        setState(() {
-                          _isInit = value;
-                        });
-                      },
-                    )),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FloatingActionButton(
+              onPressed: () async {
+                await Provider.of<LikeProvider>(context, listen: false).addLike(
+                  _userId,
+                  widget.post.id,
+                );
+              },
+              child: Icon(
+                EneftyIcons.heart_bold,
+                color: Colors.white,
+                size: 26,
               ),
-            );
-          },
-          label: Text(
-            'Add new comment',
-            style: GoogleFonts.openSans(
-              color: Colors.white,
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
+              backgroundColor: Colors.redAccent[400],
             ),
-          ),
+            const SizedBox(height: 15),
+            FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: ((context) => AddComment(
+                          post: widget.post,
+                          callback: (value) {
+                            setState(() {
+                              _isInit = value;
+                            });
+                          },
+                        )),
+                  ),
+                );
+              },
+              child: Icon(
+                EneftyIcons.add_outline,
+                color: Colors.white,
+                size: 40,
+              ),
+            ),
+          ],
         ),
       ),
     );

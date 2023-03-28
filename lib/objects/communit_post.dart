@@ -43,3 +43,15 @@ class Comments {
     required this.dateTime,
   });
 }
+
+class Like {
+  final String id;
+  final String userID;
+  final String postID;
+
+  Like({
+    required this.id,
+    required this.userID,
+    required this.postID,
+  });
+}

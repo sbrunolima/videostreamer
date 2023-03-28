@@ -8,6 +8,7 @@ import 'dart:math';
 //Provider
 import '../objects/communit_post.dart';
 import '../providers/comments_provider.dart';
+import '../providers/likes_provider.dart';
 
 //Widgets
 import '../community_screen/post_description.dart';
@@ -27,9 +28,14 @@ class _PostItemState extends State<PostItem> {
   @override
   Widget build(BuildContext context) {
     final commentData = Provider.of<CommentProvider>(context, listen: false);
+    final likeData = Provider.of<LikeProvider>(context, listen: false);
     final comment = commentData.comments
         .where((loadPost) => loadPost.postID == widget.post.id)
         .toList();
+    final likes = likeData.like
+        .where((loadlikes) => loadlikes.postID == widget.post.id)
+        .toList();
+
     return GestureDetector(
       onTap: () {
         Navigator.of(context).push(
@@ -85,7 +91,7 @@ class _PostItemState extends State<PostItem> {
                         Row(
                           children: [
                             likeOrCommentCount(
-                              widget.post.likes.toString(),
+                              likes.length.toString(),
                               Icons.favorite_border_outlined,
                             ),
                             const SizedBox(width: 15),

@@ -1,7 +1,7 @@
+import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:enefty_icons/enefty_icons.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart';
@@ -20,17 +20,16 @@ import '../widgets/my_back_icon.dart';
 import '../community_screen/post_profile.dart';
 import '../community_screen/post_movie_container.dart';
 
-class AddComment extends StatefulWidget {
-  final CommunityPost post;
+class AddPost extends StatefulWidget {
   final Function(bool) callback;
 
-  AddComment({required this.post, required this.callback});
+  AddPost({required this.callback});
 
   @override
-  State<AddComment> createState() => _AddCommentState();
+  State<AddPost> createState() => _AddPostState();
 }
 
-class _AddCommentState extends State<AddComment> {
+class _AddPostState extends State<AddPost> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   var _userId;
   var _isInit = true;
@@ -38,7 +37,9 @@ class _AddCommentState extends State<AddComment> {
   final _observation = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
-  var comment = '';
+  var postContent = '';
+  var postTitle = '';
+  var movie = '';
 
   @override
   void didChangeDependencies() {
@@ -73,7 +74,6 @@ class _AddCommentState extends State<AddComment> {
     final user = usersData.user
         .where((element) => element.id == _userId.toString())
         .toList();
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
@@ -86,8 +86,32 @@ class _AddCommentState extends State<AddComment> {
           key: _formKey,
           child: Column(
             children: [
+              TextFormField(
+                key: const ValueKey('title'),
+                decoration: const InputDecoration(
+                  hintText: 'Title',
+                ),
+                keyboardType: TextInputType.multiline,
+                textCapitalization: TextCapitalization.sentences,
+                onSaved: (value) {
+                  postTitle = value.toString();
+                },
+              ),
+              const SizedBox(height: 10),
+              TextFormField(
+                key: const ValueKey('movie'),
+                decoration: const InputDecoration(
+                  hintText: 'Category or Movie',
+                ),
+                keyboardType: TextInputType.multiline,
+                textCapitalization: TextCapitalization.sentences,
+                onSaved: (value) {
+                  movie = value.toString();
+                },
+              ),
               Expanded(
                 child: TextFormField(
+                  key: const ValueKey('content'),
                   decoration: const InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Content',
@@ -101,7 +125,7 @@ class _AddCommentState extends State<AddComment> {
                     _saveForm();
                   },
                   onSaved: (value) {
-                    comment = value.toString();
+                    postContent = value.toString();
                   },
                 ),
               ),
@@ -113,15 +137,15 @@ class _AddCommentState extends State<AddComment> {
         padding: const EdgeInsets.symmetric(vertical: 26),
         child: FloatingActionButton(
           onPressed: () async {
-            print('COMMENT: $comment');
+            print('COMMENT: $postContent');
             _saveForm();
-            await Provider.of<CommentProvider>(context, listen: false)
-                .sendComment(
-              postID: widget.post.id,
+            await Provider.of<PostProvider>(context, listen: false).addNewPost(
+              movie: movie,
+              postContent: postContent,
+              postTitle: postTitle,
               userID: _userId,
               userImage: images[0].imageUrl,
               username: user[0].username,
-              userComment: comment,
             );
 
             widget.callback(true);

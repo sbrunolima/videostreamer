@@ -1,3 +1,4 @@
+import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -42,85 +43,95 @@ class _StartScreenState extends State<StartScreen> {
         onRefresh: () => _refreshSongs(context),
         child: _screens[_pageIndex],
       ),
-      bottomNavigationBar: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          NavigationBarTheme(
-            data: NavigationBarThemeData(
-              elevation: 0,
-              indicatorColor: Colors.transparent,
-              labelTextStyle: MaterialStateProperty.all(
-                Theme.of(context).textTheme.bodySmall!.copyWith(
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Colors.blueGrey,
+              blurRadius: 1,
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            NavigationBarTheme(
+              data: NavigationBarThemeData(
+                elevation: 0,
+                indicatorColor: Colors.transparent,
+                labelTextStyle: MaterialStateProperty.all(
+                  Theme.of(context).textTheme.bodySmall!.copyWith(
+                        color: Colors.white,
+                        fontSize: 12,
+                      ),
+                ),
+              ),
+              child: NavigationBar(
+                elevation: 0,
+                height: 60,
+                backgroundColor: Colors.black,
+                selectedIndex: _pageIndex,
+                onDestinationSelected: (i) => setState(() {
+                  _pageIndex = i;
+                }),
+                destinations: const [
+                  NavigationDestination(
+                    selectedIcon: Icon(
+                      Icons.home_filled,
                       color: Colors.white,
-                      fontSize: 0,
+                      size: 30,
                     ),
+                    icon: Icon(
+                      Icons.home_filled,
+                      color: Colors.grey,
+                      size: 30,
+                    ),
+                    label: 'Home',
+                  ),
+                  NavigationDestination(
+                    selectedIcon: Icon(
+                      Icons.search_rounded,
+                      color: Colors.white,
+                      size: 32,
+                    ),
+                    icon: Icon(
+                      Icons.search_rounded,
+                      color: Colors.grey,
+                      size: 32,
+                    ),
+                    label: 'Search',
+                  ),
+                  NavigationDestination(
+                    selectedIcon: Icon(
+                      EneftyIcons.device_message_bold,
+                      color: Colors.white,
+                      size: 28,
+                    ),
+                    icon: Icon(
+                      EneftyIcons.device_message_outline,
+                      color: Colors.grey,
+                      size: 28,
+                    ),
+                    label: 'Comunity',
+                  ),
+                  NavigationDestination(
+                    selectedIcon: Icon(
+                      Icons.person,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                    icon: Icon(
+                      Icons.person,
+                      color: Colors.grey,
+                      size: 30,
+                    ),
+                    label: 'Profile',
+                  ),
+                ],
               ),
             ),
-            child: NavigationBar(
-              elevation: 0,
-              height: 60,
-              backgroundColor: Colors.grey.shade900,
-              selectedIndex: _pageIndex,
-              onDestinationSelected: (i) => setState(() {
-                _pageIndex = i;
-              }),
-              destinations: const [
-                NavigationDestination(
-                  selectedIcon: Icon(
-                    Icons.home_filled,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                  icon: Icon(
-                    Icons.home_filled,
-                    color: Colors.grey,
-                    size: 30,
-                  ),
-                  label: '',
-                ),
-                NavigationDestination(
-                  selectedIcon: Icon(
-                    Icons.search_rounded,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                  icon: Icon(
-                    Icons.search_rounded,
-                    color: Colors.grey,
-                    size: 30,
-                  ),
-                  label: '',
-                ),
-                NavigationDestination(
-                  selectedIcon: Icon(
-                    Icons.menu_open_sharp,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                  icon: Icon(
-                    Icons.menu_sharp,
-                    color: Colors.grey,
-                    size: 30,
-                  ),
-                  label: '',
-                ),
-                NavigationDestination(
-                  selectedIcon: Icon(
-                    Icons.person,
-                    color: Colors.white,
-                    size: 30,
-                  ),
-                  icon: Icon(
-                    Icons.person,
-                    color: Colors.grey,
-                    size: 30,
-                  ),
-                  label: '',
-                ),
-              ],
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

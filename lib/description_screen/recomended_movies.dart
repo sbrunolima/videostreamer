@@ -18,7 +18,6 @@ class RecomendedMoviesWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final videoData = Provider.of<VideosProvider>(context, listen: false);
-
     final video = videoData.video;
 
     return Column(
@@ -44,13 +43,12 @@ class RecomendedMoviesWidget extends StatelessWidget {
           child: ListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             scrollDirection: Axis.horizontal,
-            itemCount: 10,
+            itemCount: video.length,
             itemBuilder: (context, index) {
-              for (int i = 0; i < video[index].genre.length; i++)
-                if (video[index].genre.contains(movieGenre[i]) &&
-                    video[index].id != movieID) {
-                  return MovieCard(video: video[index]);
-                }
+              if (video[index].genre.contains(movieGenre[0]) &&
+                  video[index].id != movieID) {
+                return MovieCard(video: video[index]);
+              }
               return Container();
             },
           ),

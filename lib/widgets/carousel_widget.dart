@@ -59,10 +59,12 @@ class _CarouselWidgetState extends State<CarouselWidget> {
             children: [
               CarouselSlider.builder(
                 options: CarouselOptions(
-                  height: 550,
+                  height: 440,
                   autoPlay: true,
-                  viewportFraction: 1,
-                  autoPlayInterval: const Duration(seconds: 20),
+                  enlargeCenterPage: true,
+                  enlargeFactor: 0.15,
+                  viewportFraction: 0.9,
+                  autoPlayInterval: const Duration(seconds: 10),
                   onPageChanged: (index, reason) =>
                       setState(() => activeIndex = index),
                 ),
@@ -73,19 +75,18 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                   return BannerWidget(imageUrl: imageUrl, trailerID: trailerID);
                 },
               ),
-              const SizedBox(height: 20),
-              AnimatedSmoothIndicator(
-                activeIndex: activeIndex,
-                count: banner.length,
-                effect: const SlideEffect(
-                  dotWidth: 8,
-                  dotHeight: 8,
-                  activeDotColor: Colors.white,
-                  dotColor: Colors.white30,
-                  spacing: 17,
-                ),
-              ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 10),
+              // AnimatedSmoothIndicator(
+              //   activeIndex: activeIndex,
+              //   count: banner.length,
+              //   effect: const SlideEffect(
+              //     dotWidth: 8,
+              //     dotHeight: 8,
+              //     activeDotColor: Colors.white,
+              //     dotColor: Colors.white30,
+              //     spacing: 17,
+              //   ),
+              // ),
             ],
           );
   }

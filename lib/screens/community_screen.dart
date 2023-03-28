@@ -1,3 +1,4 @@
+import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -5,10 +6,12 @@ import 'package:provider/provider.dart';
 
 //Widgets
 import '../community_screen/post_item.dart';
+import '../community_screen/add_post.dart';
 
 //Providers
 import '../providers/post_provider.dart';
 import '../providers/comments_provider.dart';
+import '../providers/likes_provider.dart';
 
 class CommunutyScreen extends StatefulWidget {
   @override
@@ -23,6 +26,7 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
     super.didChangeDependencies();
     if (_isInit) {
       Provider.of<PostProvider>(context, listen: false).loadPosts();
+      Provider.of<LikeProvider>(context, listen: false).loadLikes();
     }
     _isInit = false;
   }
@@ -62,9 +66,23 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: Icon(
+          EneftyIcons.add_outline,
+          color: Colors.white,
+          size: 40,
+        ),
         onPressed: () {
-          postsData.loadPosts();
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => AddPost(
+                callback: (value) {
+                  setState(() {
+                    _isInit = value;
+                  });
+                },
+              ),
+            ),
+          );
         },
       ),
     );

@@ -35,40 +35,36 @@ class BannerWidget extends StatelessWidget {
             ),
           );
       },
-      child: ShaderMask(
-        shaderCallback: (rect) {
-          return const LinearGradient(
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-            colors: [Colors.black, Colors.transparent],
-            transform: GradientRotation(math.pi / 1),
-          ).createShader(Rect.fromLTRB(0, 500, rect.width, rect.height - 0));
-        },
-        blendMode: BlendMode.dstIn,
-        child: Column(
-          children: [
-            Image.network(
-              imageUrl,
-              height: 550,
-              width: MediaQuery.of(context).size.width,
-              fit: BoxFit.cover,
-              loadingBuilder:
-                  (context, Widget child, ImageChunkEvent? loadingProgress) {
-                if (loadingProgress == null) return child;
-                return Container(
-                  height: 500,
-                  width: titleWidth,
-                  child: const Align(
-                    alignment: Alignment.center,
-                    child: JumpingDots(
-                      color: Colors.white54,
-                      radius: 6,
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
+      child: Container(
+        height: 400,
+        width: titleWidth,
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.transparent),
+          borderRadius: BorderRadius.circular(6),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(6),
+          child: Image.network(
+            imageUrl,
+            fit: BoxFit.fill,
+            loadingBuilder:
+                (context, Widget child, ImageChunkEvent? loadingProgress) {
+              if (loadingProgress == null) return child;
+              return Container(
+                height: 400,
+                width: titleWidth,
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.white10),
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.white30,
+                ),
+                child: Image.asset(
+                  'assets/noimage.png',
+                  fit: BoxFit.cover,
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

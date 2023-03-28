@@ -60,6 +60,8 @@ class _MovieCardState extends State<MovieCard> {
                         ImageChunkEvent? loadingProgress) {
                       if (loadingProgress == null) return child;
                       return Container(
+                        height: 160,
+                        width: 150,
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.white10),
                           borderRadius: BorderRadius.circular(5),
@@ -67,8 +69,6 @@ class _MovieCardState extends State<MovieCard> {
                         ),
                         child: Image.asset(
                           'assets/noimage.png',
-                          height: 160,
-                          width: 120,
                           fit: BoxFit.cover,
                         ),
                       );
