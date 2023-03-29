@@ -22,8 +22,8 @@ class CommentItem extends StatelessWidget {
               borderRadius: BorderRadius.circular(50),
               child: Image.network(
                 comment.userImage,
-                height: 50,
-                width: 50,
+                height: 40,
+                width: 40,
                 fit: BoxFit.cover,
               ),
             ),
@@ -39,33 +39,38 @@ class CommentItem extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 10),
-        Text(
-          comment.userComment,
-          style: GoogleFonts.openSans(
-            color: Colors.white,
-            fontSize: 16,
-            fontWeight: FontWeight.w400,
-          ),
-        ),
-        const SizedBox(height: 10),
-        Row(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              DateFormat('dd/MM - hh:mm').format(comment.dateTime),
+              comment.userComment,
               style: GoogleFonts.openSans(
-                color: Colors.grey,
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 14,
+                fontWeight: FontWeight.w400,
               ),
             ),
-            const SizedBox(width: 17),
-            Text(
-              '${comment.likes.toString()} likes',
-              style: GoogleFonts.openSans(
-                color: Colors.grey,
-                fontSize: 12,
-                fontWeight: FontWeight.w500,
-              ),
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Text(
+                  DateFormat('dd/MM - hh:mm').format(comment.dateTime),
+                  style: GoogleFonts.openSans(
+                    color: Colors.grey,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                const SizedBox(width: 17),
+                Text(
+                  '${comment.likes.toString()} likes',
+                  style: GoogleFonts.openSans(
+                    color: Colors.grey,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
             ),
           ],
         ),

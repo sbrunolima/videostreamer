@@ -19,6 +19,7 @@ import '../providers/user_provider.dart';
 import '../widgets/my_back_icon.dart';
 import '../community_screen/post_profile.dart';
 import '../community_screen/post_movie_container.dart';
+import '../widgets/my_title.dart';
 
 class AddComment extends StatefulWidget {
   final CommunityPost post;
@@ -38,7 +39,8 @@ class _AddCommentState extends State<AddComment> {
   final _observation = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
-  var comment = '';
+  bool _contiueContent = false;
+  var _comment = '';
 
   @override
   void didChangeDependencies() {
@@ -75,10 +77,15 @@ class _AddCommentState extends State<AddComment> {
         .toList();
 
     return Scaffold(
+      backgroundColor: Colors.grey.shade900,
       appBar: AppBar(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         elevation: 0,
+        titleSpacing: 0,
         leading: MyBackIcon(),
+        title: MyTitle(
+          title: 'Add new comment',
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -88,6 +95,12 @@ class _AddCommentState extends State<AddComment> {
             children: [
               Expanded(
                 child: TextFormField(
+                  validator: (value) {
+                    if (value.toString().isEmpty) {
+                      return 'Enter a Content.';
+                    }
+                    return null;
+                  },
                   decoration: const InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Content',
@@ -100,8 +113,19 @@ class _AddCommentState extends State<AddComment> {
                   onFieldSubmitted: (value) {
                     _saveForm();
                   },
+                  onChanged: (value) {
+                    if (value.toString().length > 0) {
+                      setState(() {
+                        _contiueContent = true;
+                      });
+                    } else {
+                      setState(() {
+                        _contiueContent = false;
+                      });
+                    }
+                  },
                   onSaved: (value) {
-                    comment = value.toString();
+                    _comment = value.toString();
                   },
                 ),
               ),
@@ -109,28 +133,43 @@ class _AddCommentState extends State<AddComment> {
           ),
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 26),
-        child: FloatingActionButton(
-          onPressed: () async {
-            print('COMMENT: $comment');
-            _saveForm();
-            await Provider.of<CommentProvider>(context, listen: false)
-                .sendComment(
-              postID: widget.post.id,
-              userID: _userId,
-              userImage: images[0].imageUrl,
-              username: user[0].username,
-              userComment: comment,
-            );
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Container(
+        height: 50,
+        width: double.infinity,
+        color: Colors.black,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 17),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(),
+              IconButton(
+                onPressed: (_contiueContent)
+                    ? () async {
+                        _saveForm();
+                        await Provider.of<CommentProvider>(context,
+                                listen: false)
+                            .sendComment(
+                          postID: widget.post.id,
+                          userID: _userId,
+                          userImage: images[0].imageUrl,
+                          username: user[0].username,
+                          userComment: _comment,
+                        );
 
-            widget.callback(true);
+                        widget.callback(true);
 
-            Navigator.of(context).pop();
-          },
-          child: Icon(
-            EneftyIcons.send_2_bold,
-            color: Colors.white,
+                        Navigator.of(context).pop();
+                      }
+                    : null,
+                icon: Icon(
+                  EneftyIcons.send_3_bold,
+                  color: (_contiueContent) ? Colors.white : Colors.white12,
+                ),
+                iconSize: 30,
+              ),
+            ],
           ),
         ),
       ),

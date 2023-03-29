@@ -41,7 +41,7 @@ class _MovieDescriptionScreenState extends State<MovieDescriptionScreen> {
     final mediaQuery = MediaQuery.of(context).size;
     final videoData = Provider.of<VideosProvider>(context, listen: false);
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.grey.shade900,
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),

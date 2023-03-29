@@ -19,6 +19,7 @@ import '../providers/user_provider.dart';
 import '../widgets/my_back_icon.dart';
 import '../community_screen/post_profile.dart';
 import '../community_screen/post_movie_container.dart';
+import '../widgets/my_title.dart';
 
 class AddPost extends StatefulWidget {
   final Function(bool) callback;
@@ -36,10 +37,13 @@ class _AddPostState extends State<AddPost> {
   var _isLoading = false;
   final _observation = FocusNode();
   final _formKey = GlobalKey<FormState>();
+  bool _contiueTitle = false;
+  bool _contiueSubtitle = false;
+  bool _contiueContent = false;
 
-  var postContent = '';
-  var postTitle = '';
-  var movie = '';
+  var _postContent = '';
+  var _postTitle = '';
+  var _movie = '';
 
   @override
   void didChangeDependencies() {
@@ -75,10 +79,13 @@ class _AddPostState extends State<AddPost> {
         .where((element) => element.id == _userId.toString())
         .toList();
     return Scaffold(
+      backgroundColor: Colors.grey.shade900,
       appBar: AppBar(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         elevation: 0,
+        titleSpacing: 0,
         leading: MyBackIcon(),
+        title: MyTitle(title: 'Add new post'),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -88,30 +95,70 @@ class _AddPostState extends State<AddPost> {
             children: [
               TextFormField(
                 key: const ValueKey('title'),
+                validator: (value) {
+                  if (value.toString().isEmpty) {
+                    return 'Enter a valit title.';
+                  }
+                  return null;
+                },
                 decoration: const InputDecoration(
                   hintText: 'Title',
                 ),
                 keyboardType: TextInputType.multiline,
                 textCapitalization: TextCapitalization.sentences,
+                onChanged: (value) {
+                  if (value.toString().length > 0) {
+                    setState(() {
+                      _contiueTitle = true;
+                    });
+                  } else {
+                    setState(() {
+                      _contiueTitle = false;
+                    });
+                  }
+                },
                 onSaved: (value) {
-                  postTitle = value.toString();
+                  _postTitle = value.toString();
                 },
               ),
               const SizedBox(height: 10),
               TextFormField(
                 key: const ValueKey('movie'),
+                validator: (value) {
+                  if (value.toString().isEmpty) {
+                    return 'Enter a Category or Movie.';
+                  }
+                  return null;
+                },
                 decoration: const InputDecoration(
                   hintText: 'Category or Movie',
                 ),
                 keyboardType: TextInputType.multiline,
                 textCapitalization: TextCapitalization.sentences,
+                onChanged: (value) {
+                  if (value.toString().length > 0) {
+                    setState(() {
+                      _contiueSubtitle = true;
+                    });
+                  } else {
+                    setState(() {
+                      _contiueSubtitle = false;
+                    });
+                  }
+                },
                 onSaved: (value) {
-                  movie = value.toString();
+                  _movie = value.toString();
                 },
               ),
               Expanded(
                 child: TextFormField(
                   key: const ValueKey('content'),
+                  validator: (value) {
+                    if (value.toString().isEmpty) {
+                      return 'Enter a Content.';
+                    }
+                    return null;
+                  },
                   decoration: const InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Content',
@@ -124,8 +171,19 @@ class _AddPostState extends State<AddPost> {
                   onFieldSubmitted: (value) {
                     _saveForm();
                   },
+                  onChanged: (value) {
+                    if (value.toString().length > 0) {
+                      setState(() {
+                        _contiueContent = true;
+                      });
+                    } else {
+                      setState(() {
+                        _contiueContent = false;
+                      });
+                    }
+                  },
                   onSaved: (value) {
-                    postContent = value.toString();
+                    _postContent = value.toString();
                   },
                 ),
               ),
@@ -133,28 +191,47 @@ class _AddPostState extends State<AddPost> {
           ),
         ),
       ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 26),
-        child: FloatingActionButton(
-          onPressed: () async {
-            print('COMMENT: $postContent');
-            _saveForm();
-            await Provider.of<PostProvider>(context, listen: false).addNewPost(
-              movie: movie,
-              postContent: postContent,
-              postTitle: postTitle,
-              userID: _userId,
-              userImage: images[0].imageUrl,
-              username: user[0].username,
-            );
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Container(
+        height: 50,
+        width: double.infinity,
+        color: Colors.black,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 17),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(),
+              IconButton(
+                onPressed: (_contiueTitle &&
+                        _contiueSubtitle &&
+                        _contiueContent)
+                    ? () async {
+                        _saveForm();
+                        await Provider.of<PostProvider>(context, listen: false)
+                            .addNewPost(
+                          movie: _movie,
+                          postContent: _postContent,
+                          postTitle: _postTitle,
+                          userID: _userId,
+                          userImage: images[0].imageUrl,
+                          username: user[0].username,
+                        );
 
-            widget.callback(true);
+                        widget.callback(true);
 
-            Navigator.of(context).pop();
-          },
-          child: Icon(
-            EneftyIcons.send_2_bold,
-            color: Colors.white,
+                        Navigator.of(context).pop();
+                      }
+                    : null,
+                icon: Icon(
+                  EneftyIcons.send_3_bold,
+                  color: (_contiueTitle && _contiueSubtitle && _contiueContent)
+                      ? Colors.white
+                      : Colors.grey.shade700,
+                ),
+                iconSize: 30,
+              ),
+            ],
           ),
         ),
       ),

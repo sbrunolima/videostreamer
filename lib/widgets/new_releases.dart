@@ -12,18 +12,17 @@ import '../description_screen/movie_description.dart';
 //Widgets
 import '../widgets/movie_card.dart';
 
-class GenreRows extends StatelessWidget {
-  final String movieGenre;
+class NewReleases extends StatelessWidget {
+  final String year;
 
-  GenreRows({required this.movieGenre});
+  NewReleases({required this.year});
 
   @override
   Widget build(BuildContext context) {
     final titleWidth = MediaQuery.of(context).size.width;
     final videoData = Provider.of<VideosProvider>(context, listen: false);
-    final video = videoData.video
-        .where((element) => element.genre.contains(movieGenre))
-        .toList();
+    final video =
+        videoData.video.where((element) => element.release == year).toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +30,7 @@ class GenreRows extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Text(
-            '$movieGenre Movies',
+            '$year Releases',
             style: GoogleFonts.roboto(
               color: Colors.white60,
               fontSize: 16,

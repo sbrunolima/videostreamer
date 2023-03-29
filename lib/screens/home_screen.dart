@@ -17,10 +17,12 @@ import '../providers/likes_provider.dart';
 
 //Widgets
 import '../widgets/movie_card.dart';
+import '../widgets/loading.dart';
 import '../widgets/genre_rows.dart';
 import '../widgets/banner_widget.dart';
 import '../widgets/carousel_widget.dart';
 import '../widgets/my_app_bar.dart';
+import '../widgets/new_releases.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -32,30 +34,28 @@ class _HomeScreenState extends State<HomeScreen> {
   var _isInit = true;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isInit) {
-      setState(() {
-        _isLoading = true;
-      });
+  void initState() {
+    super.initState();
+    setState(() {
+      _isLoading = true;
+    });
 
-      Provider.of<VideosProvider>(context, listen: false)
-          .loadVideos()
-          .then((_) async {
-        Provider.of<CarouselProvider>(context, listen: false).loadCarousel();
+    Provider.of<CarouselProvider>(context, listen: false).loadCarousel().then(
+      (_) {
+        Provider.of<VideosProvider>(context, listen: false).loadVideos();
         Provider.of<ImagesProvider>(context, listen: false).loadProfileImages();
         Provider.of<UserPovider>(context, listen: false).loadUsers();
         Provider.of<PostProvider>(context, listen: false).loadPosts();
         Provider.of<CommentProvider>(context, listen: false).loadComments();
         Provider.of<LikeProvider>(context, listen: false).loadLikes();
-        setState(() {
+
+        Future.delayed(const Duration(seconds: 2)).then((_) {
           setState(() {
             _isLoading = false;
           });
         });
-      });
-    }
-    _isInit = false;
+      },
+    );
   }
 
   @override
@@ -67,28 +67,34 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.black54,
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              mySizedBox,
-              MyAppBar(),
-              mySizedBox,
-              CarouselWidget(),
-              GenreRows(movieGenre: 'Action'),
-              mySizedBox,
-              GenreRows(movieGenre: 'Crime'),
-              mySizedBox,
-              GenreRows(movieGenre: 'Comedy'),
-              mySizedBox,
-              GenreRows(movieGenre: 'SciFi'),
-              mySizedBox,
-              GenreRows(movieGenre: 'Horror'),
-              mySizedBox,
-              GenreRows(movieGenre: 'Animation'),
-              mySizedBox,
-            ],
-          ),
-        ),
+        body: _isLoading
+            ? Loading()
+            : SingleChildScrollView(
+                child: video.isNotEmpty
+                    ? Column(
+                        children: [
+                          mySizedBox,
+                          MyAppBar(),
+                          mySizedBox,
+                          CarouselWidget(),
+                          NewReleases(year: '2023'),
+                          mySizedBox,
+                          GenreRows(movieGenre: 'Crime'),
+                          mySizedBox,
+                          GenreRows(movieGenre: 'Adventure'),
+                          mySizedBox,
+                          GenreRows(movieGenre: 'Comedy'),
+                          mySizedBox,
+                          GenreRows(movieGenre: 'SciFi'),
+                          mySizedBox,
+                          GenreRows(movieGenre: 'Horror'),
+                          mySizedBox,
+                          GenreRows(movieGenre: 'Animation'),
+                          const SizedBox(height: 40),
+                        ],
+                      )
+                    : Text('ERROR'),
+              ),
       ),
     );
   }

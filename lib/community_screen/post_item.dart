@@ -68,8 +68,8 @@ class _PostItemState extends State<PostItem> {
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.openSans(
                         color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
                       ),
                     ),
                     const SizedBox(height: 10),
@@ -79,7 +79,7 @@ class _PostItemState extends State<PostItem> {
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.openSans(
                         color: Colors.grey,
-                        fontSize: 14,
+                        fontSize: 12,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -127,7 +127,7 @@ class _PostItemState extends State<PostItem> {
           style: GoogleFonts.openSans(
             color: Colors.grey,
             fontSize: 14,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w400,
           ),
         ),
       ],

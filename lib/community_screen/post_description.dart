@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:jumping_dot/jumping_dot.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:provider/provider.dart';
@@ -19,6 +20,8 @@ import '../community_screen/post_profile.dart';
 import '../community_screen/post_movie_container.dart';
 import '../community_screen/add_comment.dart';
 import '../community_screen/comment_item.dart';
+import '../widgets/loading.dart';
+import '../widgets/my_title.dart';
 
 class PostDescription extends StatefulWidget {
   final CommunityPost post;
@@ -34,6 +37,7 @@ class _PostDescriptionState extends State<PostDescription> {
   var _userId;
   var _isInit = true;
   var _isLoading = false;
+  bool _liked = false;
 
   @override
   void didChangeDependencies() {
@@ -70,13 +74,14 @@ class _PostDescriptionState extends State<PostDescription> {
         .toList();
 
     return Scaffold(
+      backgroundColor: Colors.grey.shade900,
       appBar: AppBar(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         elevation: 0,
         leading: MyBackIcon(),
       ),
       body: _isLoading
-          ? const Center(child: CircularProgressIndicator())
+          ? Loading()
           : SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(15),
@@ -98,7 +103,7 @@ class _PostDescriptionState extends State<PostDescription> {
                       widget.post.postContent,
                       style: GoogleFonts.openSans(
                         color: Colors.white,
-                        fontSize: 16,
+                        fontSize: 14,
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -130,50 +135,92 @@ class _PostDescriptionState extends State<PostDescription> {
                 ),
               ),
             ),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 26),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+      persistentFooterButtons: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            FloatingActionButton(
-              onPressed: () async {
-                await Provider.of<LikeProvider>(context, listen: false).addLike(
-                  _userId,
-                  widget.post.id,
-                );
-              },
-              child: Icon(
-                EneftyIcons.heart_bold,
-                color: Colors.white,
-                size: 26,
-              ),
-              backgroundColor: Colors.redAccent[400],
-            ),
-            const SizedBox(height: 15),
-            FloatingActionButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: ((context) => AddComment(
-                          post: widget.post,
-                          callback: (value) {
-                            setState(() {
-                              _isInit = value;
-                            });
-                          },
-                        )),
+            SizedBox(
+              height: 40,
+              width: MediaQuery.of(context).size.width - 80,
+              child: OutlinedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: ((context) => AddComment(
+                            post: widget.post,
+                            callback: (value) {
+                              setState(() {
+                                _isInit = value;
+                              });
+                            },
+                          )),
+                    ),
+                  );
+                },
+                style: OutlinedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                );
-              },
-              child: Icon(
-                EneftyIcons.add_outline,
-                color: Colors.white,
-                size: 40,
+                ),
+                child: Text(
+                  'Comment',
+                  style: GoogleFonts.openSans(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 16,
+                  ),
+                ),
               ),
             ),
+            const SizedBox(width: 10),
+            if (likes.isNotEmpty)
+              IconButton(
+                onPressed: () async {
+                  if (likes.isEmpty) {
+                    await Provider.of<LikeProvider>(context, listen: false)
+                        .addLike(
+                      _userId,
+                      widget.post.id,
+                    );
+                  }
+                  for (int i = 0; i < likes.length; i++)
+                    if (likes.isNotEmpty &&
+                        likes[i].postID != widget.post.id &&
+                        likes[i].userID != _userId) {
+                      await Provider.of<LikeProvider>(context, listen: false)
+                          .addLike(
+                        _userId,
+                        widget.post.id,
+                      );
+                    }
+                },
+                icon: Icon(
+                  EneftyIcons.heart_bold,
+                  color: Colors.redAccent[400],
+                  size: 26,
+                ),
+              ),
+            if (likes.isEmpty)
+              IconButton(
+                onPressed: () async {
+                  setState(() {
+                    _liked = true;
+                  });
+                  await Provider.of<LikeProvider>(context, listen: false)
+                      .addLike(
+                    _userId,
+                    widget.post.id,
+                  );
+                },
+                icon: Icon(
+                  _liked ? EneftyIcons.heart_bold : EneftyIcons.heart_outline,
+                  color: _liked ? Colors.redAccent[400] : Colors.grey,
+                  size: 26,
+                ),
+              ),
           ],
         ),
-      ),
+      ],
     );
   }
 }

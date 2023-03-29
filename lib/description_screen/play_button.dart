@@ -56,7 +56,7 @@ class _PlayButtonState extends State<PlayButton> {
                 ),
                 const SizedBox(width: 10),
                 Text(
-                  'Watch Movie',
+                  'Watch Trailer',
                   style: GoogleFonts.openSans(
                     color: Colors.white,
                     fontWeight: FontWeight.w500,

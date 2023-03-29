@@ -38,10 +38,10 @@ class _MovieCardState extends State<MovieCard> {
         );
       },
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 4),
+        padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Container(
-          height: 160,
-          width: 120,
+          height: 150,
+          width: 110,
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(color: Colors.transparent),
@@ -53,14 +53,14 @@ class _MovieCardState extends State<MovieCard> {
                   borderRadius: BorderRadius.circular(5),
                   child: Image.network(
                     widget.video.coverUrl.toString(),
-                    height: 160,
+                    height: 150,
                     width: 150,
                     fit: BoxFit.cover,
                     loadingBuilder: (context, Widget child,
                         ImageChunkEvent? loadingProgress) {
                       if (loadingProgress == null) return child;
                       return Container(
-                        height: 160,
+                        height: 150,
                         width: 150,
                         decoration: BoxDecoration(
                           border: Border.all(color: Colors.white10),

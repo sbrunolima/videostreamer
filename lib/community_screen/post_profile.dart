@@ -20,8 +20,8 @@ class PostProfile extends StatelessWidget {
           borderRadius: BorderRadius.circular(50),
           child: Image.network(
             post.userImage,
-            height: 50,
-            width: 50,
+            height: 40,
+            width: 40,
             fit: BoxFit.cover,
           ),
         ),
@@ -37,12 +37,12 @@ class PostProfile extends StatelessWidget {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            const SizedBox(height: 4),
+            const SizedBox(height: 2),
             Text(
               DateFormat('dd/MM - hh:mm').format(post.dateTime),
               style: GoogleFonts.openSans(
                 color: Colors.grey,
-                fontSize: 12,
+                fontSize: 10,
                 fontWeight: FontWeight.w500,
               ),
             )
