@@ -27,15 +27,15 @@ class _MovieGridState extends State<MovieGrid> {
       child: GridView.builder(
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: 10,
+        itemCount: video.length,
         itemBuilder: (context, index) {
           return MovieCard(video: video[index]);
         },
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 180,
-          crossAxisSpacing: 10,
-          mainAxisSpacing: 10,
-          mainAxisExtent: 240,
+          maxCrossAxisExtent: 140,
+          crossAxisSpacing: 1,
+          mainAxisSpacing: 2,
+          mainAxisExtent: 160,
         ),
       ),
     );

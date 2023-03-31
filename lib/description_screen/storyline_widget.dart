@@ -34,7 +34,6 @@ class StorylineWidget extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 2),
           GestureDetector(
             onTap: () => showModalBottomSheet(
               context: context,
@@ -47,7 +46,7 @@ class StorylineWidget extends StatelessWidget {
               builder: (context) => bottonSheet(context),
             ),
             child: Text(
-              'Read More',
+              'Read More...',
               style: GoogleFonts.openSans(
                 height: 1.6,
                 color: Colors.red,
@@ -62,7 +61,7 @@ class StorylineWidget extends StatelessWidget {
   }
 
   Widget bottonSheet(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,12 +87,12 @@ class StorylineWidget extends StatelessWidget {
             ),
             const SizedBox(height: 26),
             SizedBox(
-              height: 60,
+              height: 50,
               width: MediaQuery.of(context).size.width,
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.transparent),
-                  borderRadius: BorderRadius.circular(10),
+                  borderRadius: BorderRadius.circular(6),
                   gradient: LinearGradient(
                     begin: Alignment.centerLeft,
                     end: Alignment.centerRight,

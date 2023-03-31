@@ -31,17 +31,17 @@ class CastColumn extends StatelessWidget {
             children: [
               Text(
                 'Cast',
-                style: GoogleFonts.roboto(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 16,
+                style: GoogleFonts.openSans(
+                  color: Colors.white60,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
                 ),
               ),
               AllCastButton(video: video),
             ],
           ),
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 10),
         Container(
           height: 160,
           child: ListView.builder(
@@ -76,6 +76,11 @@ class CastColumn extends StatelessWidget {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
+                        style: GoogleFonts.openSans(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 14,
+                        ),
                       ),
                     ),
                   ],

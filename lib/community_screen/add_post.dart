@@ -72,9 +72,7 @@ class _AddPostState extends State<AddPost> {
 
   @override
   Widget build(BuildContext context) {
-    final imagesData = Provider.of<ImagesProvider>(context, listen: false);
     final usersData = Provider.of<UserPovider>(context, listen: false);
-    final images = imagesData.images;
     final user = usersData.user
         .where((element) => element.id == _userId.toString())
         .toList();
@@ -214,7 +212,7 @@ class _AddPostState extends State<AddPost> {
                           postContent: _postContent,
                           postTitle: _postTitle,
                           userID: _userId,
-                          userImage: images[0].imageUrl,
+                          userImage: user[0].imageUrl,
                           username: user[0].username,
                         );
 

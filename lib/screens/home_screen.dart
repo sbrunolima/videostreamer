@@ -60,42 +60,34 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const mySizedBox = SizedBox(height: 12);
+    const mySizedBox = SizedBox(height: 17);
     final videoData = Provider.of<VideosProvider>(context, listen: false);
     final video = videoData.video;
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: Colors.black54,
-        body: _isLoading
-            ? Loading()
-            : SingleChildScrollView(
-                child: video.isNotEmpty
-                    ? Column(
-                        children: [
-                          mySizedBox,
-                          MyAppBar(),
-                          mySizedBox,
-                          CarouselWidget(),
-                          NewReleases(year: '2023'),
-                          mySizedBox,
-                          GenreRows(movieGenre: 'Crime'),
-                          mySizedBox,
-                          GenreRows(movieGenre: 'Adventure'),
-                          mySizedBox,
-                          GenreRows(movieGenre: 'Comedy'),
-                          mySizedBox,
-                          GenreRows(movieGenre: 'SciFi'),
-                          mySizedBox,
-                          GenreRows(movieGenre: 'Horror'),
-                          mySizedBox,
-                          GenreRows(movieGenre: 'Animation'),
-                          const SizedBox(height: 40),
-                        ],
-                      )
-                    : Text('ERROR'),
+    return video.isNotEmpty
+        ? SafeArea(
+            child: Scaffold(
+              backgroundColor: Colors.black54,
+              body: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    mySizedBox,
+                    MyAppBar(),
+                    mySizedBox,
+                    CarouselWidget(),
+                    NewReleases(year: '2023'),
+                    GenreRows(movieGenre: 'Crime'),
+                    GenreRows(movieGenre: 'Adventure'),
+                    GenreRows(movieGenre: 'Comedy'),
+                    GenreRows(movieGenre: 'SciFi'),
+                    GenreRows(movieGenre: 'Horror'),
+                    GenreRows(movieGenre: 'Animation'),
+                    const SizedBox(height: 40),
+                  ],
+                ),
               ),
-      ),
-    );
+            ),
+          )
+        : Loading();
   }
 }

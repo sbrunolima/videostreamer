@@ -32,7 +32,7 @@ class GenreRows extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Text(
             '$movieGenre Movies',
-            style: GoogleFonts.roboto(
+            style: GoogleFonts.openSans(
               color: Colors.white60,
               fontSize: 16,
               fontWeight: FontWeight.w500,

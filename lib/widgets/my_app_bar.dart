@@ -19,17 +19,22 @@ class MyAppBar extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/logo2.png',
-              scale: 20,
+              'assets/logo3.png',
+              scale: 17,
             ),
             const SizedBox(width: 5),
-            Text(
-              'Cinema Preview',
-              style: GoogleFonts.openSans(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: 20,
-              ),
+            Column(
+              children: [
+                const SizedBox(height: 12),
+                Text(
+                  'Cinema Preview',
+                  style: GoogleFonts.audiowide(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 20,
+                  ),
+                ),
+              ],
             ),
           ],
         ),

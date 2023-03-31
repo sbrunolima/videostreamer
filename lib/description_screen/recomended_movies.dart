@@ -30,8 +30,8 @@ class RecomendedMoviesWidget extends StatelessWidget {
               child: Text(
                 'More like this',
                 style: GoogleFonts.openSans(
-                  color: Colors.white,
-                  fontSize: 18,
+                  color: Colors.white60,
+                  fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),
               ),

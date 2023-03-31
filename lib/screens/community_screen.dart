@@ -52,62 +52,55 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
     final commentData = Provider.of<CommentProvider>(context, listen: false);
     final comment = commentData.comments;
 
-    return WillPopScope(
-      onWillPop: () async {
-        Navigator.of(context).popAndPushNamed(StartScreen.routeName);
-
-        return true;
-      },
-      child: Scaffold(
-        backgroundColor: Colors.black54,
-        appBar: AppBar(
-            backgroundColor: Color.fromARGB(0, 0, 0, 0),
-            elevation: 0,
-            title: MyTitle(title: 'Community')),
-        body: _isLoading
-            ? Loading()
-            : SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: post.length,
-                      itemBuilder: (context, index) {
-                        return Column(
-                          children: [
-                            PostItem(
-                              post: post[index],
-                            ),
-                            const Divider(),
-                          ],
-                        );
-                      },
-                    ),
-                  ],
-                ),
+    return Scaffold(
+      backgroundColor: Colors.black54,
+      appBar: AppBar(
+          backgroundColor: Color.fromARGB(0, 0, 0, 0),
+          elevation: 0,
+          title: MyTitle(title: 'Community')),
+      body: _isLoading
+          ? Loading()
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 10),
+                  ListView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: post.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          PostItem(
+                            post: post[index],
+                          ),
+                          const Divider(),
+                        ],
+                      );
+                    },
+                  ),
+                ],
               ),
-        floatingActionButton: FloatingActionButton(
-          child: Icon(
-            EneftyIcons.add_outline,
-            color: Colors.white,
-            size: 40,
-          ),
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => AddPost(
-                  callback: (value) {
-                    setState(() {
-                      _isInit = value;
-                    });
-                  },
-                ),
-              ),
-            );
-          },
+            ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          EneftyIcons.add_outline,
+          color: Colors.white,
+          size: 40,
         ),
+        onPressed: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(
+              builder: (context) => AddPost(
+                callback: (value) {
+                  setState(() {
+                    _isInit = value;
+                  });
+                },
+              ),
+            ),
+          );
+        },
       ),
     );
   }

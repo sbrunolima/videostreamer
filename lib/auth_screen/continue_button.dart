@@ -15,7 +15,7 @@ class ContinueButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: SizedBox(
-        height: 60,
+        height: 50,
         width: MediaQuery.of(context).size.width,
         child: DecoratedBox(
           decoration: BoxDecoration(
@@ -32,10 +32,10 @@ class ContinueButton extends StatelessWidget {
           ),
           child: OutlinedButton(
             child: Text(
-              'CONTINUE',
+              'Continue',
               style: GoogleFonts.openSans(
                 color: Colors.white,
-                fontWeight: FontWeight.w700,
+                fontWeight: FontWeight.w500,
                 fontSize: 18,
               ),
             ),

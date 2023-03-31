@@ -37,10 +37,10 @@ class AllCastButton extends StatelessWidget {
       },
       child: Text(
         'See all',
-        style: GoogleFonts.roboto(
-          color: Colors.white,
+        style: GoogleFonts.openSans(
+          color: Colors.red,
           fontWeight: FontWeight.w400,
-          fontSize: 16,
+          fontSize: 14,
         ),
       ),
     );

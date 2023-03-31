@@ -10,17 +10,22 @@ class AuthTitle extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/logo2.png',
+              'assets/logo3.png',
               scale: 12,
             ),
             const SizedBox(width: 8),
-            Text(
-              'Cinema Preview',
-              style: GoogleFonts.openSans(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: 26,
-              ),
+            Column(
+              children: [
+                const SizedBox(height: 20),
+                Text(
+                  'Cinema Preview',
+                  style: GoogleFonts.audiowide(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 26,
+                  ),
+                ),
+              ],
             ),
           ],
         ),

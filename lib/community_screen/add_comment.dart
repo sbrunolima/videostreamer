@@ -69,9 +69,7 @@ class _AddCommentState extends State<AddComment> {
 
   @override
   Widget build(BuildContext context) {
-    final imagesData = Provider.of<ImagesProvider>(context, listen: false);
     final usersData = Provider.of<UserPovider>(context, listen: false);
-    final images = imagesData.images;
     final user = usersData.user
         .where((element) => element.id == _userId.toString())
         .toList();
@@ -153,7 +151,7 @@ class _AddCommentState extends State<AddComment> {
                             .sendComment(
                           postID: widget.post.id,
                           userID: _userId,
-                          userImage: images[0].imageUrl,
+                          userImage: user[0].imageUrl,
                           username: user[0].username,
                           userComment: _comment,
                         );
