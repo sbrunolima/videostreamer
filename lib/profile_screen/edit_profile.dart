@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:enefty_icons/enefty_icons.dart';
@@ -12,6 +14,9 @@ import '../screens/start_screen.dart';
 import '../providers/images_provider.dart';
 import '../providers/user_provider.dart';
 
+//Objects
+import '../objects/user.dart';
+
 //Widgets
 import '../profile_screen/profile_option_buttons.dart';
 import '../profile_screen/exit_button.dart';
@@ -20,6 +25,13 @@ import '../widgets/my_title.dart';
 import '../profile_screen/profiles_images.dart';
 
 class EditProfile extends StatefulWidget {
+  final UserData user;
+  final void Function(
+    String userImage,
+    String username,
+  ) callback;
+
+  EditProfile({required this.user, required this.callback});
   @override
   State<EditProfile> createState() => _EditProfileState();
 }
@@ -62,11 +74,6 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext) {
-    final usersData = Provider.of<UserPovider>(context, listen: false);
-    final user = usersData.user
-        .where((element) => element.userID == _userId.toString())
-        .toList();
-
     return Scaffold(
       backgroundColor: Colors.grey.shade900,
       appBar: AppBar(
@@ -99,7 +106,7 @@ class _EditProfileState extends State<EditProfile> {
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
                         _imageUrl.isEmpty
-                            ? user[0].imageUrl.toString()
+                            ? widget.user.imageUrl.toString()
                             : _imageUrl,
                         fit: BoxFit.cover,
                       ),
@@ -142,14 +149,8 @@ class _EditProfileState extends State<EditProfile> {
               ),
               TextFormField(
                 key: const ValueKey('username'),
-                validator: (value) {
-                  if (value.toString().isEmpty) {
-                    return 'Enter a valit title.';
-                  }
-                  return null;
-                },
                 decoration: InputDecoration(
-                  hintText: user[0].username.toString(),
+                  hintText: widget.user.username.toString(),
                 ),
                 keyboardType: TextInputType.multiline,
                 textCapitalization: TextCapitalization.sentences,
@@ -157,7 +158,7 @@ class _EditProfileState extends State<EditProfile> {
                   if (value.toString().length > 0) {
                     _newUsername = value.toString();
                   } else {
-                    _newUsername = user[0].username.toString();
+                    _newUsername = widget.user.username.toString();
                   }
                 },
               ),
@@ -168,11 +169,19 @@ class _EditProfileState extends State<EditProfile> {
 
                   await Provider.of<UserPovider>(context, listen: false)
                       .editUser(
-                    id: user[0].id,
-                    email: user[0].email,
-                    imageUrl: _imageUrl,
+                    id: widget.user.id,
+                    email: widget.user.email,
+                    imageUrl:
+                        _imageUrl.isEmpty ? widget.user.imageUrl : _imageUrl,
                     userID: _userId,
-                    username: _newUsername,
+                    username: _newUsername.isEmpty
+                        ? widget.user.username
+                        : _newUsername,
+                  );
+
+                  widget.callback(
+                    _imageUrl.isEmpty ? widget.user.imageUrl : _imageUrl,
+                    _newUsername.isEmpty ? widget.user.username : _newUsername,
                   );
 
                   Navigator.of(context).pop();

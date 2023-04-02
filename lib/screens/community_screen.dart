@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 //Screens
 import '../screens/start_screen.dart';
@@ -17,6 +18,7 @@ import '../widgets/my_title.dart';
 import '../providers/post_provider.dart';
 import '../providers/comments_provider.dart';
 import '../providers/likes_provider.dart';
+import '../providers/user_provider.dart';
 
 class CommunutyScreen extends StatefulWidget {
   @override
@@ -24,6 +26,8 @@ class CommunutyScreen extends StatefulWidget {
 }
 
 class _CommunutyScreenState extends State<CommunutyScreen> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  var _userId;
   var _isLoading = false;
   var _isInit = true;
 
@@ -31,6 +35,9 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_isInit) {
+      final User? user = auth.currentUser;
+      _userId = user!.uid;
+
       setState(() {
         _isLoading = true;
       });
@@ -48,9 +55,11 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
   @override
   Widget build(BuildContext context) {
     final postsData = Provider.of<PostProvider>(context, listen: false);
+    final usersData = Provider.of<UserPovider>(context, listen: false);
     final post = postsData.posts;
-    final commentData = Provider.of<CommentProvider>(context, listen: false);
-    final comment = commentData.comments;
+    final user = usersData.user
+        .where((loadedUser) => loadedUser.userID == _userId.toString())
+        .toList();
 
     return Scaffold(
       backgroundColor: Colors.black54,
@@ -92,6 +101,7 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => AddPost(
+                user: user[0],
                 callback: (value) {
                   setState(() {
                     _isInit = value;

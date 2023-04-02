@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
@@ -9,6 +10,7 @@ import 'dart:math';
 import '../objects/communit_post.dart';
 import '../providers/comments_provider.dart';
 import '../providers/likes_provider.dart';
+import '../providers/user_provider.dart';
 
 //Widgets
 import '../community_screen/post_description.dart';

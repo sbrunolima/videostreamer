@@ -15,6 +15,9 @@ import '../providers/comments_provider.dart';
 import '../providers/images_provider.dart';
 import '../providers/user_provider.dart';
 
+//Objects
+import '../objects/user.dart';
+
 //Widgets
 import '../widgets/my_back_icon.dart';
 import '../community_screen/post_profile.dart';
@@ -22,35 +25,22 @@ import '../community_screen/post_movie_container.dart';
 import '../widgets/my_title.dart';
 
 class AddComment extends StatefulWidget {
+  final UserData user;
   final CommunityPost post;
   final Function(bool) callback;
 
-  AddComment({required this.post, required this.callback});
+  AddComment({required this.user, required this.post, required this.callback});
 
   @override
   State<AddComment> createState() => _AddCommentState();
 }
 
 class _AddCommentState extends State<AddComment> {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  var _userId;
-  var _isInit = true;
-  var _isLoading = false;
   final _observation = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
   bool _contiueContent = false;
   var _comment = '';
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isInit) {
-      final User? user = auth.currentUser;
-      _userId = user!.uid;
-    }
-    _isInit = false;
-  }
 
   @override
   void dispose() {
@@ -69,11 +59,6 @@ class _AddCommentState extends State<AddComment> {
 
   @override
   Widget build(BuildContext context) {
-    final usersData = Provider.of<UserPovider>(context, listen: false);
-    final user = usersData.user
-        .where((element) => element.id == _userId.toString())
-        .toList();
-
     return Scaffold(
       backgroundColor: Colors.grey.shade900,
       appBar: AppBar(
@@ -131,45 +116,31 @@ class _AddCommentState extends State<AddComment> {
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        height: 50,
-        width: double.infinity,
-        color: Colors.black,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 17),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(),
-              IconButton(
-                onPressed: (_contiueContent)
-                    ? () async {
-                        _saveForm();
-                        await Provider.of<CommentProvider>(context,
-                                listen: false)
-                            .sendComment(
-                          postID: widget.post.id,
-                          userID: _userId,
-                          userImage: user[0].imageUrl,
-                          username: user[0].username,
-                          userComment: _comment,
-                        );
-
-                        widget.callback(true);
-
-                        Navigator.of(context).pop();
-                      }
-                    : null,
-                icon: Icon(
-                  EneftyIcons.send_3_bold,
-                  color: (_contiueContent) ? Colors.white : Colors.white12,
-                ),
-                iconSize: 30,
-              ),
-            ],
-          ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor:
+            (_contiueContent) ? Colors.greenAccent : Colors.grey.shade600,
+        child: Icon(
+          EneftyIcons.send_3_bold,
+          color: (_contiueContent) ? Colors.white : Colors.grey.shade700,
+          size: 30,
         ),
+        onPressed: (_contiueContent)
+            ? () async {
+                _saveForm();
+                await Provider.of<CommentProvider>(context, listen: false)
+                    .sendComment(
+                  postID: widget.post.id,
+                  userID: widget.user.userID,
+                  userImage: widget.user.imageUrl,
+                  username: widget.user.username,
+                  userComment: _comment,
+                );
+
+                widget.callback(true);
+
+                Navigator.of(context).pop();
+              }
+            : null,
       ),
     );
   }

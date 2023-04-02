@@ -13,6 +13,7 @@ import 'dart:math';
 import '../objects/communit_post.dart';
 import '../providers/comments_provider.dart';
 import '../providers/likes_provider.dart';
+import '../providers/user_provider.dart';
 
 //Widgets
 import '../widgets/my_back_icon.dart';
@@ -66,6 +67,10 @@ class _PostDescriptionState extends State<PostDescription> {
   Widget build(BuildContext context) {
     final commentData = Provider.of<CommentProvider>(context, listen: false);
     final likeData = Provider.of<LikeProvider>(context, listen: false);
+    final usersData = Provider.of<UserPovider>(context, listen: false);
+    final user = usersData.user
+        .where((loadedUser) => loadedUser.userID == _userId)
+        .toList();
     final comment = commentData.comments
         .where((loadPost) => loadPost.postID == widget.post.id)
         .toList();
@@ -147,6 +152,7 @@ class _PostDescriptionState extends State<PostDescription> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: ((context) => AddComment(
+                            user: user[0],
                             post: widget.post,
                             callback: (value) {
                               setState(() {

@@ -93,6 +93,7 @@ class _VideoStreamerState extends State<VideoStreamer> {
         ),
         routes: {
           StartScreen.routeName: (ctx) => StartScreen(),
+          AuthScreen.routeName: (ctx) => AuthScreen(),
         },
       ),
     );

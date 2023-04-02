@@ -47,10 +47,7 @@ class _StartScreenState extends State<StartScreen> {
         return false;
       },
       child: Scaffold(
-        body: RefreshIndicator(
-          onRefresh: () => _refreshSongs(context),
-          child: _screens[_pageIndex],
-        ),
+        body: _screens[_pageIndex],
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
             boxShadow: <BoxShadow>[

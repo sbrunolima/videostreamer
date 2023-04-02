@@ -13,6 +13,8 @@ import '../auth_screen/continue_button.dart';
 import '../auth_screen/signin_button.dart';
 
 class AuthScreen extends StatelessWidget {
+  static const routeName = '/auth-screen';
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size;

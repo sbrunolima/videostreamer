@@ -1,12 +1,8 @@
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart';
-import 'package:intl/intl.dart';
-import 'dart:math';
 
 //Provider
 import '../objects/communit_post.dart';
@@ -15,6 +11,9 @@ import '../providers/comments_provider.dart';
 import '../providers/images_provider.dart';
 import '../providers/user_provider.dart';
 
+//Objects
+import '../objects/user.dart';
+
 //Widgets
 import '../widgets/my_back_icon.dart';
 import '../community_screen/post_profile.dart';
@@ -22,38 +21,26 @@ import '../community_screen/post_movie_container.dart';
 import '../widgets/my_title.dart';
 
 class AddPost extends StatefulWidget {
+  final UserData user;
   final Function(bool) callback;
 
-  AddPost({required this.callback});
+  AddPost({required this.user, required this.callback});
 
   @override
   State<AddPost> createState() => _AddPostState();
 }
 
 class _AddPostState extends State<AddPost> {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  var _userId;
-  var _isInit = true;
-  var _isLoading = false;
   final _observation = FocusNode();
   final _formKey = GlobalKey<FormState>();
-  bool _contiueTitle = false;
-  bool _contiueSubtitle = false;
-  bool _contiueContent = false;
 
   var _postContent = '';
   var _postTitle = '';
   var _movie = '';
 
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isInit) {
-      final User? user = auth.currentUser;
-      _userId = user!.uid;
-    }
-    _isInit = false;
-  }
+  bool _contiueTitle = false;
+  bool _contiueSubtitle = false;
+  bool _contiueContent = false;
 
   @override
   void dispose() {
@@ -72,10 +59,6 @@ class _AddPostState extends State<AddPost> {
 
   @override
   Widget build(BuildContext context) {
-    final usersData = Provider.of<UserPovider>(context, listen: false);
-    final user = usersData.user
-        .where((element) => element.id == _userId.toString())
-        .toList();
     return Scaffold(
       backgroundColor: Colors.grey.shade900,
       appBar: AppBar(
@@ -189,49 +172,35 @@ class _AddPostState extends State<AddPost> {
           ),
         ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: Container(
-        height: 50,
-        width: double.infinity,
-        color: Colors.black,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 17),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(),
-              IconButton(
-                onPressed: (_contiueTitle &&
-                        _contiueSubtitle &&
-                        _contiueContent)
-                    ? () async {
-                        _saveForm();
-                        await Provider.of<PostProvider>(context, listen: false)
-                            .addNewPost(
-                          movie: _movie,
-                          postContent: _postContent,
-                          postTitle: _postTitle,
-                          userID: _userId,
-                          userImage: user[0].imageUrl,
-                          username: user[0].username,
-                        );
-
-                        widget.callback(true);
-
-                        Navigator.of(context).pop();
-                      }
-                    : null,
-                icon: Icon(
-                  EneftyIcons.send_3_bold,
-                  color: (_contiueTitle && _contiueSubtitle && _contiueContent)
-                      ? Colors.white
-                      : Colors.grey.shade700,
-                ),
-                iconSize: 30,
-              ),
-            ],
-          ),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: (_contiueTitle && _contiueSubtitle && _contiueContent)
+            ? Colors.greenAccent
+            : Colors.grey.shade600,
+        child: Icon(
+          EneftyIcons.send_3_bold,
+          color: (_contiueTitle && _contiueSubtitle && _contiueContent)
+              ? Colors.white
+              : Colors.grey.shade700,
+          size: 30,
         ),
+        onPressed: (_contiueTitle && _contiueSubtitle && _contiueContent)
+            ? () async {
+                _saveForm();
+                await Provider.of<PostProvider>(context, listen: false)
+                    .addNewPost(
+                  movie: _movie,
+                  postContent: _postContent,
+                  postTitle: _postTitle,
+                  userID: widget.user.userID,
+                  userImage: widget.user.imageUrl,
+                  username: widget.user.username,
+                );
+
+                widget.callback(true);
+
+                Navigator.of(context).pop();
+              }
+            : null,
       ),
     );
   }

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class User {
+class UserData {
   final String id;
   final String userID;
   final String email;
   final String username;
   final String imageUrl;
 
-  User({
+  UserData({
     required this.id,
     required this.userID,
     required this.email,

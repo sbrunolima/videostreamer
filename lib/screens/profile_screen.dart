@@ -16,6 +16,7 @@ import '../providers/user_provider.dart';
 import '../profile_screen/profile_option_buttons.dart';
 import '../profile_screen/exit_button.dart';
 import '../profile_screen/profile_data.dart';
+import '../widgets/loading.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -26,16 +27,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _auth = FirebaseAuth.instance;
   var _userId;
   var _isInit = true;
+  var _isLoading = false;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    final User? user = _auth.currentUser;
-    _userId = user!.uid;
-    print('USERUS $_userId');
+
     if (_isInit) {
-      Provider.of<ImagesProvider>(context, listen: false).loadProfileImages();
-      Provider.of<UserPovider>(context, listen: false).loadUsers();
+      final User? user = _auth.currentUser;
+      _userId = user!.uid;
+      setState(() {
+        _isLoading = true;
+      });
+
+      Provider.of<UserPovider>(context, listen: false).loadUsers().then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
     }
 
     _isInit = false;
@@ -55,24 +64,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
         elevation: 0,
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
       ),
-      body: Column(
-        children: [
-          ProfileData(
-            imageUrl: user[0].imageUrl.toString(),
-            username: user[0].username.toString(),
-          ),
-          const SizedBox(height: 30),
-          OptionButton(title: 'About the Author'),
-          buttonSpace,
-          OptionButton(title: 'About the Trailers'),
-          buttonSpace,
-          OptionButton(title: 'Version notes'),
-          buttonSpace,
-          OptionButton(title: 'Privacy'),
-          const SizedBox(height: 40),
-          ExitButton(),
-        ],
-      ),
+      body: _isLoading
+          ? Loading()
+          : SingleChildScrollView(
+              child: Column(
+                children: [
+                  ProfileData(
+                    user: user[0],
+                  ),
+                  const SizedBox(height: 30),
+                  OptionButton(title: 'About the Author'),
+                  buttonSpace,
+                  OptionButton(title: 'About the Trailers'),
+                  buttonSpace,
+                  OptionButton(title: 'Version notes'),
+                  buttonSpace,
+                  OptionButton(title: 'Privacy'),
+                  const SizedBox(height: 40),
+                  ExitButton(),
+                ],
+              ),
+            ),
     );
   }
 }
