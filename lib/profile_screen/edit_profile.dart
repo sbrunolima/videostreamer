@@ -25,13 +25,20 @@ import '../widgets/my_title.dart';
 import '../profile_screen/profiles_images.dart';
 
 class EditProfile extends StatefulWidget {
+  final String userImage;
+  final String username;
   final UserData user;
   final void Function(
     String userImage,
     String username,
   ) callback;
 
-  EditProfile({required this.user, required this.callback});
+  EditProfile({
+    required this.userImage,
+    required this.username,
+    required this.user,
+    required this.callback,
+  });
   @override
   State<EditProfile> createState() => _EditProfileState();
 }
@@ -106,7 +113,7 @@ class _EditProfileState extends State<EditProfile> {
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
                         _imageUrl.isEmpty
-                            ? widget.user.imageUrl.toString()
+                            ? widget.userImage.toString()
                             : _imageUrl,
                         fit: BoxFit.cover,
                       ),
@@ -150,7 +157,7 @@ class _EditProfileState extends State<EditProfile> {
               TextFormField(
                 key: const ValueKey('username'),
                 decoration: InputDecoration(
-                  hintText: widget.user.username.toString(),
+                  hintText: widget.username.toString(),
                 ),
                 keyboardType: TextInputType.multiline,
                 textCapitalization: TextCapitalization.sentences,

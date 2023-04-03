@@ -81,6 +81,11 @@ class _ProfileDataState extends State<ProfileData> {
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: ((context) => EditProfile(
+                      userImage: _userImage.isEmpty
+                          ? widget.user.imageUrl
+                          : _userImage,
+                      username:
+                          _username.isEmpty ? widget.user.username : _username,
                       user: widget.user,
                       callback: (image, name) {
                         setState(() {

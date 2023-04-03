@@ -42,7 +42,7 @@ class _SigninScreenState extends State<SigninScreen> {
         credential.user!.uid,
         email,
         username,
-        'https://i.pinimg.com/originals/b1/92/4d/b1924dce177345b5485bb5490ab3441f.jpg',
+        'https://icon-library.com/images/no-profile-pic-icon/no-profile-pic-icon-27.jpg',
       );
 
       Navigator.pushNamedAndRemoveUntil(
