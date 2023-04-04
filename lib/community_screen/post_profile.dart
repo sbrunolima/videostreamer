@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
 
 //Provider
 import '../objects/communit_post.dart';
+import '../providers/user_provider.dart';
 
 class PostProfile extends StatelessWidget {
   final CommunityPost post;
@@ -14,14 +16,18 @@ class PostProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final usersData = Provider.of<UserPovider>(context, listen: false);
+    final user = usersData.user
+        .where((loadedUser) => loadedUser.userID == post.userID)
+        .toList();
     return Row(
       children: [
         ClipRRect(
           borderRadius: BorderRadius.circular(50),
           child: Image.network(
-            post.userImage,
-            height: 40,
-            width: 40,
+            user[0].imageUrl,
+            height: 30,
+            width: 30,
             fit: BoxFit.cover,
           ),
         ),
@@ -30,11 +36,11 @@ class PostProfile extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              post.username,
+              user[0].username,
               style: GoogleFonts.openSans(
                 color: Colors.white,
                 fontSize: 14,
-                fontWeight: FontWeight.w500,
+                fontWeight: FontWeight.w400,
               ),
             ),
             const SizedBox(height: 2),

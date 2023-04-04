@@ -116,14 +116,28 @@ class _PostDescriptionState extends State<PostDescription> {
                     const Divider(),
                     const SizedBox(height: 10),
                     PostMovieContainer(post: widget.post),
-                    const SizedBox(height: 50),
-                    Text(
-                      'All comments  (${comment.length})',
-                      style: GoogleFonts.openSans(
-                        color: Colors.white,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w500,
-                      ),
+                    const SizedBox(height: 30),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Comments',
+                          style: GoogleFonts.openSans(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                        const SizedBox(width: 5),
+                        Text(
+                          '(${comment.length})',
+                          style: GoogleFonts.openSans(
+                            color: Colors.white60,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
+                      ],
                     ),
                     const Divider(),
                     const SizedBox(height: 8),

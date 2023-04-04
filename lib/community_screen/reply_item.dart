@@ -8,16 +8,16 @@ import '../objects/communit_post.dart';
 import '../providers/comments_provider.dart';
 import '../providers/user_provider.dart';
 
-class CommentItem extends StatelessWidget {
-  final Comments comment;
+class ReplyItem extends StatelessWidget {
+  final Reply reply;
 
-  CommentItem({required this.comment});
+  ReplyItem({required this.reply});
 
   @override
   Widget build(BuildContext context) {
     final usersData = Provider.of<UserPovider>(context, listen: false);
     final user = usersData.user
-        .where((loadedUser) => loadedUser.userID == comment.userID)
+        .where((loadedUser) => loadedUser.userID == reply.userID)
         .toList();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -54,7 +54,7 @@ class CommentItem extends StatelessWidget {
                 SizedBox(
                   width: MediaQuery.of(context).size.width - 70,
                   child: Text(
-                    comment.userComment,
+                    reply.userReply,
                     style: GoogleFonts.openSans(
                       color: Colors.white,
                       fontSize: 14,
@@ -66,7 +66,7 @@ class CommentItem extends StatelessWidget {
                 Row(
                   children: [
                     Text(
-                      DateFormat('dd/MM - hh:mm').format(comment.dateTime),
+                      DateFormat('dd/MM - hh:mm').format(reply.dateTime),
                       style: GoogleFonts.openSans(
                         color: Colors.grey,
                         fontSize: 10,
@@ -75,7 +75,7 @@ class CommentItem extends StatelessWidget {
                     ),
                     const SizedBox(width: 17),
                     Text(
-                      '${comment.likes.toString()} likes',
+                      '${reply.likes.toString()} likes',
                       style: GoogleFonts.openSans(
                         color: Colors.grey,
                         fontSize: 12,

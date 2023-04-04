@@ -44,6 +44,28 @@ class Comments {
   });
 }
 
+class Reply {
+  final String id;
+  final String username;
+  final String userImage;
+  final String userID;
+  final String postID;
+  final String userReply;
+  final int likes;
+  final DateTime dateTime;
+
+  Reply({
+    required this.id,
+    required this.username,
+    required this.userImage,
+    required this.userID,
+    required this.postID,
+    required this.userReply,
+    required this.likes,
+    required this.dateTime,
+  });
+}
+
 class Like {
   final String id;
   final String userID;
