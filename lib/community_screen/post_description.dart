@@ -12,7 +12,7 @@ import 'dart:math';
 //Provider
 import '../objects/communit_post.dart';
 import '../providers/comments_provider.dart';
-import '../providers/likes_provider.dart';
+import '../providers/post_likes_provider.dart';
 import '../providers/user_provider.dart';
 
 //Widgets
@@ -66,7 +66,7 @@ class _PostDescriptionState extends State<PostDescription> {
   @override
   Widget build(BuildContext context) {
     final commentData = Provider.of<CommentProvider>(context, listen: false);
-    final likeData = Provider.of<LikeProvider>(context, listen: false);
+    final likeData = Provider.of<PostLikeProvider>(context, listen: false);
     final usersData = Provider.of<UserPovider>(context, listen: false);
     final user = usersData.user
         .where((loadedUser) => loadedUser.userID == _userId)
@@ -146,7 +146,9 @@ class _PostDescriptionState extends State<PostDescription> {
                       shrinkWrap: true,
                       itemCount: comment.length,
                       itemBuilder: (context, index) {
-                        return CommentItem(comment: comment[index]);
+                        return CommentItem(
+                          comment: comment[index],
+                        );
                       },
                     ),
                     const SizedBox(height: 80),
@@ -197,7 +199,7 @@ class _PostDescriptionState extends State<PostDescription> {
               IconButton(
                 onPressed: () async {
                   if (likes.isEmpty) {
-                    await Provider.of<LikeProvider>(context, listen: false)
+                    await Provider.of<PostLikeProvider>(context, listen: false)
                         .addLike(
                       _userId,
                       widget.post.id,
@@ -207,7 +209,8 @@ class _PostDescriptionState extends State<PostDescription> {
                     if (likes.isNotEmpty &&
                         likes[i].postID != widget.post.id &&
                         likes[i].userID != _userId) {
-                      await Provider.of<LikeProvider>(context, listen: false)
+                      await Provider.of<PostLikeProvider>(context,
+                              listen: false)
                           .addLike(
                         _userId,
                         widget.post.id,
@@ -226,7 +229,7 @@ class _PostDescriptionState extends State<PostDescription> {
                   setState(() {
                     _liked = true;
                   });
-                  await Provider.of<LikeProvider>(context, listen: false)
+                  await Provider.of<PostLikeProvider>(context, listen: false)
                       .addLike(
                     _userId,
                     widget.post.id,

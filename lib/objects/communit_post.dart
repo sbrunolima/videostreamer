@@ -49,9 +49,8 @@ class Reply {
   final String username;
   final String userImage;
   final String userID;
-  final String postID;
+  final String commentID;
   final String userReply;
-  final int likes;
   final DateTime dateTime;
 
   Reply({
@@ -59,21 +58,32 @@ class Reply {
     required this.username,
     required this.userImage,
     required this.userID,
-    required this.postID,
+    required this.commentID,
     required this.userReply,
-    required this.likes,
     required this.dateTime,
   });
 }
 
-class Like {
+class LikePost {
   final String id;
   final String userID;
   final String postID;
 
-  Like({
+  LikePost({
     required this.id,
     required this.userID,
     required this.postID,
+  });
+}
+
+class LikeComment {
+  final String id;
+  final String userID;
+  final String commentID;
+
+  LikeComment({
+    required this.id,
+    required this.userID,
+    required this.commentID,
   });
 }

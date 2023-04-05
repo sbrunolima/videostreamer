@@ -17,7 +17,7 @@ import '../widgets/my_title.dart';
 //Providers
 import '../providers/post_provider.dart';
 import '../providers/comments_provider.dart';
-import '../providers/likes_provider.dart';
+import '../providers/post_likes_provider.dart';
 import '../providers/user_provider.dart';
 
 class CommunutyScreen extends StatefulWidget {
@@ -43,7 +43,7 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
       });
 
       Provider.of<PostProvider>(context, listen: false).loadPosts().then((_) {
-        Provider.of<LikeProvider>(context, listen: false).loadLikes();
+        Provider.of<PostLikeProvider>(context, listen: false).loadLikes();
         setState(() {
           _isLoading = false;
         });

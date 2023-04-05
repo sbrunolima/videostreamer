@@ -52,7 +52,7 @@ class ReplyItem extends StatelessWidget {
                 ),
                 const SizedBox(height: 5),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width - 70,
+                  width: MediaQuery.of(context).size.width - 100,
                   child: Text(
                     reply.userReply,
                     style: GoogleFonts.openSans(
@@ -73,15 +73,6 @@ class ReplyItem extends StatelessWidget {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                    const SizedBox(width: 17),
-                    Text(
-                      '${reply.likes.toString()} likes',
-                      style: GoogleFonts.openSans(
-                        color: Colors.grey,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
                   ],
                 ),
               ],
@@ -89,7 +80,6 @@ class ReplyItem extends StatelessWidget {
           ],
         ),
         const SizedBox(height: 10),
-        const Divider(),
       ],
     );
   }

@@ -9,7 +9,7 @@ import 'dart:math';
 //Provider
 import '../objects/communit_post.dart';
 import '../providers/comments_provider.dart';
-import '../providers/likes_provider.dart';
+import '../providers/post_likes_provider.dart';
 import '../providers/user_provider.dart';
 
 //Widgets
@@ -30,7 +30,7 @@ class _PostItemState extends State<PostItem> {
   @override
   Widget build(BuildContext context) {
     final commentData = Provider.of<CommentProvider>(context, listen: false);
-    final likeData = Provider.of<LikeProvider>(context, listen: false);
+    final likeData = Provider.of<PostLikeProvider>(context, listen: false);
     final comment = commentData.comments
         .where((loadPost) => loadPost.postID == widget.post.id)
         .toList();
