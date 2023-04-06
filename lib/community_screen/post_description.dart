@@ -9,11 +9,20 @@ import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
 
-//Provider
-import '../objects/communit_post.dart';
+//Providers
+import '../providers/video_provider.dart';
+import '../providers/images_provider.dart';
+import '../providers/user_provider.dart';
+import '../providers/carousel_provider.dart';
+import '../providers/post_provider.dart';
 import '../providers/comments_provider.dart';
 import '../providers/post_likes_provider.dart';
-import '../providers/user_provider.dart';
+import '../providers/reply_provider.dart';
+import '../providers/comment_like_provider.dart';
+import '../providers/reply_like_provider.dart';
+
+//Objects
+import '../objects/communit_post.dart';
 
 //Widgets
 import '../widgets/my_back_icon.dart';
@@ -50,15 +59,18 @@ class _PostDescriptionState extends State<PostDescription> {
       setState(() {
         _isLoading = true;
       });
-      Provider.of<CommentProvider>(context, listen: false)
-          .loadComments()
-          .then((_) async {
+
+      Provider.of<PostProvider>(context, listen: false).loadPosts().then((_) {
+        Provider.of<UserPovider>(context, listen: false).loadUsers();
+        Provider.of<PostProvider>(context, listen: false).loadPosts();
+        Provider.of<CommentProvider>(context, listen: false).loadComments();
+        Provider.of<ReplyProvider>(context, listen: false).loadReply();
         Provider.of<PostLikeProvider>(context, listen: false).loadLikes();
+        Provider.of<CommentLikeProvider>(context, listen: false).loadLikes();
+        Provider.of<ReplyLikeProvider>(context, listen: false).loadLikes();
 
         setState(() {
-          setState(() {
-            _isLoading = false;
-          });
+          _isLoading = false;
         });
       });
     }
@@ -77,7 +89,8 @@ class _PostDescriptionState extends State<PostDescription> {
         .where((loadPost) => loadPost.postID == widget.post.id)
         .toList();
     final likes = likeData.like
-        .where((loadlikes) => loadlikes.postID == widget.post.id)
+        .where((loadlikes) =>
+            loadlikes.postID == widget.post.id && loadlikes.userID == _userId)
         .toList();
 
     if (likes.isNotEmpty) {
@@ -156,6 +169,7 @@ class _PostDescriptionState extends State<PostDescription> {
                       itemBuilder: (context, index) {
                         return CommentItem(
                           comment: comment[index],
+                          user: user[0],
                         );
                       },
                     ),

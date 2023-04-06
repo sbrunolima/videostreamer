@@ -66,7 +66,7 @@ class _AddReplyState extends State<AddReply> {
         titleSpacing: 0,
         leading: MyBackIcon(),
         title: MyTitle(
-          title: 'Add new comment',
+          title: 'Add new reply',
         ),
       ),
       body: Padding(

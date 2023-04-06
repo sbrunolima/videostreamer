@@ -8,6 +8,9 @@ import '../objects/communit_post.dart';
 import '../providers/reply_provider.dart';
 import '../providers/user_provider.dart';
 
+//Objects
+import '../objects/user.dart';
+
 //Widgets
 import '../community_screen/reply_button.dart';
 import '../community_screen/add_reply.dart';
@@ -15,8 +18,9 @@ import '../community_screen/reply_item.dart';
 
 class RepliesList extends StatelessWidget {
   final Comments comment;
+  final UserData user;
 
-  RepliesList({required this.comment});
+  RepliesList({required this.comment, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +36,10 @@ class RepliesList extends StatelessWidget {
         physics: NeverScrollableScrollPhysics(),
         itemCount: reply.length,
         itemBuilder: (context, index) {
-          return ReplyItem(reply: reply[index]);
+          return ReplyItem(
+            reply: reply[index],
+            user: user,
+          );
         },
       ),
     );

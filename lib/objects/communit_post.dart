@@ -91,3 +91,17 @@ class LikeComment {
     required this.favorite,
   });
 }
+
+class LikeReply {
+  final String id;
+  final String userID;
+  final String replyID;
+  final bool favorite;
+
+  LikeReply({
+    required this.id,
+    required this.userID,
+    required this.replyID,
+    required this.favorite,
+  });
+}

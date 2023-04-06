@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:enefty_icons/enefty_icons.dart';
 import 'package:intl/intl.dart';
 
 //Provider
@@ -21,8 +22,9 @@ import '../community_screen/replies_list.dart';
 
 class CommentItem extends StatefulWidget {
   final Comments comment;
+  final UserData user;
 
-  CommentItem({required this.comment});
+  CommentItem({required this.comment, required this.user});
 
   @override
   State<CommentItem> createState() => _CommentItemState();
@@ -30,18 +32,36 @@ class CommentItem extends StatefulWidget {
 
 class _CommentItemState extends State<CommentItem> {
   bool _expanded = false;
+  bool _liked = false;
+  int _like = 0;
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size.width;
     final replyData = Provider.of<ReplyProvider>(context, listen: false);
     final usersData = Provider.of<UserPovider>(context, listen: false);
+    final likeData = Provider.of<CommentLikeProvider>(context, listen: false);
     final reply = replyData.reply
         .where((loadedReplies) => loadedReplies.commentID == widget.comment.id)
         .toList();
     final user = usersData.user
         .where((loadedUser) => loadedUser.userID == widget.comment.userID)
         .toList();
+    final likes = likeData.like
+        .where((loadLikes) =>
+            loadLikes.commentID == widget.comment.id &&
+            loadLikes.userID == widget.user.userID)
+        .toList();
+    final likeLength = likeData.like
+        .where((loadLikes) => loadLikes.commentID == widget.comment.id)
+        .toList();
+
+    if (likes.isNotEmpty) {
+      setState(() {
+        _liked = likes[0].favorite;
+        _like = likeLength.length;
+      });
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -66,15 +86,28 @@ class _CommentItemState extends State<CommentItem> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  user[0].username,
-                  style: GoogleFonts.openSans(
-                    color: Colors.white60,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                  ),
+                Row(
+                  children: [
+                    Text(
+                      user[0].username,
+                      style: GoogleFonts.openSans(
+                        color: Colors.white60,
+                        fontSize: 12,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    Text(
+                      DateFormat('● dd/MM - hh:mm')
+                          .format(widget.comment.dateTime),
+                      style: GoogleFonts.openSans(
+                        color: Colors.grey,
+                        fontSize: 10,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 5),
+                const SizedBox(height: 6),
                 SizedBox(
                   width: mediaQuery - 70,
                   child: Text(
@@ -86,57 +119,98 @@ class _CommentItemState extends State<CommentItem> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 17),
                 SizedBox(
                   width: mediaQuery - 70,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          Text(
-                            DateFormat('dd/MM - hh:mm')
-                                .format(widget.comment.dateTime),
-                            style: GoogleFonts.openSans(
-                              color: Colors.grey,
-                              fontSize: 10,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          const SizedBox(width: 17),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (context) => AddReply(
-                                    user: user[0],
-                                    comment: widget.comment,
-                                  ),
-                                ),
+                      if (likes.isNotEmpty)
+                        GestureDetector(
+                          onTap: () async {
+                            setState(() {
+                              _liked = !_liked;
+                            });
+
+                            if (likes.isEmpty) {
+                              setState(() {
+                                _like = _like + 1;
+                              });
+
+                              await Provider.of<CommentLikeProvider>(context,
+                                      listen: false)
+                                  .addLike(
+                                widget.user.userID,
+                                widget.comment.id,
                               );
-                            },
-                            child: Text(
-                              'Add a reply',
-                              style: GoogleFonts.openSans(
-                                color: Colors.greenAccent,
-                                fontSize: 12,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          )
-                        ],
+                            }
+
+                            for (int i = 0; i < likes.length; i++)
+                              if (likes.isNotEmpty &&
+                                  likes[i].commentID == widget.comment.id &&
+                                  likes[i].userID == widget.user.userID) {
+                                setState(() {
+                                  _like = _like - 1;
+                                });
+
+                                await Provider.of<CommentLikeProvider>(context,
+                                        listen: false)
+                                    .deleteLike(
+                                  likes[i].id,
+                                );
+                              }
+                          },
+                          child: Icon(
+                            _liked
+                                ? EneftyIcons.heart_bold
+                                : EneftyIcons.heart_outline,
+                            color: _liked ? Colors.redAccent[400] : Colors.grey,
+                            size: 16,
+                          ),
+                        ),
+                      if (likes.isEmpty)
+                        GestureDetector(
+                          onTap: () async {
+                            setState(() {
+                              _liked = !_liked;
+                              _like = _like + 1;
+                            });
+
+                            await Provider.of<CommentLikeProvider>(context,
+                                    listen: false)
+                                .addLike(
+                              widget.user.userID,
+                              widget.comment.id,
+                            );
+                          },
+                          child: Icon(
+                            _liked
+                                ? EneftyIcons.heart_bold
+                                : EneftyIcons.heart_outline,
+                            color: _liked ? Colors.redAccent[400] : Colors.grey,
+                            size: 16,
+                          ),
+                        ),
+                      const SizedBox(width: 4),
+                      likeOrCommentCount(
+                        _like.toString(),
                       ),
+                      const SizedBox(width: 17),
+                      ReplyButton(comment: widget.comment, user: user[0])
                     ],
                   ),
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 17),
                 if (reply.isNotEmpty) repliesExpand(reply.length),
               ],
             ),
           ],
         ),
         SizedBox(height: reply.isNotEmpty ? 10 : 0),
-        if (reply.isNotEmpty && _expanded) RepliesList(comment: widget.comment),
+        if (reply.isNotEmpty && _expanded)
+          RepliesList(
+            comment: widget.comment,
+            user: widget.user,
+          ),
         const Divider(),
       ],
     );
@@ -164,9 +238,9 @@ class _CommentItemState extends State<CommentItem> {
     return Text(
       title,
       style: GoogleFonts.openSans(
-        color: Colors.grey,
-        fontSize: 10,
-        fontWeight: FontWeight.w400,
+        color: Colors.white,
+        fontSize: 13,
+        fontWeight: FontWeight.w600,
       ),
     );
   }

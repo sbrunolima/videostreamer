@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:enefty_icons/enefty_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
@@ -94,7 +95,7 @@ class _PostItemState extends State<PostItem> {
                           children: [
                             likeOrCommentCount(
                               likes.length.toString(),
-                              Icons.favorite_border_outlined,
+                              EneftyIcons.heart_bold,
                             ),
                             const SizedBox(width: 15),
                             Row(
@@ -122,14 +123,18 @@ class _PostItemState extends State<PostItem> {
   Widget likeOrCommentCount(String title, IconData icon) {
     return Row(
       children: [
-        Icon(icon, color: Colors.grey),
+        Icon(
+          icon,
+          color: Colors.grey,
+          size: 20,
+        ),
         const SizedBox(width: 5),
         Text(
           title,
           style: GoogleFonts.openSans(
             color: Colors.grey,
             fontSize: 14,
-            fontWeight: FontWeight.w400,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ],
