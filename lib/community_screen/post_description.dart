@@ -53,6 +53,8 @@ class _PostDescriptionState extends State<PostDescription> {
       Provider.of<CommentProvider>(context, listen: false)
           .loadComments()
           .then((_) async {
+        Provider.of<PostLikeProvider>(context, listen: false).loadLikes();
+
         setState(() {
           setState(() {
             _isLoading = false;
@@ -77,6 +79,12 @@ class _PostDescriptionState extends State<PostDescription> {
     final likes = likeData.like
         .where((loadlikes) => loadlikes.postID == widget.post.id)
         .toList();
+
+    if (likes.isNotEmpty) {
+      setState(() {
+        _liked = likes[0].favorite;
+      });
+    }
 
     return Scaffold(
       backgroundColor: Colors.grey.shade900,
@@ -198,6 +206,10 @@ class _PostDescriptionState extends State<PostDescription> {
             if (likes.isNotEmpty)
               IconButton(
                 onPressed: () async {
+                  setState(() {
+                    _liked = !_liked;
+                  });
+
                   if (likes.isEmpty) {
                     await Provider.of<PostLikeProvider>(context, listen: false)
                         .addLike(
@@ -207,19 +219,18 @@ class _PostDescriptionState extends State<PostDescription> {
                   }
                   for (int i = 0; i < likes.length; i++)
                     if (likes.isNotEmpty &&
-                        likes[i].postID != widget.post.id &&
-                        likes[i].userID != _userId) {
+                        likes[i].postID == widget.post.id &&
+                        likes[i].userID == _userId) {
                       await Provider.of<PostLikeProvider>(context,
                               listen: false)
-                          .addLike(
-                        _userId,
-                        widget.post.id,
+                          .deleteLike(
+                        likes[i].id,
                       );
                     }
                 },
                 icon: Icon(
-                  EneftyIcons.heart_bold,
-                  color: Colors.redAccent[400],
+                  _liked ? EneftyIcons.heart_bold : EneftyIcons.heart_outline,
+                  color: _liked ? Colors.redAccent[400] : Colors.grey,
                   size: 26,
                 ),
               ),
@@ -227,8 +238,9 @@ class _PostDescriptionState extends State<PostDescription> {
               IconButton(
                 onPressed: () async {
                   setState(() {
-                    _liked = true;
+                    _liked = !_liked;
                   });
+
                   await Provider.of<PostLikeProvider>(context, listen: false)
                       .addLike(
                     _userId,

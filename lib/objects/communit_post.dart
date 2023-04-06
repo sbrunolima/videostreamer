@@ -68,11 +68,13 @@ class LikePost {
   final String id;
   final String userID;
   final String postID;
+  final bool favorite;
 
   LikePost({
     required this.id,
     required this.userID,
     required this.postID,
+    required this.favorite,
   });
 }
 
@@ -80,10 +82,12 @@ class LikeComment {
   final String id;
   final String userID;
   final String commentID;
+  final bool favorite;
 
   LikeComment({
     required this.id,
     required this.userID,
     required this.commentID,
+    required this.favorite,
   });
 }

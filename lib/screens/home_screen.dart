@@ -51,7 +51,6 @@ class _HomeScreenState extends State<HomeScreen> {
         Provider.of<CommentProvider>(context, listen: false).loadComments();
         Provider.of<ReplyProvider>(context, listen: false).loadReply();
         Provider.of<PostLikeProvider>(context, listen: false).loadLikes();
-        Provider.of<CommentLikeProvider>(context, listen: false).loadLikes();
 
         Future.delayed(const Duration(seconds: 2)).then((_) {
           setState(() {

@@ -29,34 +29,20 @@ class CommentItem extends StatefulWidget {
 }
 
 class _CommentItemState extends State<CommentItem> {
-  final FirebaseAuth auth = FirebaseAuth.instance;
-  var _userId;
   bool _expanded = false;
-  bool _liked = false;
-  int _like = 0;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final User? user = auth.currentUser;
-    _userId = user!.uid;
-  }
 
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context).size.width;
     final replyData = Provider.of<ReplyProvider>(context, listen: false);
     final usersData = Provider.of<UserPovider>(context, listen: false);
-    final likeData = Provider.of<CommentLikeProvider>(context, listen: false);
-    final likes = likeData.like
-        .where((loadeLikes) => loadeLikes.commentID == widget.comment.id)
-        .toList();
     final reply = replyData.reply
         .where((loadedReplies) => loadedReplies.commentID == widget.comment.id)
         .toList();
     final user = usersData.user
         .where((loadedUser) => loadedUser.userID == widget.comment.userID)
         .toList();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -100,6 +86,7 @@ class _CommentItemState extends State<CommentItem> {
                     ),
                   ),
                 ),
+                const SizedBox(height: 10),
                 SizedBox(
                   width: mediaQuery - 70,
                   child: Row(
@@ -115,10 +102,6 @@ class _CommentItemState extends State<CommentItem> {
                               fontSize: 10,
                               fontWeight: FontWeight.w400,
                             ),
-                          ),
-                          const SizedBox(width: 17),
-                          likeOrCommentCount(
-                            '${likes.length.toString()} likes',
                           ),
                           const SizedBox(width: 17),
                           GestureDetector(
@@ -143,55 +126,19 @@ class _CommentItemState extends State<CommentItem> {
                           )
                         ],
                       ),
-                      likeButton(likes.length, likes),
                     ],
                   ),
                 ),
+                const SizedBox(height: 10),
                 if (reply.isNotEmpty) repliesExpand(reply.length),
               ],
             ),
           ],
         ),
-        SizedBox(height: reply.isNotEmpty ? 15 : 0),
+        SizedBox(height: reply.isNotEmpty ? 10 : 0),
         if (reply.isNotEmpty && _expanded) RepliesList(comment: widget.comment),
         const Divider(),
       ],
-    );
-  }
-
-  Widget likeButton(int likeLength, var likes) {
-    return IconButton(
-      icon: Icon(
-        _liked ? Icons.favorite_outlined : Icons.favorite_border_outlined,
-        size: 18,
-        color: _liked ? Colors.red : Colors.white,
-      ),
-      onPressed: !_liked
-          ? () async {
-              setState(() {
-                _like = _like + 1;
-                _liked = true;
-              });
-
-              if (likes.isEmpty) {
-                await Provider.of<CommentLikeProvider>(context, listen: false)
-                    .addLike(
-                  _userId,
-                  widget.comment.id,
-                );
-              }
-
-              for (int i = 0; i < likeLength; i++)
-                if (likes.isNotEmpty &&
-                    likes[i].commentID != widget.comment.id &&
-                    likes[i].userID != _userId)
-                  await Provider.of<CommentLikeProvider>(context, listen: false)
-                      .addLike(
-                    _userId,
-                    widget.comment.id,
-                  );
-            }
-          : null,
     );
   }
 
