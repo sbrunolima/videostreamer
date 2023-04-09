@@ -187,17 +187,31 @@ class _PostDescriptionState extends State<PostDescription> {
               width: MediaQuery.of(context).size.width - 80,
               child: OutlinedButton(
                 onPressed: () {
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: ((context) => AddComment(
-                            user: user[0],
-                            post: widget.post,
-                            callback: (value) {
-                              setState(() {
-                                _isInit = value;
-                              });
-                            },
-                          )),
+                  showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) => DraggableScrollableSheet(
+                      initialChildSize: 0.7,
+                      minChildSize: 0.5,
+                      maxChildSize: 0.9,
+                      builder: (_, controller) => Container(
+                        decoration: BoxDecoration(
+                          color: Colors.grey.shade900,
+                          borderRadius: BorderRadius.vertical(
+                            top: Radius.circular(20),
+                          ),
+                        ),
+                        child: AddComment(
+                          user: user[0],
+                          post: widget.post,
+                          callback: (value) {
+                            setState(() {
+                              _isInit = value;
+                            });
+                          },
+                        ),
+                      ),
                     ),
                   );
                 },

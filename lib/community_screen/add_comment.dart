@@ -60,7 +60,7 @@ class _AddCommentState extends State<AddComment> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade900,
+      backgroundColor: Color.fromARGB(0, 0, 0, 0),
       appBar: AppBar(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         elevation: 0,

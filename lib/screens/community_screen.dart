@@ -48,8 +48,8 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
         _isLoading = true;
       });
 
-      Provider.of<PostProvider>(context, listen: false).loadPosts().then((_) {
-        Provider.of<UserPovider>(context, listen: false).loadUsers();
+      Provider.of<UserPovider>(context, listen: false).loadUsers().then((_) {
+        Provider.of<PostProvider>(context, listen: false).loadPosts();
         Provider.of<PostProvider>(context, listen: false).loadPosts();
         Provider.of<CommentProvider>(context, listen: false).loadComments();
         Provider.of<ReplyProvider>(context, listen: false).loadReply();
@@ -111,15 +111,29 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
           size: 40,
         ),
         onPressed: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => AddPost(
-                user: user[0],
-                callback: (value) {
-                  setState(() {
-                    _isInit = value;
-                  });
-                },
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            backgroundColor: Colors.transparent,
+            builder: (context) => DraggableScrollableSheet(
+              initialChildSize: 0.9,
+              minChildSize: 0.5,
+              maxChildSize: 0.9,
+              builder: (_, controller) => Container(
+                decoration: BoxDecoration(
+                  color: Colors.grey.shade900,
+                  borderRadius: BorderRadius.vertical(
+                    top: Radius.circular(20),
+                  ),
+                ),
+                child: AddPost(
+                  user: user[0],
+                  callback: (value) {
+                    setState(() {
+                      _isInit = value;
+                    });
+                  },
+                ),
               ),
             ),
           );
