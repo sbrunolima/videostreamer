@@ -67,13 +67,13 @@ class _StartScreenState extends State<StartScreen> {
                   labelTextStyle: MaterialStateProperty.all(
                     Theme.of(context).textTheme.bodySmall!.copyWith(
                           color: Colors.white,
-                          fontSize: 12,
+                          fontSize: 10,
                         ),
                   ),
                 ),
                 child: NavigationBar(
                   elevation: 0,
-                  height: 60,
+                  height: 50,
                   backgroundColor: Colors.black,
                   selectedIndex: _pageIndex,
                   onDestinationSelected: (i) => setState(() {
@@ -84,12 +84,12 @@ class _StartScreenState extends State<StartScreen> {
                       selectedIcon: Icon(
                         Icons.home_filled,
                         color: Colors.white,
-                        size: 30,
+                        size: 26,
                       ),
                       icon: Icon(
                         Icons.home_filled,
                         color: Colors.grey,
-                        size: 30,
+                        size: 26,
                       ),
                       label: 'Home',
                     ),
@@ -97,12 +97,12 @@ class _StartScreenState extends State<StartScreen> {
                       selectedIcon: Icon(
                         Icons.search_rounded,
                         color: Colors.white,
-                        size: 32,
+                        size: 26,
                       ),
                       icon: Icon(
                         Icons.search_rounded,
                         color: Colors.grey,
-                        size: 32,
+                        size: 26,
                       ),
                       label: 'Search',
                     ),
@@ -110,12 +110,12 @@ class _StartScreenState extends State<StartScreen> {
                       selectedIcon: Icon(
                         EneftyIcons.device_message_bold,
                         color: Colors.white,
-                        size: 28,
+                        size: 24,
                       ),
                       icon: Icon(
                         EneftyIcons.device_message_outline,
                         color: Colors.grey,
-                        size: 28,
+                        size: 24,
                       ),
                       label: 'Comunity',
                     ),
@@ -123,12 +123,12 @@ class _StartScreenState extends State<StartScreen> {
                       selectedIcon: Icon(
                         Icons.person,
                         color: Colors.white,
-                        size: 30,
+                        size: 26,
                       ),
                       icon: Icon(
                         Icons.person,
                         color: Colors.grey,
-                        size: 30,
+                        size: 26,
                       ),
                       label: 'Profile',
                     ),
