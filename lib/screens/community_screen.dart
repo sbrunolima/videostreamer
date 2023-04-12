@@ -123,7 +123,7 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
                 decoration: BoxDecoration(
                   color: Colors.grey.shade900,
                   borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(20),
+                    top: Radius.circular(10),
                   ),
                 ),
                 child: AddPost(

@@ -33,11 +33,11 @@ class ReplyButton extends StatelessWidget {
             initialChildSize: 0.7,
             minChildSize: 0.5,
             maxChildSize: 0.9,
-            builder: (_, context) => Container(
+            builder: (_, controller) => Container(
               decoration: BoxDecoration(
                 color: Colors.grey.shade900,
                 borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(20),
+                  top: Radius.circular(10),
                 ),
               ),
               child: AddReply(

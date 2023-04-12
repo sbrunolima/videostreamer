@@ -17,6 +17,11 @@ import '../profile_screen/profile_option_buttons.dart';
 import '../profile_screen/exit_button.dart';
 import '../profile_screen/profile_data.dart';
 import '../widgets/loading.dart';
+import '../profile_screen/profile_option_buttons.dart';
+import '../profile_screen/about_author_buttom.dart';
+import '../profile_screen/version_buttom.dart';
+import '../profile_screen/privacy_buttom.dart';
+import '../profile_screen/about_trailers.buttom.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -73,13 +78,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     user: user[0],
                   ),
                   const SizedBox(height: 30),
-                  OptionButton(title: 'About the Author'),
+                  AboutAuthorButtom(),
                   buttonSpace,
-                  OptionButton(title: 'About the Trailers'),
+                  AboutTrailersButtom(),
                   buttonSpace,
-                  OptionButton(title: 'Version notes'),
+                  VersionButtom(),
                   buttonSpace,
-                  OptionButton(title: 'Privacy'),
+                  PrivacyButtom(),
                   const SizedBox(height: 40),
                   ExitButton(),
                 ],
