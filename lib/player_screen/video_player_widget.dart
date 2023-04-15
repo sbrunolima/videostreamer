@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 //Widgets
 import '../player_screen/video_progress_indicator.dart';
 import '../widgets/my_back_icon.dart';
+import '../widgets/loading.dart';
 
 //Providers
 import '../providers/video_provider.dart';
@@ -81,8 +82,8 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(height: mediaQuary.height - 220),
-                    const Center(
-                      child: CircularProgressIndicator(color: Colors.white30),
+                    Center(
+                      child: Loading(),
                     ),
                   ],
                 ),

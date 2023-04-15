@@ -29,10 +29,11 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   @override
   void initState() {
     super.initState();
-    controller = VideoPlayerController.network(widget.video.trailerURL)
-      ..addListener(() => setState(() {}))
-      ..setLooping(false)
-      ..initialize().then((_) => controller.play());
+    controller =
+        VideoPlayerController.network(widget.video.trailerURL.toString())
+          ..addListener(() => setState(() {}))
+          ..setLooping(false)
+          ..initialize().then((_) => controller.play());
     setLandscape();
   }
 

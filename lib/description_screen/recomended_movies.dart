@@ -7,7 +7,7 @@ import '../objects/video.dart';
 import '../providers/video_provider.dart';
 
 //Widgets
-import '../widgets/movie_card.dart';
+import '../widgets/movie_card_recommend.dart';
 
 class RecomendedMoviesWidget extends StatelessWidget {
   final List<String> movieGenre;
@@ -20,40 +20,29 @@ class RecomendedMoviesWidget extends StatelessWidget {
     final videoData = Provider.of<VideosProvider>(context, listen: false);
     final video = videoData.video;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              child: Text(
-                'More like this',
-                style: GoogleFonts.openSans(
-                  color: Colors.white60,
-                  fontSize: 16,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ],
+    return MediaQuery.removePadding(
+      removeTop: true,
+      removeBottom: true,
+      context: context,
+      child: GridView.builder(
+        physics: NeverScrollableScrollPhysics(),
+        shrinkWrap: true,
+        itemCount: video.length > 7 ? 8 : video.length,
+        itemBuilder: (context, index) {
+          return MovieCardRecommend(video: video[index]);
+          // if (video[index].genre.contains(movieGenre[0]) &&
+          //     video[index].id != movieID) {
+          //   return MovieCardRecommend(video: video[index]);
+          // }
+          // return SizedBox.shrink();
+        },
+        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 260,
+          crossAxisSpacing: 0,
+          mainAxisSpacing: 10,
+          mainAxisExtent: 240,
         ),
-        Container(
-          height: 160,
-          child: ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 15),
-            scrollDirection: Axis.horizontal,
-            itemCount: video.length,
-            itemBuilder: (context, index) {
-              if (video[index].genre.contains(movieGenre[0]) &&
-                  video[index].id != movieID) {
-                return MovieCard(video: video[index]);
-              }
-              return Container();
-            },
-          ),
-        ),
-      ],
+      ),
     );
   }
 }

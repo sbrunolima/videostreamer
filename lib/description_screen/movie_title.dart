@@ -81,14 +81,16 @@ class MovieTitle extends StatelessWidget {
         color: Colors.green,
         child: SizedBox(
           height: 17,
-          width: 18,
           child: Center(
-            child: Text(
-              video.age.toString(),
-              style: GoogleFonts.openSans(
-                color: Colors.white,
-                fontWeight: FontWeight.w700,
-                fontSize: 10,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: Text(
+                video.age.toString(),
+                style: GoogleFonts.openSans(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 10,
+                ),
               ),
             ),
           ),
@@ -126,7 +128,7 @@ class MovieTitle extends StatelessWidget {
             Row(
               children: [
                 genreText('${video.genre[i].toString()}'),
-                i < video.genre.length - 1 ? Text(', ') : Text('. '),
+                i < video.genre.length - 1 ? Text(', ') : Text(''),
               ],
             ),
         ],

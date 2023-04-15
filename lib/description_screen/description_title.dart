@@ -1,5 +1,4 @@
 import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:enefty_icons/enefty_icons.dart';
@@ -7,8 +6,11 @@ import 'package:jumping_dot/jumping_dot.dart';
 
 //Widgets
 import '../description_screen/play_button.dart';
-import '../objects/video.dart';
 import '../widgets/my_back_icon.dart';
+import '../widgets/loading.dart';
+
+//Objects
+import '../objects/video.dart';
 
 class DescriptionTitle extends StatelessWidget {
   final Video video;
@@ -20,7 +22,7 @@ class DescriptionTitle extends StatelessWidget {
     final titleWidth = MediaQuery.of(context).size.width;
 
     return Container(
-      height: 400,
+      height: 450,
       child: Stack(
         children: [
           //Movie banner
@@ -39,21 +41,18 @@ class DescriptionTitle extends StatelessWidget {
               children: [
                 Image.network(
                   video.bannerUrl.toString(),
-                  height: 400,
+                  height: 450,
                   width: titleWidth,
                   fit: BoxFit.cover,
                   loadingBuilder: (context, Widget child,
                       ImageChunkEvent? loadingProgress) {
                     if (loadingProgress == null) return child;
                     return Container(
-                      height: 350,
+                      height: 400,
                       width: titleWidth,
-                      child: const Align(
+                      child: Align(
                         alignment: Alignment.center,
-                        child: JumpingDots(
-                          color: Colors.white54,
-                          radius: 6,
-                        ),
+                        child: Loading(),
                       ),
                     );
                   },

@@ -14,12 +14,11 @@ import '../objects/video.dart';
 import '../description_screen/description_title.dart';
 import '../description_screen/rate_row.dart';
 import '../description_screen/play_button.dart';
-import '../description_screen/all_cast_button.dart';
-import '../description_screen/cast_column.dart';
 import '../description_screen/storyline_widget.dart';
 import '../description_screen/recomended_movies.dart';
 import '../widgets/my_back_icon.dart';
 import '../description_screen/movie_title.dart';
+import '../description_screen/suggestion_details_tab.dart';
 
 class MovieDescriptionScreen extends StatefulWidget {
   static const routeName = 'description-screen';
@@ -34,7 +33,9 @@ class MovieDescriptionScreen extends StatefulWidget {
   State<MovieDescriptionScreen> createState() => _MovieDescriptionScreenState();
 }
 
-class _MovieDescriptionScreenState extends State<MovieDescriptionScreen> {
+class _MovieDescriptionScreenState extends State<MovieDescriptionScreen>
+    with SingleTickerProviderStateMixin {
+  late final TabController controller = TabController(length: 2, vsync: this);
   @override
   Widget build(BuildContext context) {
     final titleWidth = MediaQuery.of(context).size.width;
@@ -54,13 +55,9 @@ class _MovieDescriptionScreenState extends State<MovieDescriptionScreen> {
             DescriptionTitle(video: widget.video),
             MovieTitle(video: widget.video),
             StorylineWidget(video: widget.video),
-            const SizedBox(height: 30),
-            CastColumn(video: widget.video),
-            RecomendedMoviesWidget(
-              movieGenre: widget.video.genre,
-              movieID: widget.video.id,
-            ),
-            const SizedBox(height: 50),
+            const SizedBox(height: 20),
+            SuggestionDetailsTab(video: widget.video),
+            const SizedBox(height: 10),
           ],
         ),
       ),
