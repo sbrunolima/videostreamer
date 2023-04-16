@@ -63,8 +63,8 @@ class AboutAuthorButtom extends StatelessWidget {
           title,
           style: GoogleFonts.openSans(
             color: Colors.lightGreenAccent,
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            fontSize: 14,
           ),
         ),
         const SizedBox(width: 6),
@@ -73,8 +73,8 @@ class AboutAuthorButtom extends StatelessWidget {
           maxLines: 2,
           style: GoogleFonts.openSans(
             color: Colors.white,
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            fontSize: 14,
           ),
         ),
       ],
@@ -89,8 +89,8 @@ class AboutAuthorButtom extends StatelessWidget {
           title,
           style: GoogleFonts.openSans(
             color: Colors.lightGreenAccent,
-            fontWeight: FontWeight.w600,
-            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            fontSize: 14,
           ),
         ),
         const SizedBox(width: 6),
@@ -101,8 +101,8 @@ class AboutAuthorButtom extends StatelessWidget {
             maxLines: 2,
             style: GoogleFonts.openSans(
               color: Colors.white,
-              fontWeight: FontWeight.w600,
-              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              fontSize: 14,
             ),
           ),
         ),
@@ -117,7 +117,7 @@ class AboutAuthorButtom extends StatelessWidget {
             style: GoogleFonts.openSans(
               color: Colors.white,
               fontWeight: FontWeight.w600,
-              fontSize: 18,
+              fontSize: 14,
             ),
           ),
         ],

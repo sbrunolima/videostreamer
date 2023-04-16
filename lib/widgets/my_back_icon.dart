@@ -7,7 +7,6 @@ class MyBackIcon extends StatelessWidget {
     return IconButton(
       icon: const Icon(
         EneftyIcons.arrow_left_3_outline,
-        size: 30,
       ),
       onPressed: () {
         Navigator.of(context).pop();

@@ -23,7 +23,7 @@ class StorylineWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Container(
-            height: 53,
+            height: 45,
             width: MediaQuery.of(context).size.width,
             child: Text(
               video.storyline[0].toString(),
@@ -33,7 +33,7 @@ class StorylineWidget extends StatelessWidget {
                 height: 1.6,
                 color: Colors.white,
                 fontWeight: FontWeight.w400,
-                fontSize: 16,
+                fontSize: 14,
               ),
             ),
           ),
@@ -54,7 +54,7 @@ class StorylineWidget extends StatelessWidget {
                 height: 1.6,
                 color: Colors.red,
                 fontWeight: FontWeight.w400,
-                fontSize: 16,
+                fontSize: 14,
               ),
             ),
           ),

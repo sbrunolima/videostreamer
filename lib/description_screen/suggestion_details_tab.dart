@@ -63,7 +63,7 @@ class _SuggestionDetailsTabState extends State<SuggestionDetailsTab>
               labelStyle: GoogleFonts.openSans(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,
-                fontSize: 16,
+                fontSize: 14,
               ),
               padding: EdgeInsets.symmetric(horizontal: 6),
               onTap: (value) {
@@ -81,7 +81,11 @@ class _SuggestionDetailsTabState extends State<SuggestionDetailsTab>
           SizedBox(
             width: MediaQuery.of(context).size.width,
             //Check the Tab index and set height according
-            height: _index == 0 ? 1000 : 800,
+            height: (_index == 1 && widget.video.castNames.length < 15)
+                ? 600
+                : (_index == 1 && widget.video.castNames.length > 15)
+                    ? 800
+                    : 1050,
             child: TabBarView(
               controller: _controller,
               children: [
@@ -183,7 +187,12 @@ class _SuggestionDetailsTabState extends State<SuggestionDetailsTab>
               //Check how many Genres the movies has
               //And show all the Genres
               for (int i = 0; i < widget.video.genre.length; i++)
-                myText('${widget.video.genre[i].toString()}'),
+                Row(
+                  children: [
+                    myText('${widget.video.genre[i].toString()}'),
+                    i < widget.video.genre.length - 1 ? Text(', ') : Text(''),
+                  ],
+                ),
             ],
           ),
         ],
@@ -207,7 +216,14 @@ class _SuggestionDetailsTabState extends State<SuggestionDetailsTab>
               //Check how many Directors the movies has
               //And show all the directors
               for (int i = 0; i < widget.video.director.length; i++)
-                myText('${widget.video.director[i].toString()}'),
+                Row(
+                  children: [
+                    myText('${widget.video.director[i].toString()}'),
+                    i < widget.video.director.length - 1
+                        ? Text(', ')
+                        : Text(''),
+                  ],
+                ),
             ],
           ),
         ],

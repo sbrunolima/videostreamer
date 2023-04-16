@@ -34,7 +34,7 @@ class DescriptionTitle extends StatelessWidget {
                 colors: [Colors.grey, Colors.transparent],
                 transform: GradientRotation(math.pi / 1),
               ).createShader(
-                  Rect.fromLTRB(0, 250, rect.width, rect.height - 10));
+                  Rect.fromLTRB(0, 360, rect.width, rect.height - 0));
             },
             blendMode: BlendMode.dstIn,
             child: Column(
@@ -48,7 +48,7 @@ class DescriptionTitle extends StatelessWidget {
                       ImageChunkEvent? loadingProgress) {
                     if (loadingProgress == null) return child;
                     return Container(
-                      height: 400,
+                      height: 450,
                       width: titleWidth,
                       child: Align(
                         alignment: Alignment.center,

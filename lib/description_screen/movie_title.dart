@@ -17,7 +17,7 @@ class MovieTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const sizedBox = SizedBox(width: 5);
+    const sizedBox = SizedBox(height: 5);
     const pointText = Padding(
       padding: EdgeInsets.symmetric(horizontal: 3),
       child: Text('●'),
@@ -25,11 +25,13 @@ class MovieTitle extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
-        height: video.title.toString().length > 20 ? 210 : 170,
+        height: video.title.toString().length > 20 ? 200 : 165,
+        width: MediaQuery.of(context).size.width,
         color: Colors.transparent,
         child: Column(
           children: [
             movieTitle(),
+            sizedBox,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -63,16 +65,16 @@ class MovieTitle extends StatelessWidget {
   }
 
   Widget movieTitle() => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Text(
-          video.title.toString().toUpperCase(),
+          video.title.toString(),
           maxLines: video.title.toString().length > 18 ? 2 : 1,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.center,
-          style: GoogleFonts.openSans(
+          style: GoogleFonts.audiowide(
             color: Colors.white,
-            fontWeight: FontWeight.w600,
-            fontSize: 30,
+            fontWeight: FontWeight.w500,
+            fontSize: 28,
           ),
         ),
       );
@@ -107,7 +109,9 @@ class MovieTitle extends StatelessWidget {
           ),
           const SizedBox(width: 2),
           Text(
-            video.rate.toString().toUpperCase(),
+            video.rate.toString() == '0'
+                ? '-.-'
+                : video.rate.toString().toUpperCase(),
             style: GoogleFonts.openSans(
               color: Colors.white,
               fontWeight: FontWeight.w400,

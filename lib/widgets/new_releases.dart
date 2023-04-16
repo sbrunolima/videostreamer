@@ -13,16 +13,17 @@ import '../description_screen/movie_description.dart';
 import '../widgets/movie_card.dart';
 
 class NewReleases extends StatelessWidget {
-  final String year;
+  final double rate;
 
-  NewReleases({required this.year});
+  NewReleases({required this.rate});
 
   @override
   Widget build(BuildContext context) {
     final titleWidth = MediaQuery.of(context).size.width;
     final videoData = Provider.of<VideosProvider>(context, listen: false);
-    final video =
-        videoData.video.where((element) => element.release == year).toList();
+    final video = videoData.video
+        .where((element) => double.tryParse(element.rate)! > rate)
+        .toList();
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -30,7 +31,7 @@ class NewReleases extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Text(
-            '$year Releases',
+            'Top IMDb  Rating',
             style: GoogleFonts.roboto(
               color: Colors.white60,
               fontSize: 16,

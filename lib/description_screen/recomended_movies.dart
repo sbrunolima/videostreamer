@@ -30,11 +30,6 @@ class RecomendedMoviesWidget extends StatelessWidget {
         itemCount: video.length > 7 ? 8 : video.length,
         itemBuilder: (context, index) {
           return MovieCardRecommend(video: video[index]);
-          // if (video[index].genre.contains(movieGenre[0]) &&
-          //     video[index].id != movieID) {
-          //   return MovieCardRecommend(video: video[index]);
-          // }
-          // return SizedBox.shrink();
         },
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 260,

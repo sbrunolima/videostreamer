@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     MyAppBar(),
                     mySizedBox,
                     CarouselWidget(),
-                    NewReleases(year: '2023'),
+                    NewReleases(rate: 7.0),
                     GenreRows(movieGenre: 'Crime'),
                     GenreRows(movieGenre: 'Adventure'),
                     GenreRows(movieGenre: 'Comedy'),

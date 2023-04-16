@@ -64,7 +64,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         .toList();
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.black54,
       appBar: AppBar(
         elevation: 0,
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
