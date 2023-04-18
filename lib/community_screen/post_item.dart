@@ -20,8 +20,9 @@ import '../community_screen/post_movie_container.dart';
 
 class PostItem extends StatefulWidget {
   final CommunityPost post;
+  final Function(bool) callback;
 
-  PostItem({required this.post});
+  PostItem({required this.post, required this.callback});
 
   @override
   State<PostItem> createState() => _PostItemState();
@@ -45,6 +46,11 @@ class _PostItemState extends State<PostItem> {
           MaterialPageRoute(
             builder: ((context) => PostDescription(
                   post: widget.post,
+                  //Receive a BOOL value from Post Description
+                  //And pass the BOOL value to Community Screen
+                  callback: (value) {
+                    widget.callback(value);
+                  },
                 )),
           ),
         );

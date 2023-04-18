@@ -95,6 +95,13 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
                         children: [
                           PostItem(
                             post: post[index],
+                            //Receive a BOOL value from Post Item
+                            //And refresh the screen according the BOOL value
+                            callback: (value) {
+                              setState(() {
+                                _isInit = value;
+                              });
+                            },
                           ),
                           const Divider(),
                         ],

@@ -19,8 +19,10 @@ import '../community_screen/reply_item.dart';
 class RepliesList extends StatelessWidget {
   final Comments comment;
   final UserData user;
+  final Function(bool) callback;
 
-  RepliesList({required this.comment, required this.user});
+  RepliesList(
+      {required this.comment, required this.user, required this.callback});
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +41,9 @@ class RepliesList extends StatelessWidget {
           return ReplyItem(
             reply: reply[index],
             user: user,
+            callback: (value) {
+              callback(value);
+            },
           );
         },
       ),

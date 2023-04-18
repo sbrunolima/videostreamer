@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:intl/intl.dart';
+import 'package:ui_training05/providers/comments_provider.dart';
 
 //Provider
 import '../objects/communit_post.dart';
@@ -23,8 +24,10 @@ import '../community_screen/replies_list.dart';
 class CommentItem extends StatefulWidget {
   final Comments comment;
   final UserData user;
+  final Function(bool) callback;
 
-  CommentItem({required this.comment, required this.user});
+  CommentItem(
+      {required this.comment, required this.user, required this.callback});
 
   @override
   State<CommentItem> createState() => _CommentItemState();
@@ -69,43 +72,63 @@ class _CommentItemState extends State<CommentItem> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Image.network(
-                    user[0].imageUrl,
-                    height: 25,
-                    width: 25,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ],
+            ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Image.network(
+                user[0].imageUrl,
+                height: 25,
+                width: 25,
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Text(
-                      user[0].username,
-                      style: GoogleFonts.openSans(
-                        color: Colors.white60,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
+                SizedBox(
+                  width: MediaQuery.of(context).size.width - 70,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            user[0].username,
+                            style: GoogleFonts.openSans(
+                              color: Colors.white60,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          Text(
+                            DateFormat('● dd/MM - hh:mm')
+                                .format(widget.comment.dateTime),
+                            style: GoogleFonts.openSans(
+                              color: Colors.grey,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    Text(
-                      DateFormat('● dd/MM - hh:mm')
-                          .format(widget.comment.dateTime),
-                      style: GoogleFonts.openSans(
-                        color: Colors.grey,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
+                      if (widget.comment.userID == widget.user.userID)
+                        GestureDetector(
+                          onTap: () async {
+                            await Provider.of<CommentProvider>(context,
+                                    listen: false)
+                                .deleteComment(commentID: widget.comment.id);
+
+                            //Return true to Post Description Widget
+                            widget.callback(true);
+                          },
+                          child: Icon(
+                            Icons.delete,
+                            size: 20,
+                            color: Colors.white70,
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 6),
                 SizedBox(
@@ -210,6 +233,11 @@ class _CommentItemState extends State<CommentItem> {
           RepliesList(
             comment: widget.comment,
             user: widget.user,
+            //Receive a BOOL value and refresh the
+            //Screen according the BOOL value
+            callback: (value) {
+              widget.callback(value);
+            },
           ),
         const Divider(),
       ],

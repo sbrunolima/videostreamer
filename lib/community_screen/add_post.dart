@@ -196,6 +196,7 @@ class _AddPostState extends State<AddPost> {
                   username: widget.user.username,
                 );
 
+                //Return the BOOL value after finish the adding
                 widget.callback(true);
 
                 Navigator.of(context).pop();

@@ -9,6 +9,7 @@ import '../objects/communit_post.dart';
 import '../providers/comments_provider.dart';
 import '../providers/user_provider.dart';
 import '../providers/reply_like_provider.dart';
+import '../providers/reply_provider.dart';
 
 //Objects
 import '../objects/user.dart';
@@ -16,8 +17,9 @@ import '../objects/user.dart';
 class ReplyItem extends StatefulWidget {
   final Reply reply;
   final UserData user;
+  final Function(bool) callback;
 
-  ReplyItem({required this.reply, required this.user});
+  ReplyItem({required this.reply, required this.user, required this.callback});
 
   @override
   State<ReplyItem> createState() => _ReplyItemState();
@@ -57,44 +59,63 @@ class _ReplyItemState extends State<ReplyItem> {
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(50),
-                  child: Image.network(
-                    user[0].imageUrl,
-                    height: 25,
-                    width: 25,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ],
+            ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Image.network(
+                user[0].imageUrl,
+                height: 25,
+                width: 25,
+                fit: BoxFit.cover,
+              ),
             ),
             const SizedBox(width: 10),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      user[0].username,
-                      style: GoogleFonts.openSans(
-                        color: Colors.white60,
-                        fontSize: 12,
-                        fontWeight: FontWeight.w400,
+                Container(
+                  color: Colors.red,
+                  width: MediaQuery.of(context).size.width - 100,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            user[0].username,
+                            style: GoogleFonts.openSans(
+                              color: Colors.white60,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          Text(
+                            DateFormat('● dd/MM - hh:mm')
+                                .format(widget.reply.dateTime),
+                            style: GoogleFonts.openSans(
+                              color: Colors.grey,
+                              fontSize: 10,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    Text(
-                      DateFormat('● dd/MM - hh:mm')
-                          .format(widget.reply.dateTime),
-                      style: GoogleFonts.openSans(
-                        color: Colors.grey,
-                        fontSize: 10,
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ],
+                      if (widget.reply.userID == widget.user.userID)
+                        GestureDetector(
+                          onTap: () async {
+                            await Provider.of<ReplyProvider>(context,
+                                    listen: false)
+                                .deleteReply(replyID: widget.reply.id);
+
+                            widget.callback(true);
+                          },
+                          child: Icon(
+                            Icons.delete,
+                            size: 20,
+                            color: Colors.white70,
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 6),
                 SizedBox(

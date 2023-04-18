@@ -136,6 +136,7 @@ class _AddCommentState extends State<AddComment> {
                   userComment: _comment,
                 );
 
+                //Return the BOOL value after finish the adding
                 widget.callback(true);
 
                 Navigator.of(context).pop();

@@ -35,8 +35,9 @@ import '../widgets/my_title.dart';
 
 class PostDescription extends StatefulWidget {
   final CommunityPost post;
+  final Function(bool) callback;
 
-  PostDescription({required this.post});
+  PostDescription({required this.post, required this.callback});
 
   @override
   State<PostDescription> createState() => _PostDescriptionState();
@@ -93,7 +94,9 @@ class _PostDescriptionState extends State<PostDescription> {
             loadlikes.postID == widget.post.id && loadlikes.userID == _userId)
         .toList();
 
+    //Verify if the likes is not empty
     if (likes.isNotEmpty) {
+      //If is not empty, set _liked to the same value the server
       setState(() {
         _liked = likes[0].favorite;
       });
@@ -105,6 +108,28 @@ class _PostDescriptionState extends State<PostDescription> {
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         elevation: 0,
         leading: MyBackIcon(),
+        actions: [
+          //Verify if the user is the owner of the post
+          //And show him the delete option
+          widget.post.userID == _userId
+              ? IconButton(
+                  icon: Icon(
+                    Icons.delete,
+                    color: Colors.white70,
+                  ),
+                  onPressed: () async {
+                    await Provider.of<PostProvider>(context, listen: false)
+                        .deletePost(postID: widget.post.id);
+
+                    //Return true to Post Item Widget
+                    widget.callback(true);
+
+                    Navigator.of(context).pop();
+                  },
+                )
+              : const SizedBox(width: 20),
+          const SizedBox(width: 10),
+        ],
       ),
       body: _isLoading
           ? Loading()
@@ -170,6 +195,13 @@ class _PostDescriptionState extends State<PostDescription> {
                         return CommentItem(
                           comment: comment[index],
                           user: user[0],
+                          //Receive a BOOL value and refresh the
+                          //Screen according the BOOL value
+                          callback: (value) {
+                            setState(() {
+                              _isInit = value;
+                            });
+                          },
                         );
                       },
                     ),
