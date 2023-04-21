@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     GenreRows(movieGenre: 'Crime'),
                     GenreRows(movieGenre: 'Adventure'),
                     GenreRows(movieGenre: 'Comedy'),
-                    GenreRows(movieGenre: 'SciFi'),
+                    GenreRows(movieGenre: 'Sci-Fi'),
                     GenreRows(movieGenre: 'Horror'),
                     GenreRows(movieGenre: 'Animation'),
                     const SizedBox(height: 40),

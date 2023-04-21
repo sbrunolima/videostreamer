@@ -82,10 +82,8 @@ class _SuggestionDetailsTabState extends State<SuggestionDetailsTab>
             width: MediaQuery.of(context).size.width,
             //Check the Tab index and set height according
             height: (_index == 1 && widget.video.castNames.length < 15)
-                ? 600
-                : (_index == 1 && widget.video.castNames.length > 15)
-                    ? 800
-                    : 1050,
+                ? 900
+                : 1050,
             child: TabBarView(
               controller: _controller,
               children: [
@@ -211,98 +209,109 @@ class _SuggestionDetailsTabState extends State<SuggestionDetailsTab>
             ),
           ),
           const SizedBox(height: 3),
-          Row(
+          Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               //Check how many Directors the movies has
               //And show all the directors
               for (int i = 0; i < widget.video.director.length; i++)
-                Row(
-                  children: [
-                    myText('${widget.video.director[i].toString()}'),
-                    i < widget.video.director.length - 1
-                        ? Text(', ')
-                        : Text(''),
-                  ],
-                ),
+                myText('${widget.video.director[i].toString()}'),
             ],
           ),
         ],
       );
 
   //Cast Widget
-  Widget cast() => Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Cast:',
-            style: GoogleFonts.openSans(
-              color: Colors.white54,
-              fontWeight: FontWeight.w400,
-              fontSize: 14,
-            ),
-          ),
-          const SizedBox(height: 3),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+  Widget cast() => SizedBox(
+        height: 310,
+        child: ListView(
+          padding: EdgeInsets.zero,
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Cast:',
+                  style: GoogleFonts.openSans(
+                    color: Colors.white54,
+                    fontWeight: FontWeight.w400,
+                    fontSize: 14,
+                  ),
+                ),
+                const SizedBox(height: 3),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    //Check the video length
-                    //If it is bigger than 15
-                    //It will divide the cast names in two columns
-                    if (widget.video.castNames.length > 15)
-                      for (int i = 0;
-                          i <
-                              widget.video.castNames.length -
-                                  (widget.video.castNames.length / 2);
-                          i++)
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            myText('${widget.video.castNames[i].toString()}'),
-                          ],
-                        ),
+                    SizedBox(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          //Check the video length
+                          //If it is bigger than 15
+                          //It will divide the cast names in two columns
+                          if (widget.video.castNames.length > 15)
+                            for (int i = 0; i < 15; i++)
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  myText(
+                                      '${widget.video.castNames[i].toString()}'),
+                                ],
+                              ),
 
-                    //Check the video length
-                    //If it is less than 15
-                    //It will add a only one cast names column
-                    if (widget.video.castNames.length < 15)
-                      for (int i = 0; i < widget.video.castNames.length; i++)
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            myText('${widget.video.castNames[i].toString()}'),
-                          ],
-                        ),
+                          //Check the video length
+                          //If it is less than 15
+                          //It will add a only one cast names column
+                          if (widget.video.castNames.length < 15)
+                            for (int i = 0;
+                                i < widget.video.castNames.length;
+                                i++)
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  myText(
+                                      '${widget.video.castNames[i].toString()}'),
+                                ],
+                              ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          //Check the video length
+                          //If it is bigger than 15
+                          //It will add a second cast names column
+                          if (widget.video.castNames.length > 15)
+                            for (int i = 15;
+                                i < widget.video.castNames.length;
+                                i++)
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  myText(
+                                      '${widget.video.castNames[i].toString()}'),
+                                ],
+                              ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
-              ),
-              SizedBox(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    //Check the video length
-                    //If it is bigger than 15
-                    //It will add a second cast names column
-                    if (widget.video.castNames.length > 15)
-                      for (int i = 16; i < widget.video.castNames.length; i++)
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            myText('${widget.video.castNames[i].toString()}'),
-                          ],
-                        ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       );
 
   //MyText Widget

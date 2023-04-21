@@ -22,6 +22,7 @@ import '../profile_screen/about_author_buttom.dart';
 import '../profile_screen/version_buttom.dart';
 import '../profile_screen/privacy_buttom.dart';
 import '../profile_screen/about_trailers.buttom.dart';
+import '../profile_screen/report_buttom.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -85,6 +86,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   VersionButtom(),
                   buttonSpace,
                   PrivacyButtom(),
+                  buttonSpace,
+                  ReportButtom(),
                   const SizedBox(height: 40),
                   ExitButton(),
                 ],

@@ -14,9 +14,9 @@ class OptionButton extends StatelessWidget {
         height: 45,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.blueGrey),
+          border: Border.all(color: Colors.white10),
           borderRadius: BorderRadius.circular(4),
-          color: Colors.blueGrey,
+          color: Colors.white10,
         ),
         child: Padding(
           padding: const EdgeInsets.all(10),
@@ -27,11 +27,11 @@ class OptionButton extends StatelessWidget {
                 title,
                 style: GoogleFonts.openSans(
                   color: Colors.white,
-                  fontWeight: FontWeight.w600,
+                  fontWeight: FontWeight.w500,
                   fontSize: 16,
                 ),
               ),
-              Icon(Icons.arrow_forward_ios_sharp),
+              Icon(Icons.arrow_forward_ios_sharp, size: 18),
             ],
           ),
         ),

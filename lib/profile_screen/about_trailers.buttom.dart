@@ -61,7 +61,7 @@ class AboutTrailersButtom extends StatelessWidget {
           Text(
             title,
             style: GoogleFonts.openSans(
-              color: Colors.white,
+              color: Colors.lightGreenAccent,
               fontWeight: FontWeight.w600,
               fontSize: 18,
             ),

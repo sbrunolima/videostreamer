@@ -24,6 +24,7 @@ class VideoProgressIdicator extends StatelessWidget {
       children: [
         VideoTitleWidget(video: video),
         const SizedBox(height: 17),
+        //Progress indicator
         SizedBox(
           height: 5,
           child: VideoProgressIndicator(
@@ -43,6 +44,7 @@ class VideoProgressIdicator extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              //Video duration widget
               Container(
                 child: Row(
                   children: [
@@ -78,6 +80,7 @@ class VideoProgressIdicator extends StatelessWidget {
                   ],
                 ),
               ),
+              //Set volume and Report Button
               Container(
                 child: Row(
                   children: [
@@ -95,9 +98,6 @@ class VideoProgressIdicator extends StatelessWidget {
                             ),
                           ),
                         const SizedBox(width: 15),
-                        const Icon(Icons.message_outlined,
-                            color: Colors.white60),
-                        const SizedBox(width: 10),
                       ],
                     ),
                   ],
@@ -110,6 +110,7 @@ class VideoProgressIdicator extends StatelessWidget {
     );
   }
 
+  //Video time widget
   String _videoDuration(Duration duration) {
     String twoDigits(int n) => n.toString().padLeft(2, '0');
     String hours = twoDigits(duration.inHours.remainder(60));

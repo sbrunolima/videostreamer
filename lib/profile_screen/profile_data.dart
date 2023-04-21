@@ -55,7 +55,7 @@ class _ProfileDataState extends State<ProfileData> {
           height: 100,
           width: 100,
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.red),
+            border: Border.all(color: Colors.white10),
             borderRadius: BorderRadius.circular(50),
           ),
           child: ClipRRect(
