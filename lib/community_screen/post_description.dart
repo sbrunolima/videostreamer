@@ -1,19 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:jumping_dot/jumping_dot.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart';
-import 'package:intl/intl.dart';
-import 'dart:math';
 
 //Providers
-import '../providers/video_provider.dart';
-import '../providers/images_provider.dart';
 import '../providers/user_provider.dart';
-import '../providers/carousel_provider.dart';
 import '../providers/post_provider.dart';
 import '../providers/comments_provider.dart';
 import '../providers/post_likes_provider.dart';
@@ -31,7 +23,6 @@ import '../community_screen/post_movie_container.dart';
 import '../community_screen/add_comment.dart';
 import '../community_screen/comment_item.dart';
 import '../widgets/loading.dart';
-import '../widgets/my_title.dart';
 
 class PostDescription extends StatefulWidget {
   final CommunityPost post;

@@ -1,32 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:enefty_icons/enefty_icons.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:http/http.dart';
-import 'package:intl/intl.dart';
-import 'dart:math';
 
 //Provider
 import '../objects/communit_post.dart';
-import '../providers/post_provider.dart';
 import '../providers/comments_provider.dart';
-import '../providers/images_provider.dart';
-import '../providers/user_provider.dart';
 
 //Objects
 import '../objects/user.dart';
 
 //Widgets
 import '../widgets/my_back_icon.dart';
-import '../community_screen/post_profile.dart';
-import '../community_screen/post_movie_container.dart';
 import '../widgets/my_title.dart';
 
+//Add Comment Widget
 class AddComment extends StatefulWidget {
   final UserData user;
   final CommunityPost post;
+
+  //Callback function to refresh the page
   final Function(bool) callback;
 
   AddComment({required this.user, required this.post, required this.callback});
@@ -48,6 +40,7 @@ class _AddCommentState extends State<AddComment> {
     _observation.dispose();
   }
 
+  //Save the form field
   Future<void> _saveForm() async {
     final isValid = _formKey.currentState!.validate();
     if (!isValid) {
@@ -97,6 +90,7 @@ class _AddCommentState extends State<AddComment> {
                     _saveForm();
                   },
                   onChanged: (value) {
+                    //Continue only if the user add any comment
                     if (value.toString().length > 0) {
                       setState(() {
                         _contiueContent = true;
@@ -116,6 +110,7 @@ class _AddCommentState extends State<AddComment> {
           ),
         ),
       ),
+      //The button activate or not if the user enter any data
       floatingActionButton: FloatingActionButton(
         backgroundColor:
             (_contiueContent) ? Colors.greenAccent : Colors.grey.shade600,
@@ -126,7 +121,11 @@ class _AddCommentState extends State<AddComment> {
         ),
         onPressed: (_contiueContent)
             ? () async {
+                //Save the formfield
                 _saveForm();
+
+                //Access the CommentProvider and send the comment to firebase
+                //Using the sendComment function
                 await Provider.of<CommentProvider>(context, listen: false)
                     .sendComment(
                   postID: widget.post.id,
@@ -139,6 +138,7 @@ class _AddCommentState extends State<AddComment> {
                 //Return the BOOL value after finish the adding
                 widget.callback(true);
 
+                //Close the AddCommnent screen
                 Navigator.of(context).pop();
               }
             : null,

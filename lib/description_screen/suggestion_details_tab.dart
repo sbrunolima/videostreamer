@@ -82,8 +82,10 @@ class _SuggestionDetailsTabState extends State<SuggestionDetailsTab>
             width: MediaQuery.of(context).size.width,
             //Check the Tab index and set height according
             height: (_index == 1 && widget.video.castNames.length < 15)
-                ? 900
-                : 1050,
+                ? 850
+                : (_index == 1 && widget.video.castNames.length > 15)
+                    ? 850
+                    : 1050,
             child: TabBarView(
               controller: _controller,
               children: [
@@ -223,8 +225,7 @@ class _SuggestionDetailsTabState extends State<SuggestionDetailsTab>
       );
 
   //Cast Widget
-  Widget cast() => SizedBox(
-        height: 310,
+  Widget cast() => Flexible(
         child: ListView(
           padding: EdgeInsets.zero,
           shrinkWrap: true,

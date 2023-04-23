@@ -4,11 +4,8 @@ import 'package:colours/colours.dart';
 
 //Screens
 import '../screens/login_screen.dart';
-import '../screens/signin_screen.dart';
 
-//Widgets
-import '../auth_screen/auth_title.dart';
-
+//Continue button in Auth Screen
 class ContinueButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

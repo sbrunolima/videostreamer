@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:colours/colours.dart';
 
 //Screens
-import '../screens/login_screen.dart';
 import '../screens/signin_screen.dart';
 
-//Widgets
-import '../auth_screen/auth_title.dart';
-
+//Singin Button to create new account if the user is new
 class SigninButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -1,27 +1,22 @@
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
 //Provider
-import '../objects/communit_post.dart';
 import '../providers/post_provider.dart';
-import '../providers/comments_provider.dart';
-import '../providers/images_provider.dart';
-import '../providers/user_provider.dart';
 
 //Objects
 import '../objects/user.dart';
 
 //Widgets
 import '../widgets/my_back_icon.dart';
-import '../community_screen/post_profile.dart';
-import '../community_screen/post_movie_container.dart';
 import '../widgets/my_title.dart';
 
+//Add Post Widget
 class AddPost extends StatefulWidget {
   final UserData user;
+
+  //Callback function to refresh the page
   final Function(bool) callback;
 
   AddPost({required this.user, required this.callback});
@@ -38,6 +33,7 @@ class _AddPostState extends State<AddPost> {
   var _postTitle = '';
   var _movie = '';
 
+  //Variables user to identify it the user entered all Forms
   bool _contiueTitle = false;
   bool _contiueSubtitle = false;
   bool _contiueContent = false;
@@ -48,6 +44,7 @@ class _AddPostState extends State<AddPost> {
     _observation.dispose();
   }
 
+  //Save the form field
   Future<void> _saveForm() async {
     final isValid = _formKey.currentState!.validate();
     if (!isValid) {
@@ -88,6 +85,7 @@ class _AddPostState extends State<AddPost> {
                 keyboardType: TextInputType.multiline,
                 textCapitalization: TextCapitalization.sentences,
                 onChanged: (value) {
+                  //Continue only if the user add any comment
                   if (value.toString().length > 0) {
                     setState(() {
                       _contiueTitle = true;
@@ -117,6 +115,7 @@ class _AddPostState extends State<AddPost> {
                 keyboardType: TextInputType.multiline,
                 textCapitalization: TextCapitalization.sentences,
                 onChanged: (value) {
+                  //Continue only if the user add any comment
                   if (value.toString().length > 0) {
                     setState(() {
                       _contiueSubtitle = true;
@@ -153,6 +152,7 @@ class _AddPostState extends State<AddPost> {
                     _saveForm();
                   },
                   onChanged: (value) {
+                    //Continue only if the user add any comment
                     if (value.toString().length > 0) {
                       setState(() {
                         _contiueContent = true;
@@ -172,6 +172,7 @@ class _AddPostState extends State<AddPost> {
           ),
         ),
       ),
+      //The button activate or not if the user enter any data
       floatingActionButton: FloatingActionButton(
         backgroundColor: (_contiueTitle && _contiueSubtitle && _contiueContent)
             ? Colors.greenAccent
@@ -185,7 +186,11 @@ class _AddPostState extends State<AddPost> {
         ),
         onPressed: (_contiueTitle && _contiueSubtitle && _contiueContent)
             ? () async {
+                //Save the formfield
                 _saveForm();
+
+                //Access the PostProvider and send the comment to firebase
+                //Using the addNewPost function
                 await Provider.of<PostProvider>(context, listen: false)
                     .addNewPost(
                   movie: _movie,
@@ -199,6 +204,7 @@ class _AddPostState extends State<AddPost> {
                 //Return the BOOL value after finish the adding
                 widget.callback(true);
 
+                //Close the AddCommnent screen
                 Navigator.of(context).pop();
               }
             : null,

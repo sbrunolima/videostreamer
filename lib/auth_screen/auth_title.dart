@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+//The APP title in the Auth Screen
 class AuthTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

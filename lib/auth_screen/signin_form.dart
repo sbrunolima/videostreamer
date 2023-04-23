@@ -1,17 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:enefty_icons/enefty_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
-
-//Providers
-import '../providers/user_provider.dart';
 
 //Widgets
 import '../widgets/my_app_bar.dart';
 import '../widgets/my_back_icon.dart';
-import '../auth_screen/signin_button.dart';
 
+//Sing in Form field
 class SigninForm extends StatefulWidget {
   final bool isLoading;
+  //Return a function to try connect
   final void Function(
     String email,
     String userName,
@@ -32,6 +29,7 @@ class _SigninFormState extends State<SigninForm> {
   String _userPassword = '';
   var _showPassword = true;
 
+  //Try to connect the backend
   void _trySignin() {
     final isValid = _formKey.currentState!.validate();
     FocusScope.of(context).unfocus();
@@ -196,6 +194,7 @@ class _SigninFormState extends State<SigninForm> {
     );
   }
 
+  //Show or Hide password
   Widget mySufixIcon() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
