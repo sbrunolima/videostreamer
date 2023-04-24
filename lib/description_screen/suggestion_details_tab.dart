@@ -81,7 +81,7 @@ class _SuggestionDetailsTabState extends State<SuggestionDetailsTab>
           SizedBox(
             width: MediaQuery.of(context).size.width,
             //Check the Tab index and set height according
-            height: (_index == 1 && widget.video.castNames.length < 15)
+            height: (_index == 1 && widget.video.castNames.length <= 15)
                 ? 850
                 : (_index == 1 && widget.video.castNames.length > 15)
                     ? 850
@@ -269,7 +269,7 @@ class _SuggestionDetailsTabState extends State<SuggestionDetailsTab>
                           //Check the video length
                           //If it is less than 15
                           //It will add a only one cast names column
-                          if (widget.video.castNames.length < 15)
+                          if (widget.video.castNames.length <= 15)
                             for (int i = 0;
                                 i < widget.video.castNames.length;
                                 i++)
