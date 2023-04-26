@@ -1,12 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:enefty_icons/enefty_icons.dart';
-import 'package:jumping_dot/jumping_dot.dart';
 
 //Widgets
-import '../description_screen/play_button.dart';
-import '../widgets/my_back_icon.dart';
 import '../widgets/loading.dart';
 
 //Objects
@@ -19,6 +14,7 @@ class DescriptionTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //Get the device width
     final titleWidth = MediaQuery.of(context).size.width;
 
     return Container(
@@ -40,10 +36,12 @@ class DescriptionTitle extends StatelessWidget {
             child: Column(
               children: [
                 Image.network(
+                  //Trailer Banner Image
                   video.bannerUrl.toString(),
                   height: 450,
                   width: titleWidth,
                   fit: BoxFit.cover,
+                  //If the image is not loaded, show this widget
                   loadingBuilder: (context, Widget child,
                       ImageChunkEvent? loadingProgress) {
                     if (loadingProgress == null) return child;
@@ -60,8 +58,6 @@ class DescriptionTitle extends StatelessWidget {
               ],
             ),
           ),
-
-          //Movie Title
         ],
       ),
     );

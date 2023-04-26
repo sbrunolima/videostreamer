@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
-import 'dart:math';
 
 //Provider
 import '../objects/communit_post.dart';
 import '../providers/comments_provider.dart';
 import '../providers/post_likes_provider.dart';
-import '../providers/user_provider.dart';
 
 //Widgets
 import '../community_screen/post_description.dart';
@@ -20,6 +15,8 @@ import '../community_screen/post_movie_container.dart';
 
 class PostItem extends StatefulWidget {
   final CommunityPost post;
+
+  //Callback function to refresh the page
   final Function(bool) callback;
 
   PostItem({required this.post, required this.callback});
@@ -31,6 +28,8 @@ class PostItem extends StatefulWidget {
 class _PostItemState extends State<PostItem> {
   @override
   Widget build(BuildContext context) {
+    //Load all DATA FROM FIREBASE => Comment, Likes
+    //-------------------------------------------------------------------------
     final commentData = Provider.of<CommentProvider>(context, listen: false);
     final likeData = Provider.of<PostLikeProvider>(context, listen: false);
     final comment = commentData.comments
@@ -39,6 +38,8 @@ class _PostItemState extends State<PostItem> {
     final likes = likeData.like
         .where((loadlikes) => loadlikes.postID == widget.post.id)
         .toList();
+    //END Load all DATA FROM FIREBASE => Comment, Likes
+    //-------------------------------------------------------------------------
 
     return GestureDetector(
       onTap: () {
@@ -72,6 +73,7 @@ class _PostItemState extends State<PostItem> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                      //Post Title preview
                       widget.post.postTitle,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
@@ -83,6 +85,7 @@ class _PostItemState extends State<PostItem> {
                     ),
                     const SizedBox(height: 10),
                     Text(
+                      //Post content preview
                       widget.post.postContent,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -96,9 +99,11 @@ class _PostItemState extends State<PostItem> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        //Movie or Topic of the post
                         PostMovieContainer(post: widget.post),
                         Row(
                           children: [
+                            //Likes count with icon
                             likeOrCommentCount(
                               likes.length.toString(),
                               EneftyIcons.heart_bold,
@@ -106,6 +111,7 @@ class _PostItemState extends State<PostItem> {
                             const SizedBox(width: 15),
                             Row(
                               children: [
+                                //Comment count with icon
                                 likeOrCommentCount(
                                   comment.length.toString(),
                                   Icons.comment_rounded,
@@ -126,6 +132,7 @@ class _PostItemState extends State<PostItem> {
     );
   }
 
+  //Text count widget
   Widget likeOrCommentCount(String title, IconData icon) {
     return Row(
       children: [

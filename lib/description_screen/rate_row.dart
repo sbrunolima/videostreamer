@@ -15,6 +15,7 @@ class RateRow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 50,
+      //Show a list of the movie data on the Movie description
       child: ListView(
         scrollDirection: Axis.horizontal,
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 8),
@@ -28,6 +29,7 @@ class RateRow extends StatelessWidget {
     );
   }
 
+  //Text Widget
   Widget categoryContainer(String title, bool isRate) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4),

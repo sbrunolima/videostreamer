@@ -26,6 +26,8 @@ import '../widgets/loading.dart';
 
 class PostDescription extends StatefulWidget {
   final CommunityPost post;
+
+  //Callback function to refresh the page
   final Function(bool) callback;
 
   PostDescription({required this.post, required this.callback});
@@ -44,6 +46,7 @@ class _PostDescriptionState extends State<PostDescription> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+    //Load the userID
     if (_isInit) {
       final User? user = auth.currentUser;
       _userId = user!.uid;
@@ -52,6 +55,7 @@ class _PostDescriptionState extends State<PostDescription> {
         _isLoading = true;
       });
 
+      //Load all data from Firebase
       Provider.of<PostProvider>(context, listen: false).loadPosts().then((_) {
         Provider.of<UserPovider>(context, listen: false).loadUsers();
         Provider.of<PostProvider>(context, listen: false).loadPosts();
@@ -71,6 +75,8 @@ class _PostDescriptionState extends State<PostDescription> {
 
   @override
   Widget build(BuildContext context) {
+    //Load all DATA FROM FIREBASE => Comment, Users, Likes
+    //-------------------------------------------------------------------------
     final commentData = Provider.of<CommentProvider>(context, listen: false);
     final likeData = Provider.of<PostLikeProvider>(context, listen: false);
     final usersData = Provider.of<UserPovider>(context, listen: false);
@@ -92,6 +98,8 @@ class _PostDescriptionState extends State<PostDescription> {
         _liked = likes[0].favorite;
       });
     }
+    //END Load all DATA FROM FIREBASE => Comment, Users, Likes
+    //-------------------------------------------------------------------------
 
     return Scaffold(
       backgroundColor: Colors.grey.shade900,
@@ -122,6 +130,7 @@ class _PostDescriptionState extends State<PostDescription> {
           const SizedBox(width: 10),
         ],
       ),
+      //While is loading, show the LOADING widget
       body: _isLoading
           ? Loading()
           : SingleChildScrollView(
@@ -131,6 +140,7 @@ class _PostDescriptionState extends State<PostDescription> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
+                      //Post title
                       widget.post.postTitle,
                       style: GoogleFonts.openSans(
                         color: Colors.white,
@@ -142,6 +152,7 @@ class _PostDescriptionState extends State<PostDescription> {
                     PostProfile(post: widget.post),
                     const SizedBox(height: 20),
                     Text(
+                      //Post content
                       widget.post.postContent,
                       style: GoogleFonts.openSans(
                         color: Colors.white,
@@ -166,6 +177,7 @@ class _PostDescriptionState extends State<PostDescription> {
                           ),
                         ),
                         const SizedBox(width: 5),
+                        //Comment length
                         Text(
                           '(${comment.length})',
                           style: GoogleFonts.openSans(
@@ -178,6 +190,7 @@ class _PostDescriptionState extends State<PostDescription> {
                     ),
                     const Divider(),
                     const SizedBox(height: 8),
+                    //Show a list of all comments
                     ListView.builder(
                       physics: const NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
@@ -201,6 +214,7 @@ class _PostDescriptionState extends State<PostDescription> {
                 ),
               ),
             ),
+      //Add comment BUTTOM
       persistentFooterButtons: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -210,6 +224,7 @@ class _PostDescriptionState extends State<PostDescription> {
               width: MediaQuery.of(context).size.width - 80,
               child: OutlinedButton(
                 onPressed: () {
+                  //Open a BOTTOM SHEET to add the comment
                   showModalBottomSheet(
                     context: context,
                     isScrollControlled: true,
@@ -228,6 +243,7 @@ class _PostDescriptionState extends State<PostDescription> {
                         child: AddComment(
                           user: user[0],
                           post: widget.post,
+                          //Set _isInit to true after add the comment to refreshe the screen
                           callback: (value) {
                             setState(() {
                               _isInit = value;
@@ -254,24 +270,37 @@ class _PostDescriptionState extends State<PostDescription> {
               ),
             ),
             const SizedBox(width: 10),
+            //POST Like buttom
+            //Identify it is not empty and load the server likes count
+            //And sum with the user new like
             if (likes.isNotEmpty)
               IconButton(
                 onPressed: () async {
+                  //Set the _liked to true or false
                   setState(() {
                     _liked = !_liked;
                   });
 
+                  //Identify it is empty and load the server likes count
+                  //And add new like
                   if (likes.isEmpty) {
+                    //Access the PostLikeProvider and call the addLike
+                    //Send the user like to firebase
                     await Provider.of<PostLikeProvider>(context, listen: false)
                         .addLike(
                       _userId,
                       widget.post.id,
                     );
                   }
+
+                  //Load all likes
                   for (int i = 0; i < likes.length; i++)
+                    //If the user alread liked, and he click aggain, it will remove the like
                     if (likes.isNotEmpty &&
                         likes[i].postID == widget.post.id &&
                         likes[i].userID == _userId) {
+                      //Access the PostLikeProvider and call the deleteLike
+                      //Remove the user like to firebase
                       await Provider.of<PostLikeProvider>(context,
                               listen: false)
                           .deleteLike(
@@ -279,25 +308,32 @@ class _PostDescriptionState extends State<PostDescription> {
                       );
                     }
                 },
+                //Identfy if the user like or not and set the colors RED/GREY
                 icon: Icon(
                   _liked ? EneftyIcons.heart_bold : EneftyIcons.heart_outline,
                   color: _liked ? Colors.redAccent[400] : Colors.grey,
                   size: 26,
                 ),
               ),
+            //Identify it is empty and load the server likes count
+            //And add new like
             if (likes.isEmpty)
               IconButton(
                 onPressed: () async {
+                  //Set the _liked to true or false
                   setState(() {
                     _liked = !_liked;
                   });
 
+                  //Access the PostLikeProvider and call the addLike
+                  //Send the user like to firebase
                   await Provider.of<PostLikeProvider>(context, listen: false)
                       .addLike(
                     _userId,
                     widget.post.id,
                   );
                 },
+                //Identfy if the user like or not and set the colors RED/GREY
                 icon: Icon(
                   _liked ? EneftyIcons.heart_bold : EneftyIcons.heart_outline,
                   color: _liked ? Colors.redAccent[400] : Colors.grey,

@@ -1,14 +1,10 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:enefty_icons/enefty_icons.dart';
-import 'package:jumping_dot/jumping_dot.dart';
 
 //Widgets
 import '../description_screen/play_button.dart';
 import '../objects/video.dart';
-import '../widgets/my_back_icon.dart';
 
 class MovieTitle extends StatelessWidget {
   final Video video;
@@ -17,27 +13,35 @@ class MovieTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //Get the device width
+    final mediaQuery = MediaQuery.of(context).size.width;
+    //Const SIZEDBOX
     const sizedBox = SizedBox(height: 5);
+    //Const point text
     const pointText = Padding(
       padding: EdgeInsets.symmetric(horizontal: 3),
       child: Text('●'),
     );
+
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
+        //Getr the video title length and set the height
+        //According to show all title
         height: video.title.toString().length > 20 ? 200 : 165,
-        width: MediaQuery.of(context).size.width,
+        width: mediaQuery,
         color: Colors.transparent,
         child: Column(
           children: [
-            movieTitle(),
+            movieTitle(), //Title
             sizedBox,
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                rate(),
+                rate(), //Rate
                 pointText,
-                age(),
+
+                age(), //Age restriction
               ],
             ),
             const SizedBox(height: 6),
@@ -48,22 +52,23 @@ class MovieTitle extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  release(),
+                  release(), //Release date
                   pointText,
-                  movieTime(),
+                  movieTime(), //Movie time
                   pointText,
-                  genreList(),
+                  genreList(), //Genres
                 ],
               ),
             ),
             const SizedBox(height: 10),
-            PlayButton(video: video),
+            PlayButton(video: video), // Play the trailler
           ],
         ),
       ),
     );
   }
 
+  //Title Widget
   Widget movieTitle() => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12),
         child: Text(
@@ -79,6 +84,7 @@ class MovieTitle extends StatelessWidget {
         ),
       );
 
+  //Age Widget
   Widget age() => Card(
         color: Colors.green,
         child: SizedBox(
@@ -99,6 +105,7 @@ class MovieTitle extends StatelessWidget {
         ),
       );
 
+  //Rate Widget
   Widget rate() => Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -122,10 +129,13 @@ class MovieTitle extends StatelessWidget {
         ],
       );
 
+  //Time Widget
   Widget movieTime() => genreText(video.time.toString());
 
+  //Relese Widget
   Widget release() => genreText(video.release.toString());
 
+  //Genre Widget
   Widget genreList() => Row(
         children: [
           for (int i = 0; i < video.genre.length; i++)
@@ -138,6 +148,7 @@ class MovieTitle extends StatelessWidget {
         ],
       );
 
+  //Genre TExt
   Widget genreText(String genre) {
     return Text(
       genre,

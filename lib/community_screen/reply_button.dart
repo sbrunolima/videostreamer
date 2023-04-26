@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:provider/provider.dart';
-import 'package:intl/intl.dart';
 import 'package:ui_training05/objects/user.dart';
 
 //Provider
-import '../objects/communit_post.dart';
-import '../providers/comments_provider.dart';
-import '../providers/user_provider.dart';
-
-//Objects
 import '../objects/communit_post.dart';
 
 //Widgets
@@ -25,6 +18,7 @@ class ReplyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+        //Open a BOTTOM SHEET to add the comment
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,
@@ -40,6 +34,7 @@ class ReplyButton extends StatelessWidget {
                   top: Radius.circular(10),
                 ),
               ),
+              //Open the ADD REPLY widget and PASS the user and comment of the reply data
               child: AddReply(
                 user: user,
                 comment: comment,

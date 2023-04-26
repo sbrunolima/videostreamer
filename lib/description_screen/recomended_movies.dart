@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 //Providers
-import '../objects/video.dart';
 import '../providers/video_provider.dart';
 
 //Widgets

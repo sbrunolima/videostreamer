@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:intl/intl.dart';
-import 'dart:math';
 
 //Provider
 import '../objects/communit_post.dart';
@@ -34,6 +31,7 @@ class PostMovieContainer extends StatelessWidget {
             Container(
               width: 70,
               child: Text(
+                //Movie or Topic title
                 post.movie,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.openSans(

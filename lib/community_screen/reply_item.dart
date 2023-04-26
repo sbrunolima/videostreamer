@@ -6,7 +6,6 @@ import 'package:enefty_icons/enefty_icons.dart';
 
 //Provider
 import '../objects/communit_post.dart';
-import '../providers/comments_provider.dart';
 import '../providers/user_provider.dart';
 import '../providers/reply_like_provider.dart';
 import '../providers/reply_provider.dart';
@@ -31,7 +30,11 @@ class _ReplyItemState extends State<ReplyItem> {
 
   @override
   Widget build(BuildContext context) {
+    //Get the device width
     final mediaQuery = MediaQuery.of(context).size.width;
+
+    //Load all DATA FROM FIREBASE => Users, Likes
+    //-------------------------------------------------------------------------
     final usersData = Provider.of<UserPovider>(context, listen: false);
     final likeData = Provider.of<ReplyLikeProvider>(context, listen: false);
     final user = usersData.user
@@ -46,12 +49,16 @@ class _ReplyItemState extends State<ReplyItem> {
         .where((loadLikes) => loadLikes.replyID == widget.reply.id)
         .toList();
 
+    //Verify if the likes is not empty
     if (likes.isNotEmpty) {
+      //If is not empty, set _liked to the same value the server
       setState(() {
         _liked = likes[0].favorite;
         _like = likeLength.length;
       });
     }
+    //END Load all DATA FROM FIREBASE => Users, Likes
+    //-------------------------------------------------------------------------
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -62,10 +69,20 @@ class _ReplyItemState extends State<ReplyItem> {
             ClipRRect(
               borderRadius: BorderRadius.circular(50),
               child: Image.network(
+                //User Profile Image
                 user[0].imageUrl,
                 height: 25,
                 width: 25,
                 fit: BoxFit.cover,
+                loadingBuilder:
+                    (context, Widget child, ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Image.network(
+                    height: 30,
+                    width: 30,
+                    'https://i.stack.imgur.com/34AD2.jpg',
+                  );
+                },
               ),
             ),
             const SizedBox(width: 10),
@@ -81,6 +98,7 @@ class _ReplyItemState extends State<ReplyItem> {
                       Row(
                         children: [
                           Text(
+                            //Username
                             user[0].username,
                             style: GoogleFonts.openSans(
                               color: Colors.white60,
@@ -89,6 +107,7 @@ class _ReplyItemState extends State<ReplyItem> {
                             ),
                           ),
                           Text(
+                            //Reply Date
                             DateFormat('● dd/MM - hh:mm')
                                 .format(widget.reply.dateTime),
                             style: GoogleFonts.openSans(
@@ -99,13 +118,16 @@ class _ReplyItemState extends State<ReplyItem> {
                           ),
                         ],
                       ),
+                      //If the user is the owner of the reply, he can delete
                       if (widget.reply.userID == widget.user.userID)
                         GestureDetector(
                           onTap: () async {
+                            //Call the ReplyProvider and delete the reply from Firebase
                             await Provider.of<ReplyProvider>(context,
                                     listen: false)
                                 .deleteReply(replyID: widget.reply.id);
 
+                            //Return callback BOOL vaue to refresh the screen
                             widget.callback(true);
                           },
                           child: Icon(
@@ -121,6 +143,7 @@ class _ReplyItemState extends State<ReplyItem> {
                 SizedBox(
                   width: mediaQuery - 100,
                   child: Text(
+                    //reply content
                     widget.reply.userReply,
                     style: GoogleFonts.openSans(
                       color: Colors.white,
@@ -134,18 +157,24 @@ class _ReplyItemState extends State<ReplyItem> {
                   width: mediaQuery - 100,
                   child: Row(
                     children: [
+                      //Identify it is not empty and load the server likes count
+                      //And sum with the user new like
                       if (likes.isNotEmpty)
                         GestureDetector(
+                          //Set the _liked to true or false
                           onTap: () async {
                             setState(() {
                               _liked = !_liked;
                             });
 
+                            //Add likes count
                             if (likes.isEmpty) {
                               setState(() {
                                 _like = _like + 1;
                               });
 
+                              //Access the ReplyLikeProvider and call the addLike
+                              //Send the user like to firebase
                               await Provider.of<ReplyLikeProvider>(context,
                                       listen: false)
                                   .addLike(
@@ -154,14 +183,17 @@ class _ReplyItemState extends State<ReplyItem> {
                               );
                             }
 
+                            //Load all likes
                             for (int i = 0; i < likes.length; i++)
+                              //If the user alread liked, and he click aggain, it will remove the like
                               if (likes.isNotEmpty &&
                                   likes[i].replyID == widget.reply.id &&
                                   likes[i].userID == widget.user.userID) {
                                 setState(() {
                                   _like = _like - 1;
                                 });
-
+                                //Access the ReplyLikeProvider and call the deleteLike
+                                //Remove the user like to firebase
                                 await Provider.of<ReplyLikeProvider>(context,
                                         listen: false)
                                     .deleteLike(
@@ -169,6 +201,7 @@ class _ReplyItemState extends State<ReplyItem> {
                                 );
                               }
                           },
+                          //Identfy if the user like or not and set the colors RED/GREY
                           child: Icon(
                             _liked
                                 ? EneftyIcons.heart_bold
@@ -177,14 +210,19 @@ class _ReplyItemState extends State<ReplyItem> {
                             size: 16,
                           ),
                         ),
+                      //Identify it is empty and load the server likes count
+                      //And add new like
                       if (likes.isEmpty)
                         GestureDetector(
                           onTap: () async {
+                            //Set the _liked to true or false
                             setState(() {
                               _liked = !_liked;
                               _like = _like + 1;
                             });
 
+                            //Access the ReplyLikeProvider and call the addLike
+                            //Send the user like to firebase
                             await Provider.of<ReplyLikeProvider>(context,
                                     listen: false)
                                 .addLike(
@@ -192,6 +230,7 @@ class _ReplyItemState extends State<ReplyItem> {
                               widget.reply.id,
                             );
                           },
+                          //Identfy if the user like or not and set the colors RED/GREY
                           child: Icon(
                             _liked
                                 ? EneftyIcons.heart_bold
@@ -201,6 +240,7 @@ class _ReplyItemState extends State<ReplyItem> {
                           ),
                         ),
                       const SizedBox(width: 4),
+                      //Likes count
                       likeOrCommentCount(
                         _like.toString(),
                       ),
@@ -216,6 +256,7 @@ class _ReplyItemState extends State<ReplyItem> {
     );
   }
 
+  //Likes count Text widget
   Widget likeOrCommentCount(String title) {
     return Text(
       title,

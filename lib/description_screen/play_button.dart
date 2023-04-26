@@ -1,19 +1,11 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:ui_training05/objects/video.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:colours/colours.dart';
-import 'package:video_player/video_player.dart';
 
 //Widgets
 import '../screens/video_player_screen.dart';
-
-//Providers
-import '../providers/video_provider.dart';
-import '../objects/video.dart';
 
 class PlayButton extends StatefulWidget {
   final Video video;
@@ -27,11 +19,14 @@ class PlayButton extends StatefulWidget {
 class _PlayButtonState extends State<PlayButton> {
   @override
   Widget build(BuildContext context) {
+    //Get the device width
+    final mediaQuery = MediaQuery.of(context).size.width;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: SizedBox(
         height: 50,
-        width: MediaQuery.of(context).size.width,
+        width: mediaQuery,
         child: DecoratedBox(
           decoration: BoxDecoration(
             border: Border.all(color: Colors.transparent),
@@ -71,6 +66,7 @@ class _PlayButtonState extends State<PlayButton> {
               ),
             ),
             onPressed: () {
+              //Call VideoPlayerScreen and pass the Video Data
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => VideoPlayerScreen(
