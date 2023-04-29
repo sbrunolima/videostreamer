@@ -15,25 +15,31 @@ class RecomendedMoviesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //Load all movies
+    //-----------------------------------------------------------------------
     final videoData = Provider.of<VideosProvider>(context, listen: false);
     final video = videoData.video;
+    //END Load all movies
+    //-----------------------------------------------------------------------
 
     return MediaQuery.removePadding(
       removeTop: true,
       removeBottom: true,
       context: context,
-      child: GridView.builder(
-        physics: NeverScrollableScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: video.length > 7 ? 8 : video.length,
-        itemBuilder: (context, index) {
-          return MovieCardRecommend(video: video[index]);
-        },
-        gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-          maxCrossAxisExtent: 260,
-          crossAxisSpacing: 0,
-          mainAxisSpacing: 10,
-          mainAxisExtent: 240,
+      child: Container(
+        height: 180,
+        child: ListView.builder(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          scrollDirection: Axis.horizontal,
+          itemCount: video.length,
+          itemBuilder: ((context, index) {
+            for (int i = 0; i < movieGenre.length; i++)
+              if (video[index].genre.contains(movieGenre[i]) &&
+                  video[index].id != movieID) {
+                return MovieCardRecommend(video: video[index]);
+              }
+            return SizedBox.shrink();
+          }),
         ),
       ),
     );

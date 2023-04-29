@@ -93,6 +93,23 @@ class _CommentItemState extends State<CommentItem> {
                 height: 25,
                 width: 25,
                 fit: BoxFit.cover,
+                loadingBuilder:
+                    (context, Widget child, ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Image.asset(
+                    height: 25,
+                    width: 25,
+                    'assets/noimage.png',
+                  );
+                },
+                errorBuilder: (BuildContext ctx, Object exception,
+                    StackTrace? stackTrace) {
+                  return Image.asset(
+                    height: 25,
+                    width: 25,
+                    'assets/noimage.png',
+                  );
+                },
               ),
             ),
             const SizedBox(width: 10),

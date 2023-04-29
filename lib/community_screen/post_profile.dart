@@ -40,10 +40,18 @@ class PostProfile extends StatelessWidget {
               loadingBuilder:
                   (context, Widget child, ImageChunkEvent? loadingProgress) {
                 if (loadingProgress == null) return child;
-                return Image.network(
+                return Image.asset(
                   height: 30,
                   width: 30,
-                  'https://i.stack.imgur.com/34AD2.jpg',
+                  'assets/noimage.png',
+                );
+              },
+              errorBuilder:
+                  (BuildContext ctx, Object exception, StackTrace? stackTrace) {
+                return Image.asset(
+                  height: 30,
+                  width: 30,
+                  'assets/noimage.png',
                 );
               },
             ),

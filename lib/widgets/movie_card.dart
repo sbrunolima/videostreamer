@@ -73,6 +73,14 @@ class _MovieCardState extends State<MovieCard> {
                         ),
                       );
                     },
+                    errorBuilder: (BuildContext ctx, Object exception,
+                        StackTrace? stackTrace) {
+                      return Image.asset(
+                        height: 150,
+                        width: 150,
+                        'assets/noimage.png',
+                      );
+                    },
                   ),
                 ),
               ],

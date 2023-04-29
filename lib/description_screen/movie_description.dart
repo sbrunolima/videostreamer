@@ -42,7 +42,7 @@ class _MovieDescriptionScreenState extends State<MovieDescriptionScreen> {
             StorylineWidget(video: widget.video), //Storyline
             const SizedBox(height: 20),
             SuggestionDetailsTab(video: widget.video), //Suggestion
-            const SizedBox(height: 10),
+            const SizedBox(height: 50),
           ],
         ),
       ),

@@ -40,8 +40,8 @@ class _MovieCardRecommendState extends State<MovieCardRecommend> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),
         child: Container(
-          height: 260,
-          width: 240,
+          height: 180,
+          width: 120,
           child: Container(
             decoration: BoxDecoration(
               border: Border.all(color: Colors.transparent),
@@ -71,6 +71,14 @@ class _MovieCardRecommendState extends State<MovieCardRecommend> {
                           'assets/noimage.png',
                           fit: BoxFit.cover,
                         ),
+                      );
+                    },
+                    errorBuilder: (BuildContext ctx, Object exception,
+                        StackTrace? stackTrace) {
+                      return Image.asset(
+                        height: 260,
+                        width: 240,
+                        'assets/noimage.png',
                       );
                     },
                   ),

@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class UserData {
   final String id;
   final String userID;

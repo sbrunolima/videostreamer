@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class CarouselBanner {
   final String id;
   final String coverUrl;

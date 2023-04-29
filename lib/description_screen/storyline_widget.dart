@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:enefty_icons/enefty_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:colours/colours.dart';
 
 //Providers
-import '../providers/video_provider.dart';
 import '../objects/video.dart';
 
 //Widgets
@@ -38,6 +35,7 @@ class StorylineWidget extends StatelessWidget {
             ),
           ),
           GestureDetector(
+            //Open a Bottom Sheet with the storyline text
             onTap: () => showModalBottomSheet(
               context: context,
               isScrollControlled: true,
@@ -63,6 +61,7 @@ class StorylineWidget extends StatelessWidget {
     );
   }
 
+  //Bottom Sheet TExt
   Widget bottonSheet(BuildContext context) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Column(
@@ -80,6 +79,7 @@ class StorylineWidget extends StatelessWidget {
             ),
             const SizedBox(height: 10),
             Text(
+              ///Storyline text
               video.storyline[0].toString(),
               style: GoogleFonts.openSans(
                 height: 1.6,
@@ -89,6 +89,7 @@ class StorylineWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 26),
+            //Close BUTTOM
             CloseButtom(),
             const SizedBox(height: 17),
           ],

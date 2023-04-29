@@ -64,6 +64,14 @@ class BannerWidget extends StatelessWidget {
                 ),
               );
             },
+            errorBuilder:
+                (BuildContext ctx, Object exception, StackTrace? stackTrace) {
+              return Image.asset(
+                height: 400,
+                width: titleWidth,
+                'assets/noimage.png',
+              );
+            },
           ),
         ),
       ),

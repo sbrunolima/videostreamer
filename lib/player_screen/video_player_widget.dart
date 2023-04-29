@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 //Widgets
 import '../player_screen/video_progress_indicator.dart';
@@ -8,7 +7,6 @@ import '../widgets/my_back_icon.dart';
 import '../widgets/loading.dart';
 
 //Providers
-import '../providers/video_provider.dart';
 import '../objects/video.dart';
 
 class VideoPlayerWidget extends StatefulWidget {

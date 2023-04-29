@@ -77,10 +77,18 @@ class _ReplyItemState extends State<ReplyItem> {
                 loadingBuilder:
                     (context, Widget child, ImageChunkEvent? loadingProgress) {
                   if (loadingProgress == null) return child;
-                  return Image.network(
-                    height: 30,
-                    width: 30,
-                    'https://i.stack.imgur.com/34AD2.jpg',
+                  return Image.asset(
+                    height: 25,
+                    width: 25,
+                    'assets/noimage.png',
+                  );
+                },
+                errorBuilder: (BuildContext ctx, Object exception,
+                    StackTrace? stackTrace) {
+                  return Image.asset(
+                    height: 25,
+                    width: 25,
+                    'assets/noimage.png',
                   );
                 },
               ),
