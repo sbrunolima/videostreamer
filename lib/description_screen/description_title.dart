@@ -36,29 +36,42 @@ class DescriptionTitle extends StatelessWidget {
             child: Column(
               children: [
                 Image.network(
-                  //Trailer Banner Image
-                  video.bannerUrl.toString(),
-                  height: 450,
-                  width: titleWidth,
-                  fit: BoxFit.cover,
-                  //If the image is not loaded, show this widget
-                  loadingBuilder: (context, Widget child,
-                      ImageChunkEvent? loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return Container(
-                      height: 450,
-                      width: titleWidth,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: Loading(),
-                      ),
-                    );
-                  },
-                ),
+                    //Trailer Banner Image
+                    video.bannerUrl.toString(),
+                    height: 450,
+                    width: titleWidth,
+                    fit: BoxFit.cover,
+                    //If the image is not loaded, show this widget
+                    loadingBuilder: (context, Widget child,
+                        ImageChunkEvent? loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return Container(
+                    height: 450,
+                    width: titleWidth,
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Loading(),
+                    ),
+                  );
+                }, errorBuilder: (BuildContext ctx, Object exceprion,
+                        StackTrace? stackTrace) {
+                  return errorLoadingImage(titleWidth);
+                }),
               ],
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget errorLoadingImage(double titleWidth) {
+    return Container(
+      color: Colors.white30,
+      child: Image.asset(
+        height: 450,
+        width: titleWidth,
+        'assets/noimage.png',
       ),
     );
   }

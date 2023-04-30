@@ -11,6 +11,7 @@ class ExitButton extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 15),
       child: GestureDetector(
         onTap: () {
+          //Logout and go to the AuthScreen
           FirebaseAuth.instance.signOut().then(
                 (_) => Navigator.of(context)
                     .pushReplacementNamed(AuthScreen.routeName),

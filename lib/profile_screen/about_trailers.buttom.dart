@@ -8,9 +8,11 @@ import '../widgets/close_buttom.dart';
 class AboutTrailersButtom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Const sizedbox
     const sizedBox = const SizedBox(height: 6);
     return GestureDetector(
       onTap: () {
+        //Show a mogal Bottom Sheet with all the data
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,

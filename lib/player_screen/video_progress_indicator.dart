@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:enefty_icons/enefty_icons.dart';
 
 //Widgets
 import '../player_screen/video_title_widget.dart';
 
 //Providers
-import '../providers/video_provider.dart';
 import '../objects/video.dart';
 
 class VideoProgressIdicator extends StatelessWidget {

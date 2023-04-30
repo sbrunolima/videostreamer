@@ -1,23 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:enefty_icons/enefty_icons.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-//Screens
-import '../screens/start_screen.dart';
 
 //Providers
-import '../providers/images_provider.dart';
 import '../providers/user_provider.dart';
 
 //Objects
 import '../objects/user.dart';
 
 //Widgets
-import '../profile_screen/profile_option_buttons.dart';
-import '../profile_screen/exit_button.dart';
 import '../profile_screen/edit_profile.dart';
 
 class ProfileData extends StatefulWidget {
@@ -38,6 +29,7 @@ class _ProfileDataState extends State<ProfileData> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
+    //Load all users
     if (_isInit) {
       Provider.of<UserPovider>(context, listen: false).loadUsers().then((_) {
         setState(() {});
@@ -51,6 +43,7 @@ class _ProfileDataState extends State<ProfileData> {
   Widget build(BuildContext context) {
     return Column(
       children: [
+        //User image widget
         Container(
           height: 100,
           width: 100,
@@ -67,6 +60,7 @@ class _ProfileDataState extends State<ProfileData> {
           ),
         ),
         const SizedBox(height: 10),
+        //Username widget
         Text(
           _username.isEmpty ? widget.user.username : _username,
           style: GoogleFonts.openSans(
@@ -78,6 +72,8 @@ class _ProfileDataState extends State<ProfileData> {
         const SizedBox(height: 5),
         GestureDetector(
           onTap: () {
+            //Go to the EditProfile to edit the profile
+            //Send all the actiual data to EditProfile screen
             Navigator.of(context).push(
               MaterialPageRoute(
                 builder: ((context) => EditProfile(
@@ -87,6 +83,7 @@ class _ProfileDataState extends State<ProfileData> {
                       username:
                           _username.isEmpty ? widget.user.username : _username,
                       user: widget.user,
+                      //When returned, set the data with te new data
                       callback: (image, name) {
                         setState(() {
                           _userImage = image;

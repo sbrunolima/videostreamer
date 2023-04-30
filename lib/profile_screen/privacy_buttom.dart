@@ -4,14 +4,15 @@ import 'package:google_fonts/google_fonts.dart';
 //Widgets
 import '../profile_screen/profile_option_buttons.dart';
 import '../widgets/close_buttom.dart';
-import '../widgets/my_app_bar.dart';
 
 class PrivacyButtom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    //Const sizedbox
     const sizedBox = const SizedBox(height: 10);
     return GestureDetector(
       onTap: () {
+        //Show a mogal Bottom Sheet with all the data
         showModalBottomSheet(
           context: context,
           isScrollControlled: true,

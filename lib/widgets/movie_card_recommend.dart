@@ -59,27 +59,11 @@ class _MovieCardRecommendState extends State<MovieCardRecommend> {
                     loadingBuilder: (context, Widget child,
                         ImageChunkEvent? loadingProgress) {
                       if (loadingProgress == null) return child;
-                      return Container(
-                        height: 260,
-                        width: 240,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.white10),
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.white30,
-                        ),
-                        child: Image.asset(
-                          'assets/noimage.png',
-                          fit: BoxFit.cover,
-                        ),
-                      );
+                      return errorLoadingImage();
                     },
                     errorBuilder: (BuildContext ctx, Object exception,
                         StackTrace? stackTrace) {
-                      return Image.asset(
-                        height: 260,
-                        width: 240,
-                        'assets/noimage.png',
-                      );
+                      return errorLoadingImage();
                     },
                   ),
                 ),
@@ -87,6 +71,39 @@ class _MovieCardRecommendState extends State<MovieCardRecommend> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget errorLoadingImage() {
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.white38),
+        borderRadius: BorderRadius.circular(4),
+        color: Colors.white30,
+      ),
+      child: Stack(
+        children: [
+          Image.asset(
+            height: 260,
+            width: 240,
+            'assets/noimage.png',
+          ),
+          Padding(
+            padding: const EdgeInsets.all(4),
+            child: Text(
+              widget.video.title,
+              maxLines: 2,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+              style: GoogleFonts.openSans(
+                color: Colors.white,
+                fontWeight: FontWeight.w500,
+                fontSize: 12,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

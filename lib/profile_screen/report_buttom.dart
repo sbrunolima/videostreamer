@@ -49,7 +49,6 @@ class _ReportButtomState extends State<ReportButtom> {
 
   @override
   Widget build(BuildContext context) {
-    const sizedBox = const SizedBox(height: 6);
     return GestureDetector(
       onTap: () {
         send();

@@ -1,26 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:enefty_icons/enefty_icons.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
-//Screens
-import '../screens/start_screen.dart';
 
 //Providers
 import '../providers/images_provider.dart';
-import '../providers/user_provider.dart';
 
 //Widgets
-import '../profile_screen/profile_option_buttons.dart';
-import '../profile_screen/exit_button.dart';
 import '../widgets/my_back_icon.dart';
 import '../widgets/my_title.dart';
 
 class ProfileImages extends StatefulWidget {
   final Function(String) callback;
 
+  //Return the data
   ProfileImages({required this.callback});
 
   @override
@@ -30,6 +21,7 @@ class ProfileImages extends StatefulWidget {
 class _ProfileImagesState extends State<ProfileImages> {
   @override
   Widget build(BuildContext context) {
+    //Load the images from firabase
     final imagesData = Provider.of<ImagesProvider>(context, listen: false);
     final images = imagesData.images;
     return Scaffold(
@@ -54,8 +46,11 @@ class _ProfileImagesState extends State<ProfileImages> {
                 return Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: GestureDetector(
+                    //If tapped, set the new image to the tapped Image
                     onTap: () {
                       widget.callback(images[index].imageUrl.toString());
+
+                      //Return to previous screen
                       Navigator.of(context).pop();
                     },
                     child: Container(

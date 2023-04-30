@@ -47,7 +47,6 @@ class _EditProfileState extends State<EditProfile> {
   final FirebaseAuth auth = FirebaseAuth.instance;
   var _userId;
   var _isInit = true;
-  var _isLoading = false;
   final _observation = FocusNode();
   final _formKey = GlobalKey<FormState>();
 
@@ -58,6 +57,7 @@ class _EditProfileState extends State<EditProfile> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_isInit) {
+      //Load the user ID
       final User? user = auth.currentUser;
       _userId = user!.uid;
     }
@@ -70,6 +70,7 @@ class _EditProfileState extends State<EditProfile> {
     _observation.dispose();
   }
 
+  //Save the form
   Future<void> _saveForm() async {
     final isValid = _formKey.currentState!.validate();
     if (!isValid) {
@@ -100,6 +101,7 @@ class _EditProfileState extends State<EditProfile> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 20),
+              //User profile screen
               Row(
                 children: [
                   Container(
@@ -111,6 +113,8 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
+                      //If the _imageUrl is empty, it will set the image with the user image
+                      //If not, will add the new _imageUrl
                       child: Image.network(
                         _imageUrl.isEmpty
                             ? widget.userImage.toString()
@@ -120,6 +124,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                   ),
                   const SizedBox(width: 10),
+                  //Change avatar button
                   OutlinedButton(
                     child: Text(
                       'Change avatar',
@@ -130,9 +135,11 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ),
                     onPressed: () {
+                      //Go to the image selector screen
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: ((context) => ProfileImages(
+                                //Receive the selected image and set _imageUrl to the new image
                                 callback: (value) {
                                   setState(() {
                                     _imageUrl = value.toString();
@@ -157,11 +164,13 @@ class _EditProfileState extends State<EditProfile> {
               TextFormField(
                 key: const ValueKey('username'),
                 decoration: InputDecoration(
+                  //User name show the actual name if not changed
                   hintText: widget.username.toString(),
                 ),
                 keyboardType: TextInputType.multiline,
                 textCapitalization: TextCapitalization.sentences,
                 onSaved: (value) {
+                  //If changed, it set the name with the new name
                   if (value.toString().length > 0) {
                     _newUsername = value.toString();
                   } else {
@@ -172,8 +181,10 @@ class _EditProfileState extends State<EditProfile> {
               const SizedBox(height: 10),
               OutlinedButton(
                 onPressed: () async {
+                  //Save the form
                   _saveForm();
 
+                  //Call UserPovider and send the new data to firebase
                   await Provider.of<UserPovider>(context, listen: false)
                       .editUser(
                     id: widget.user.id,
@@ -186,11 +197,13 @@ class _EditProfileState extends State<EditProfile> {
                         : _newUsername,
                   );
 
+                  //Return all the new data to update the widget
                   widget.callback(
                     _imageUrl.isEmpty ? widget.user.imageUrl : _imageUrl,
                     _newUsername.isEmpty ? widget.user.username : _newUsername,
                   );
 
+                  //Close the screen
                   Navigator.of(context).pop();
                 },
                 child: Text('Save'),
