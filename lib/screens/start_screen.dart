@@ -1,6 +1,7 @@
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
 //Screens
 import '../screens/home_screen.dart';
@@ -40,9 +41,13 @@ class _StartScreenState extends State<StartScreen> {
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        setState(() {
-          _pageIndex = 0;
-        });
+        if (_pageIndex == 0) {
+          SystemNavigator.pop();
+        } else {
+          setState(() {
+            _pageIndex = 0;
+          });
+        }
 
         return false;
       },

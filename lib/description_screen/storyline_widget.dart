@@ -50,8 +50,8 @@ class StorylineWidget extends StatelessWidget {
               'Read More...',
               style: GoogleFonts.openSans(
                 height: 1.6,
-                color: Colors.red,
-                fontWeight: FontWeight.w400,
+                color: Colors.lightGreenAccent,
+                fontWeight: FontWeight.w600,
                 fontSize: 14,
               ),
             ),

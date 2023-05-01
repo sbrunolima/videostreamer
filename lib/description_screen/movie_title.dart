@@ -148,7 +148,7 @@ class MovieTitle extends StatelessWidget {
         ],
       );
 
-  //Genre TExt
+  //Genre Text
   Widget genreText(String genre) {
     return Text(
       genre,

@@ -31,7 +31,7 @@ class _ReplyItemState extends State<ReplyItem> {
   @override
   Widget build(BuildContext context) {
     //Get the device width
-    final mediaQuery = MediaQuery.of(context).size.width;
+    final mediaQuery = MediaQuery.of(context).size;
 
     //Load all DATA FROM FIREBASE => Users, Likes
     //-------------------------------------------------------------------------
@@ -97,9 +97,8 @@ class _ReplyItemState extends State<ReplyItem> {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  color: Colors.red,
-                  width: MediaQuery.of(context).size.width - 100,
+                SizedBox(
+                  width: mediaQuery.width - 100,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -149,7 +148,7 @@ class _ReplyItemState extends State<ReplyItem> {
                 ),
                 const SizedBox(height: 6),
                 SizedBox(
-                  width: mediaQuery - 100,
+                  width: mediaQuery.width - 100,
                   child: Text(
                     //reply content
                     widget.reply.userReply,
@@ -162,7 +161,7 @@ class _ReplyItemState extends State<ReplyItem> {
                 ),
                 const SizedBox(height: 17),
                 SizedBox(
-                  width: mediaQuery - 100,
+                  width: mediaQuery.width - 100,
                   child: Row(
                     children: [
                       //Identify it is not empty and load the server likes count
@@ -175,12 +174,21 @@ class _ReplyItemState extends State<ReplyItem> {
                               _liked = !_liked;
                             });
 
-                            //Add likes count
-                            if (likes.isEmpty) {
+                            //Verify if the user alread liked and add or remove according
+                            if (_liked) {
                               setState(() {
                                 _like = _like + 1;
                               });
+                            }
+                            if (!_liked && _like > 0) {
+                              _like = _like - 1;
+                            }
+                            if (!_liked && _like == 0) {
+                              _like = 0;
+                            }
 
+                            //Add likes count
+                            if (likes.isEmpty) {
                               //Access the ReplyLikeProvider and call the addLike
                               //Send the user like to firebase
                               await Provider.of<ReplyLikeProvider>(context,
@@ -226,8 +234,20 @@ class _ReplyItemState extends State<ReplyItem> {
                             //Set the _liked to true or false
                             setState(() {
                               _liked = !_liked;
-                              _like = _like + 1;
                             });
+
+                            //Verify if the user alread liked and add or remove according
+                            if (_liked) {
+                              setState(() {
+                                _like = _like + 1;
+                              });
+                            }
+                            if (!_liked && _like > 0) {
+                              _like = _like - 1;
+                            }
+                            if (!_liked && _like == 0) {
+                              _like = 0;
+                            }
 
                             //Access the ReplyLikeProvider and call the addLike
                             //Send the user like to firebase

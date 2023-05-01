@@ -195,11 +195,20 @@ class _CommentItemState extends State<CommentItem> {
                               _liked = !_liked;
                             });
 
-                            if (likes.isEmpty) {
+                            //Verify if the user alread liked and add or remove according
+                            if (_liked) {
                               setState(() {
                                 _like = _like + 1;
                               });
+                            }
+                            if (!_liked && _like > 0) {
+                              _like = _like - 1;
+                            }
+                            if (!_liked && _like == 0) {
+                              _like = 0;
+                            }
 
+                            if (likes.isEmpty) {
                               //Access the CommentLikeProvider and call the addLike
                               //Send the user like to firebase
                               await Provider.of<CommentLikeProvider>(context,
@@ -248,10 +257,22 @@ class _CommentItemState extends State<CommentItem> {
                             //Set the _like to _like + 1
                             setState(() {
                               _liked = !_liked;
-                              _like = _like + 1;
                             });
 
-                            //Access the CommentLikeProvider and call the addLike
+                            //Verify if the user alread liked and add or remove according
+                            if (_liked) {
+                              setState(() {
+                                _like = _like + 1;
+                              });
+                            }
+                            if (!_liked && _like > 0) {
+                              _like = _like - 1;
+                            }
+                            if (!_liked && _like == 0) {
+                              _like = 0;
+                            }
+
+                            //Access the CommentLikeProvider and all the addLike
                             //Send the user like to firebase
                             await Provider.of<CommentLikeProvider>(context,
                                     listen: false)

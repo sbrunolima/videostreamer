@@ -6,6 +6,7 @@ import '../objects/video.dart';
 
 //Widgets
 import '../description_screen/recomended_movies.dart';
+import '../description_screen/all_cast_button.dart';
 
 class SuggestionDetailsTab extends StatefulWidget {
   final Video video;
@@ -34,7 +35,7 @@ class _SuggestionDetailsTabState extends State<SuggestionDetailsTab> {
           movieID: widget.video.id,
         ),
         sizedBoxTitle,
-        movieDetalsTitle('Movie details:'),
+        movieDetailsTitle('Movie details:'),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 22),
           child: Column(
@@ -52,7 +53,7 @@ class _SuggestionDetailsTabState extends State<SuggestionDetailsTab> {
               sizedBox,
               directors(), //Directors
               sizedBox,
-              cast(), //Cast names
+              castList(), //Cast names
             ],
           ),
         ),
@@ -78,7 +79,7 @@ class _SuggestionDetailsTabState extends State<SuggestionDetailsTab> {
       );
 
   //Storyline Widget
-  Widget movieDetalsTitle(String title) => Padding(
+  Widget movieDetailsTitle(String title) => Padding(
         padding: const EdgeInsets.symmetric(horizontal: 22),
         child: Row(
           children: [
@@ -176,7 +177,7 @@ class _SuggestionDetailsTabState extends State<SuggestionDetailsTab> {
       );
 
   //Cast Widget
-  Widget cast() => ListView(
+  Widget castList() => ListView(
         padding: EdgeInsets.zero,
         shrinkWrap: true,
         physics: NeverScrollableScrollPhysics(),
@@ -193,8 +194,10 @@ class _SuggestionDetailsTabState extends State<SuggestionDetailsTab> {
                 ),
               ),
               const SizedBox(height: 3),
-              for (int i = 0; i < widget.video.castNames.length; i++)
+              for (int i = 0; i < 5; i++)
                 myText('${widget.video.castNames[i].toString()}'),
+              const SizedBox(height: 5),
+              AllCastButtom(castList: widget.video.castNames),
             ],
           ),
         ],
