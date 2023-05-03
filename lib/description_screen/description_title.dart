@@ -15,10 +15,10 @@ class DescriptionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //Get the device width
-    final titleWidth = MediaQuery.of(context).size.width;
+    final mediaQuery = MediaQuery.of(context).size;
 
     return Container(
-      height: 450,
+      height: mediaQuery.height - 365,
       child: Stack(
         children: [
           //Movie banner
@@ -38,16 +38,16 @@ class DescriptionTitle extends StatelessWidget {
                 Image.network(
                     //Trailer Banner Image
                     video.bannerUrl.toString(),
-                    height: 450,
-                    width: titleWidth,
+                    height: mediaQuery.height - 365,
+                    width: mediaQuery.width,
                     fit: BoxFit.cover,
                     //If the image is not loaded, show this widget
                     loadingBuilder: (context, Widget child,
                         ImageChunkEvent? loadingProgress) {
                   if (loadingProgress == null) return child;
                   return Container(
-                    height: 450,
-                    width: titleWidth,
+                    height: mediaQuery.height - 365,
+                    width: mediaQuery.width,
                     child: Align(
                       alignment: Alignment.center,
                       child: Loading(),
@@ -55,7 +55,7 @@ class DescriptionTitle extends StatelessWidget {
                   );
                 }, errorBuilder: (BuildContext ctx, Object exceprion,
                         StackTrace? stackTrace) {
-                  return errorLoadingImage(titleWidth);
+                  return errorLoadingImage(mediaQuery.width);
                 }),
               ],
             ),

@@ -50,7 +50,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final imageWidth = MediaQuery.of(context).size.width;
+    final mediaQuery = MediaQuery.of(context).size;
     final bannerData = Provider.of<CarouselProvider>(context, listen: false);
     final banner = bannerData.banner;
     return banner.isEmpty
@@ -59,7 +59,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
             children: [
               CarouselSlider.builder(
                 options: CarouselOptions(
-                  height: 440,
+                  height: mediaQuery.height - 400,
                   autoPlay: true,
                   enlargeCenterPage: true,
                   enlargeFactor: 0.15,

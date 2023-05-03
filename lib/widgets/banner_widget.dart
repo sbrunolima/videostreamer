@@ -20,7 +20,7 @@ class BannerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final titleWidth = MediaQuery.of(context).size.width;
+    final mediaQuery = MediaQuery.of(context).size;
     final videoData = Provider.of<VideosProvider>(context, listen: false);
     final video =
         videoData.video.where((element) => element.id == trailerID).toList();
@@ -36,8 +36,8 @@ class BannerWidget extends StatelessWidget {
           );
       },
       child: Container(
-        height: 400,
-        width: titleWidth,
+        height: mediaQuery.height,
+        width: mediaQuery.width,
         decoration: BoxDecoration(
           border: Border.all(color: Colors.transparent),
           borderRadius: BorderRadius.circular(6),
@@ -51,8 +51,8 @@ class BannerWidget extends StatelessWidget {
                 (context, Widget child, ImageChunkEvent? loadingProgress) {
               if (loadingProgress == null) return child;
               return Container(
-                height: 400,
-                width: titleWidth,
+                height: mediaQuery.height,
+                width: mediaQuery.width,
                 decoration: BoxDecoration(
                   border: Border.all(color: Colors.white10),
                   borderRadius: BorderRadius.circular(5),
@@ -67,8 +67,8 @@ class BannerWidget extends StatelessWidget {
             errorBuilder:
                 (BuildContext ctx, Object exception, StackTrace? stackTrace) {
               return Image.asset(
-                height: 400,
-                width: titleWidth,
+                height: mediaQuery.height,
+                width: mediaQuery.width,
                 'assets/noimage.png',
               );
             },
