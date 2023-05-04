@@ -1,12 +1,7 @@
 import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
-//Screens
-import '../screens/start_screen.dart';
 
 //Widgets
 import '../community_screen/post_item.dart';
@@ -15,10 +10,7 @@ import '../widgets/loading.dart';
 import '../widgets/my_title.dart';
 
 //Providers
-import '../providers/video_provider.dart';
-import '../providers/images_provider.dart';
 import '../providers/user_provider.dart';
-import '../providers/carousel_provider.dart';
 import '../providers/post_provider.dart';
 import '../providers/comments_provider.dart';
 import '../providers/post_likes_provider.dart';
@@ -32,7 +24,9 @@ class CommunutyScreen extends StatefulWidget {
 }
 
 class _CommunutyScreenState extends State<CommunutyScreen> {
+  //Get the user token
   final FirebaseAuth auth = FirebaseAuth.instance;
+  //Local and private variables
   var _userId;
   var _isLoading = false;
   var _isInit = true;
@@ -41,6 +35,7 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (_isInit) {
+      //Get and set the userID to the variable _userId
       final User? user = auth.currentUser;
       _userId = user!.uid;
 
@@ -48,14 +43,20 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
         _isLoading = true;
       });
 
-      Provider.of<UserPovider>(context, listen: false).loadUsers().then((_) {
-        Provider.of<PostProvider>(context, listen: false).loadPosts();
-        Provider.of<PostProvider>(context, listen: false).loadPosts();
-        Provider.of<CommentProvider>(context, listen: false).loadComments();
-        Provider.of<ReplyProvider>(context, listen: false).loadReply();
-        Provider.of<PostLikeProvider>(context, listen: false).loadLikes();
-        Provider.of<CommentLikeProvider>(context, listen: false).loadLikes();
-        Provider.of<ReplyLikeProvider>(context, listen: false).loadLikes();
+      //Load all necessary data from firebase to show on screen
+      Provider.of<UserPovider>(context, listen: false)
+          .loadUsers()
+          .then((_) async {
+        await Provider.of<PostProvider>(context, listen: false).loadPosts();
+        await Provider.of<PostProvider>(context, listen: false).loadPosts();
+        await Provider.of<CommentProvider>(context, listen: false)
+            .loadComments();
+        await Provider.of<ReplyProvider>(context, listen: false).loadReply();
+        await Provider.of<PostLikeProvider>(context, listen: false).loadLikes();
+        await Provider.of<CommentLikeProvider>(context, listen: false)
+            .loadLikes();
+        await Provider.of<ReplyLikeProvider>(context, listen: false)
+            .loadLikes();
 
         setState(() {
           _isLoading = false;
@@ -67,25 +68,31 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
 
   @override
   Widget build(BuildContext context) {
+    //Load and Set - Posts, Users
+    //------------------------------------------------------------------
     final postsData = Provider.of<PostProvider>(context, listen: false);
     final usersData = Provider.of<UserPovider>(context, listen: false);
     final post = postsData.posts;
     final user = usersData.user
         .where((loadedUser) => loadedUser.userID == _userId.toString())
         .toList();
+    //------------------------------------------------------------------
+    //END Load and Set - Posts, Users
 
     return Scaffold(
       backgroundColor: Colors.black54,
       appBar: AppBar(
-          backgroundColor: Color.fromARGB(0, 0, 0, 0),
-          elevation: 0,
-          title: MyTitle(title: 'Community')),
+        backgroundColor: Color.fromARGB(0, 0, 0, 0),
+        elevation: 0,
+        title: MyTitle(title: 'Community'),
+      ),
       body: _isLoading
           ? Loading()
           : SingleChildScrollView(
               child: Column(
                 children: [
                   const SizedBox(height: 10),
+                  //Load a list with all posts
                   ListView.builder(
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
@@ -118,6 +125,7 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
           size: 40,
         ),
         onPressed: () {
+          //Show a Bottom Modal Sheet to add a new POST
           showModalBottomSheet(
             context: context,
             isScrollControlled: true,
@@ -135,6 +143,7 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
                 ),
                 child: AddPost(
                   user: user[0],
+                  //Send a call back to refresh the screen
                   callback: (value) {
                     setState(() {
                       _isInit = value;

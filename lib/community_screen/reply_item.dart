@@ -205,9 +205,13 @@ class _ReplyItemState extends State<ReplyItem> {
                               if (likes.isNotEmpty &&
                                   likes[i].replyID == widget.reply.id &&
                                   likes[i].userID == widget.user.userID) {
-                                setState(() {
-                                  _like = _like - 1;
-                                });
+                                //Remove the user like
+                                if (!_liked && _like == 0) {
+                                  setState(() {
+                                    _like = 0;
+                                  });
+                                }
+
                                 //Access the ReplyLikeProvider and call the deleteLike
                                 //Remove the user like to firebase
                                 await Provider.of<ReplyLikeProvider>(context,

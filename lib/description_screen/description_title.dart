@@ -55,7 +55,7 @@ class DescriptionTitle extends StatelessWidget {
                   );
                 }, errorBuilder: (BuildContext ctx, Object exceprion,
                         StackTrace? stackTrace) {
-                  return errorLoadingImage(mediaQuery.width);
+                  return errorLoadingImage(mediaQuery.height, mediaQuery.width);
                 }),
               ],
             ),
@@ -65,12 +65,12 @@ class DescriptionTitle extends StatelessWidget {
     );
   }
 
-  Widget errorLoadingImage(double titleWidth) {
+  Widget errorLoadingImage(double height, double width) {
     return Container(
       color: Colors.white30,
       child: Image.asset(
-        height: 450,
-        width: titleWidth,
+        height: height - 370,
+        width: width,
         'assets/noimage.png',
       ),
     );

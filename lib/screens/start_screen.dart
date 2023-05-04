@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 //Screens
 import '../screens/home_screen.dart';
 import '../screens/profile_screen.dart';
-import '../screens/all_trailers_screen.dart';
 import '../screens/community_screen.dart';
 
 //Providers

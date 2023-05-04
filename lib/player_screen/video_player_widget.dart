@@ -26,6 +26,7 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
   Widget build(BuildContext context) {
     //Get the device size
     final mediaQuary = MediaQuery.of(context).size;
+    print('Altura ${mediaQuary.height}');
     return Column(
       children: [
         Container(
@@ -85,7 +86,10 @@ class _VideoPlayerWidgetState extends State<VideoPlayerWidget> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    SizedBox(height: mediaQuary.height - 220),
+                    SizedBox(
+                        height: mediaQuary.height > 368.0
+                            ? mediaQuary.height - 400
+                            : mediaQuary.height - 240),
                     Center(
                       child: Loading(),
                     ),

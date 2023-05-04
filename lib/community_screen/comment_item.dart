@@ -202,10 +202,14 @@ class _CommentItemState extends State<CommentItem> {
                               });
                             }
                             if (!_liked && _like > 0) {
-                              _like = _like - 1;
+                              setState(() {
+                                _like = _like - 1;
+                              });
                             }
                             if (!_liked && _like == 0) {
-                              _like = 0;
+                              setState(() {
+                                _like = 0;
+                              });
                             }
 
                             if (likes.isEmpty) {
@@ -226,9 +230,11 @@ class _CommentItemState extends State<CommentItem> {
                                   likes[i].commentID == widget.comment.id &&
                                   likes[i].userID == widget.user.userID) {
                                 //Remove the user like
-                                setState(() {
-                                  _like = _like - 1;
-                                });
+                                if (!_liked && _like == 0) {
+                                  setState(() {
+                                    _like = 0;
+                                  });
+                                }
 
                                 //Access the CommentLikeProvider and call the deleteLike
                                 //Remove the user like to firebase

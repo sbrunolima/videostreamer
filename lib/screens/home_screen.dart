@@ -1,10 +1,5 @@
-import 'dart:math' as math;
-import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:carousel_slider/carousel_slider.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 //Providers
 import '../providers/video_provider.dart';
@@ -19,10 +14,8 @@ import '../providers/comment_like_provider.dart';
 import '../providers/reply_like_provider.dart';
 
 //Widgets
-import '../widgets/movie_card.dart';
 import '../widgets/loading.dart';
 import '../widgets/genre_rows.dart';
-import '../widgets/banner_widget.dart';
 import '../widgets/carousel_widget.dart';
 import '../widgets/my_app_bar.dart';
 import '../widgets/new_releases.dart';
@@ -37,38 +30,54 @@ class _HomeScreenState extends State<HomeScreen> {
   var _isInit = true;
 
   @override
-  void initState() {
-    super.initState();
-    setState(() {
-      _isLoading = true;
-    });
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_isInit) {
+      setState(() {
+        _isLoading = true;
+      });
 
-    Provider.of<CarouselProvider>(context, listen: false).loadCarousel().then(
-      (_) {
-        Provider.of<VideosProvider>(context, listen: false).loadVideos();
-        Provider.of<ImagesProvider>(context, listen: false).loadProfileImages();
-        Provider.of<UserPovider>(context, listen: false).loadUsers();
-        Provider.of<PostProvider>(context, listen: false).loadPosts();
-        Provider.of<CommentProvider>(context, listen: false).loadComments();
-        Provider.of<ReplyProvider>(context, listen: false).loadReply();
-        Provider.of<PostLikeProvider>(context, listen: false).loadLikes();
-        Provider.of<CommentLikeProvider>(context, listen: false).loadLikes();
-        Provider.of<ReplyLikeProvider>(context, listen: false).loadLikes();
+      //Load all data from firebase
+      Provider.of<CarouselProvider>(context, listen: false).loadCarousel().then(
+        (_) async {
+          await Provider.of<VideosProvider>(context, listen: false)
+              .loadVideos();
+          await Provider.of<ImagesProvider>(context, listen: false)
+              .loadProfileImages();
+          await Provider.of<UserPovider>(context, listen: false).loadUsers();
+          await Provider.of<PostProvider>(context, listen: false).loadPosts();
+          await Provider.of<CommentProvider>(context, listen: false)
+              .loadComments();
+          await Provider.of<ReplyProvider>(context, listen: false).loadReply();
+          await Provider.of<PostLikeProvider>(context, listen: false)
+              .loadLikes();
+          await Provider.of<CommentLikeProvider>(context, listen: false)
+              .loadLikes();
+          await Provider.of<ReplyLikeProvider>(context, listen: false)
+              .loadLikes();
 
-        Future.delayed(const Duration(seconds: 2)).then((_) {
-          setState(() {
-            _isLoading = false;
+          Future.delayed(const Duration(seconds: 2)).then((_) {
+            setState(() {
+              _isLoading = false;
+            });
           });
-        });
-      },
-    );
+        },
+      );
+    }
+
+    _isInit = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    const mySizedBox = SizedBox(height: 17);
+    //Create a cnst sizedBox to load only one time
+    const sizedBox = SizedBox(height: 17);
+    //Load and Set - Videos
+    //------------------------------------------------------------------
     final videoData = Provider.of<VideosProvider>(context, listen: false);
     final video = videoData.video;
+    //------------------------------------------------------------------
+    //END Load and Set - Videos
 
     return video.isNotEmpty
         ? SafeArea(
@@ -77,9 +86,9 @@ class _HomeScreenState extends State<HomeScreen> {
               body: SingleChildScrollView(
                 child: Column(
                   children: [
-                    mySizedBox,
+                    sizedBox,
                     MyAppBar(),
-                    mySizedBox,
+                    sizedBox,
                     CarouselWidget(),
                     NewReleases(rate: 7.0),
                     GenreRows(movieGenre: 'Crime'),

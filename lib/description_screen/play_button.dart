@@ -54,7 +54,7 @@ class _PlayButtonState extends State<PlayButton> {
                   'Watch Trailer',
                   style: GoogleFonts.openSans(
                     color: Colors.white,
-                    fontWeight: FontWeight.w500,
+                    fontWeight: FontWeight.w600,
                     fontSize: 16,
                   ),
                 ),
