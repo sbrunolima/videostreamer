@@ -56,14 +56,19 @@ class _PostDescriptionState extends State<PostDescription> {
       });
 
       //Load all data from Firebase
-      Provider.of<PostProvider>(context, listen: false).loadPosts().then((_) {
-        Provider.of<UserPovider>(context, listen: false).loadUsers();
-        Provider.of<PostProvider>(context, listen: false).loadPosts();
-        Provider.of<CommentProvider>(context, listen: false).loadComments();
-        Provider.of<ReplyProvider>(context, listen: false).loadReply();
-        Provider.of<PostLikeProvider>(context, listen: false).loadLikes();
-        Provider.of<CommentLikeProvider>(context, listen: false).loadLikes();
-        Provider.of<ReplyLikeProvider>(context, listen: false).loadLikes();
+      Provider.of<PostProvider>(context, listen: false)
+          .loadPosts()
+          .then((_) async {
+        await Provider.of<UserPovider>(context, listen: false).loadUsers();
+        await Provider.of<PostProvider>(context, listen: false).loadPosts();
+        await Provider.of<CommentProvider>(context, listen: false)
+            .loadComments();
+        await Provider.of<ReplyProvider>(context, listen: false).loadReply();
+        await Provider.of<PostLikeProvider>(context, listen: false).loadLikes();
+        await Provider.of<CommentLikeProvider>(context, listen: false)
+            .loadLikes();
+        await Provider.of<ReplyLikeProvider>(context, listen: false)
+            .loadLikes();
 
         setState(() {
           _isLoading = false;

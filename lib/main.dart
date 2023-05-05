@@ -6,11 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 //Screens
-import './screens/home_screen.dart';
 import './screens/start_screen.dart';
-import './description_screen/movie_description.dart';
-import './screens/login_screen.dart';
-import './screens/splash_screen.dart';
 import './screens/auth_screen.dart';
 
 //Providers

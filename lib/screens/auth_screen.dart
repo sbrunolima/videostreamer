@@ -15,6 +15,7 @@ class AuthScreen extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context).size;
     //Create a cnst sizedBox to load only one time
     const sizedBox = SizedBox(height: 40);
+
     return Scaffold(
       body: Container(
         height: mediaQuery.height,

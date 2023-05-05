@@ -14,25 +14,30 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  //Get a instance of the user
   final _auth = FirebaseAuth.instance;
   var _isLoading = false;
 
+  //Submit the auth form to firebase
   void _submitAuthForm(
     String email,
     String password,
     BuildContext ctx,
   ) async {
+    //Get the user credencial
     UserCredential credential;
 
     try {
       setState(() {
         _isLoading = true;
       });
+      //SingIn
       credential = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
 
+      //Go to State Screen
       Navigator.pushNamedAndRemoveUntil(
         context,
         StartScreen.routeName,
