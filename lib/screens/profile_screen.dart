@@ -52,7 +52,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //Create a cnst sizedBox to load only one time
+    //Create a const sizedBox to load only one time
     const sizedBox = SizedBox(height: 15);
     //Load and Set - Users
     //------------------------------------------------------------------
