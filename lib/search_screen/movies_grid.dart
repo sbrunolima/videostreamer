@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 //Providers
 import '../providers/video_provider.dart';
-import '../objects/video.dart';
 
 //Widgets
 import '../widgets/movie_card.dart';
-import '../widgets/my_app_bar.dart';
 
 class MovieGrid extends StatefulWidget {
   @override
@@ -18,8 +15,13 @@ class MovieGrid extends StatefulWidget {
 class _MovieGridState extends State<MovieGrid> {
   @override
   Widget build(BuildContext context) {
+    //Load all necesary DATA => Video
+    //-------------------------------------------------------------------
     final videoData = Provider.of<VideosProvider>(context, listen: false);
     final video = videoData.findedVideo;
+    //-------------------------------------------------------------------
+    //END Load all necesary DATA => Video
+
     return MediaQuery.removePadding(
       removeTop: true,
       removeBottom: true,
@@ -29,6 +31,7 @@ class _MovieGridState extends State<MovieGrid> {
         shrinkWrap: true,
         itemCount: video.length,
         itemBuilder: (context, index) {
+          //Return a grid with all the movies
           return MovieCard(video: video[index]);
         },
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(

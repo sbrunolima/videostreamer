@@ -22,9 +22,15 @@ class _SplasScreenState extends State<SplasScreen> {
   @override
   void initState() {
     super.initState();
-    Provider.of<VideosProvider>(context, listen: false).loadVideos();
-    Provider.of<ImagesProvider>(context, listen: false).loadProfileImages();
-    Provider.of<UserPovider>(context, listen: false).loadUsers();
+
+    //Load the necessary data o app start
+    Provider.of<VideosProvider>(context, listen: false).loadVideos().then(
+      (_) async {
+        await Provider.of<ImagesProvider>(context, listen: false)
+            .loadProfileImages();
+        await Provider.of<UserPovider>(context, listen: false).loadUsers();
+      },
+    );
   }
 
   @override

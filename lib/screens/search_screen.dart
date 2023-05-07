@@ -107,7 +107,6 @@ class _SearchScreenState extends State<SearchScreen> {
                     // },
                     onChanged: (value) {
                       //Take the value string and check if the movie exists
-                      print('VALUEEE = ${value.length}');
                       setState(() {
                         _searchForm(value.toString());
                       });

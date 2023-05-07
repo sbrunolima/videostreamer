@@ -1,18 +1,13 @@
-import 'dart:convert';
-
-import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wakelock/wakelock.dart';
 
 //Providers
-import '../providers/video_provider.dart';
 import '../objects/video.dart';
 
 //Widgets
 import '../player_screen/video_player_widget.dart';
-import '../widgets/my_back_icon.dart';
 
 class VideoPlayerScreen extends StatefulWidget {
   final Video video;
@@ -29,11 +24,14 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
   @override
   void initState() {
     super.initState();
+    //Receive the video data and try to play the trailerURL
     controller =
         VideoPlayerController.network(widget.video.trailerURL.toString())
           ..addListener(() => setState(() {}))
           ..setLooping(false)
           ..initialize().then((_) => controller.play());
+
+    //Set the device to landscape mode
     setLandscape();
   }
 
@@ -44,6 +42,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     setAllOrientations();
   }
 
+  //Set the device to landscape mode
   Future setLandscape() async {
     await SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
@@ -53,6 +52,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
     await Wakelock.enable();
   }
 
+  //Return to portrait mode if the player is closed
   Future setAllOrientations() async {
     await SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     await SystemChrome.setPreferredOrientations(DeviceOrientation.values);
@@ -69,6 +69,7 @@ class _VideoPlayerScreenState extends State<VideoPlayerScreen> {
           children: [
             Container(
               width: MediaQuery.of(context).size.width - 10,
+              //Send the video and the controller to VideoPlayerWidget
               child: VideoPlayerWidget(
                 video: widget.video,
                 controller: controller,

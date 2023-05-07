@@ -18,26 +18,32 @@ class SigninScreen extends StatefulWidget {
 }
 
 class _SigninScreenState extends State<SigninScreen> {
+  //Create a instance of the firabase auth
   final _auth = FirebaseAuth.instance;
   var _isLoading = false;
 
+  //Submot function
   void _submitAuthForm(
     String email,
     String username,
     String password,
     BuildContext ctx,
   ) async {
+    //Create the user credential
     UserCredential credential;
 
     try {
       setState(() {
         _isLoading = true;
       });
+
+      //Create new user on firabase
       credential = await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
+      //Add the user data on the database
       Provider.of<UserPovider>(context, listen: false).addUser(
         credential.user!.uid,
         email,
@@ -45,6 +51,7 @@ class _SigninScreenState extends State<SigninScreen> {
         'https://icon-library.com/images/no-profile-pic-icon/no-profile-pic-icon-27.jpg',
       );
 
+      //Go to the start screen
       Navigator.pushNamedAndRemoveUntil(
         context,
         StartScreen.routeName,
@@ -55,6 +62,8 @@ class _SigninScreenState extends State<SigninScreen> {
         _isLoading = false;
       });
       print('ERROR: $error');
+
+      //If the app get any error, show the message to the user
       String message = error.toString();
       errorDialog(message, context);
     }

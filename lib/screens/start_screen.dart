@@ -10,8 +10,6 @@ import '../screens/community_screen.dart';
 
 //Providers
 import '../providers/video_provider.dart';
-import '../providers/images_provider.dart';
-import '../providers/user_provider.dart';
 import '../screens/search_screen.dart';
 
 class StartScreen extends StatefulWidget {
@@ -24,6 +22,7 @@ class StartScreen extends StatefulWidget {
 class _StartScreenState extends State<StartScreen> {
   int _pageIndex = 0;
 
+  //All the screens on the bottm navbar
   final _screens = [
     HomeScreen(),
     SearchScreen(),
@@ -33,7 +32,7 @@ class _StartScreenState extends State<StartScreen> {
 
   //Responsible for refreshing the UI
   Future<void> _refreshSongs(BuildContext context) async {
-    Provider.of<VideosProvider>(context, listen: false).loadVideos();
+    await Provider.of<VideosProvider>(context, listen: false).loadVideos();
   }
 
   @override
@@ -41,8 +40,12 @@ class _StartScreenState extends State<StartScreen> {
     return WillPopScope(
       onWillPop: () async {
         if (_pageIndex == 0) {
+          //If the indexs is zero and the user press the andoid back button,
+          //the app closes
           SystemNavigator.pop();
         } else {
+          //If the page index is not zero and the user press the andoid back button,
+          ////it will return to page index zero
           setState(() {
             _pageIndex = 0;
           });
