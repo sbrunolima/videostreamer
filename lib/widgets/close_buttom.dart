@@ -36,6 +36,7 @@ class CloseButtom extends StatelessWidget {
               borderRadius: BorderRadius.circular(10),
             ),
           ),
+          //Close the screen
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),

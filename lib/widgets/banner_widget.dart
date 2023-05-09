@@ -1,15 +1,10 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:jumping_dot/jumping_dot.dart';
 
 //Providers
-import '../objects/video.dart';
 import '../providers/video_provider.dart';
 
 //Widgets
-import '../widgets/movie_card.dart';
-import 'genre_rows.dart';
 import '../description_screen/movie_description.dart';
 
 class BannerWidget extends StatelessWidget {
@@ -20,13 +15,21 @@ class BannerWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //Get the device size
     final mediaQuery = MediaQuery.of(context).size;
+    //Load all necessary data - Videos
+    //-----------------------------------------------------------------------
     final videoData = Provider.of<VideosProvider>(context, listen: false);
     final video =
         videoData.video.where((element) => element.id == trailerID).toList();
+    //-----------------------------------------------------------------------
+    //END Load all necessary data - Videos
+
     return GestureDetector(
       onTap: () {
+        //Show all the banners on server
         for (int i = 0; i < video.length; i++)
+          //If touched, go to MovieDescriptionScreen
           Navigator.of(context).push(
             MaterialPageRoute(
               builder: ((context) => MovieDescriptionScreen(

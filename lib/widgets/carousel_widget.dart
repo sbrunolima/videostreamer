@@ -1,16 +1,9 @@
-import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:jumping_dot/jumping_dot.dart';
 
-//Providers
-import '../providers/video_provider.dart';
-
 //Widgets
-import '../widgets/movie_card.dart';
-import 'genre_rows.dart';
 import '../widgets/banner_widget.dart';
 
 //Providers
@@ -35,6 +28,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
         _isLoading = true;
       });
 
+      //Load all carousels
       Provider.of<CarouselProvider>(context, listen: false)
           .loadCarousel()
           .then((_) async {
@@ -50,9 +44,17 @@ class _CarouselWidgetState extends State<CarouselWidget> {
 
   @override
   Widget build(BuildContext context) {
+    //Get the device size
     final mediaQuery = MediaQuery.of(context).size;
+    //Load all necessary data - Banners
+    //-----------------------------------------------------------------------
     final bannerData = Provider.of<CarouselProvider>(context, listen: false);
     final banner = bannerData.banner;
+    //-----------------------------------------------------------------------
+    //END Load all necessary data - Banners
+
+    //If is empty, sow oading Widget
+    //Else, load the carousel
     return banner.isEmpty
         ? loadingData()
         : Column(
@@ -76,17 +78,6 @@ class _CarouselWidgetState extends State<CarouselWidget> {
                 },
               ),
               const SizedBox(height: 10),
-              // AnimatedSmoothIndicator(
-              //   activeIndex: activeIndex,
-              //   count: banner.length,
-              //   effect: const SlideEffect(
-              //     dotWidth: 8,
-              //     dotHeight: 8,
-              //     activeDotColor: Colors.white,
-              //     dotColor: Colors.white30,
-              //     spacing: 17,
-              //   ),
-              // ),
             ],
           );
   }
