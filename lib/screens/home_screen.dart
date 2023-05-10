@@ -19,6 +19,7 @@ import '../widgets/genre_rows.dart';
 import '../widgets/carousel_widget.dart';
 import '../widgets/my_app_bar.dart';
 import '../widgets/new_releases.dart';
+import '../widgets/featured_rows.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -90,6 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     MyAppBar(),
                     sizedBox,
                     CarouselWidget(),
+                    FeaturedRows(receivedData: '2023'),
                     NewReleases(rate: 7.0),
                     GenreRows(movieGenre: 'Crime'),
                     GenreRows(movieGenre: 'Adventure'),

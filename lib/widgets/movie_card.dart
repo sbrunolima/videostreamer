@@ -39,7 +39,7 @@ class _MovieCardState extends State<MovieCard> {
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5),
-        child: Container(
+        child: SizedBox(
           height: 150,
           width: 110,
           child: Container(
