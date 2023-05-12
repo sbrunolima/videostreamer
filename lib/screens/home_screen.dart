@@ -18,8 +18,9 @@ import '../widgets/loading.dart';
 import '../widgets/genre_rows.dart';
 import '../widgets/carousel_widget.dart';
 import '../widgets/my_app_bar.dart';
-import '../widgets/new_releases.dart';
+import '../widgets/top_imdb_rows.dart';
 import '../widgets/featured_rows.dart';
+import '../widgets/family_rows.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -73,6 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     //Create a cnst sizedBox to load only one time
     const sizedBox = SizedBox(height: 17);
+    const lineHeight = SizedBox(height: 10);
     //Load and Set - Videos
     //------------------------------------------------------------------
     final videoData = Provider.of<VideosProvider>(context, listen: false);
@@ -91,14 +93,29 @@ class _HomeScreenState extends State<HomeScreen> {
                     MyAppBar(),
                     sizedBox,
                     CarouselWidget(),
-                    FeaturedRows(receivedData: '2023'),
-                    NewReleases(rate: 7.0),
+                    FeaturedRows(release: '2023'),
+                    lineHeight,
                     GenreRows(movieGenre: 'Crime'),
+                    lineHeight,
                     GenreRows(movieGenre: 'Adventure'),
+                    lineHeight,
                     GenreRows(movieGenre: 'Comedy'),
+                    lineHeight,
                     GenreRows(movieGenre: 'Sci-Fi'),
+                    lineHeight,
+                    TopIMDbRows(rate: 7.0),
+                    lineHeight,
                     GenreRows(movieGenre: 'Horror'),
+                    lineHeight,
                     GenreRows(movieGenre: 'Animation'),
+                    lineHeight,
+                    GenreRows(movieGenre: 'Drama'),
+                    lineHeight,
+                    FamilyRows(age: 'PG'),
+                    lineHeight,
+                    GenreRows(movieGenre: 'Fantasy'),
+                    lineHeight,
+                    GenreRows(movieGenre: 'Mystery'),
                     const SizedBox(height: 40),
                   ],
                 ),

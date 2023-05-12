@@ -44,6 +44,7 @@ class BannerWidget extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: Colors.transparent),
           borderRadius: BorderRadius.circular(6),
+          color: Colors.grey.shade900,
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(6),

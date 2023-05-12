@@ -3,20 +3,19 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 //Providers
-import '../objects/video.dart';
 import '../providers/video_provider.dart';
 import '../widgets/movie_card_upcoming.dart';
 
-class FeaturedRows extends StatelessWidget {
-  final String release;
+class TopIMDbRows extends StatelessWidget {
+  final double rate;
 
-  FeaturedRows({required this.release});
+  TopIMDbRows({required this.rate});
 
   Widget build(BuildContext context) {
     final titleWidth = MediaQuery.of(context).size.width;
     final videoData = Provider.of<VideosProvider>(context, listen: false);
     final video = videoData.video
-        .where((element) => element.release.contains(release))
+        .where((element) => double.tryParse(element.rate)! > rate)
         .toList();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,7 +23,7 @@ class FeaturedRows extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Text(
-            '$release Releases',
+            'Top IMDb Rating',
             style: GoogleFonts.openSans(
               color: Colors.white60,
               fontSize: 16,

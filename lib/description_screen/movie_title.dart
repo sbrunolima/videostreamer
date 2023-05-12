@@ -40,7 +40,6 @@ class MovieTitle extends StatelessWidget {
               children: [
                 rate(), //Rate
                 pointText,
-
                 age(), //Age restriction
               ],
             ),

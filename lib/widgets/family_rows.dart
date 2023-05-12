@@ -3,28 +3,26 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 //Providers
-import '../objects/video.dart';
 import '../providers/video_provider.dart';
 import '../widgets/movie_card_upcoming.dart';
 
-class FeaturedRows extends StatelessWidget {
-  final String release;
+class FamilyRows extends StatelessWidget {
+  final String age;
 
-  FeaturedRows({required this.release});
+  FamilyRows({required this.age});
 
   Widget build(BuildContext context) {
     final titleWidth = MediaQuery.of(context).size.width;
     final videoData = Provider.of<VideosProvider>(context, listen: false);
-    final video = videoData.video
-        .where((element) => element.release.contains(release))
-        .toList();
+    final video =
+        videoData.video.where((element) => element.age.contains(age)).toList();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Text(
-            '$release Releases',
+            'To the Family',
             style: GoogleFonts.openSans(
               color: Colors.white60,
               fontSize: 16,

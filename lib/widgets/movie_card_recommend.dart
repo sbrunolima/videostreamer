@@ -46,6 +46,7 @@ class _MovieCardRecommendState extends State<MovieCardRecommend> {
             decoration: BoxDecoration(
               border: Border.all(color: Colors.transparent),
               borderRadius: BorderRadius.circular(5),
+              color: Colors.grey.shade900,
             ),
             child: Stack(
               children: [

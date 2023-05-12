@@ -40,7 +40,7 @@ class GenreRows extends StatelessWidget {
           ),
         ),
         Container(
-          height: 160,
+          height: 150,
           child: ListView.builder(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             scrollDirection: Axis.horizontal,
