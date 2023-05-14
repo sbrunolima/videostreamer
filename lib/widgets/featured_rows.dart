@@ -3,21 +3,25 @@ import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 //Providers
-import '../objects/video.dart';
 import '../providers/video_provider.dart';
 import '../widgets/movie_card_upcoming.dart';
 
+//Return most recent movie trailers
 class FeaturedRows extends StatelessWidget {
   final String release;
 
   FeaturedRows({required this.release});
 
   Widget build(BuildContext context) {
-    final titleWidth = MediaQuery.of(context).size.width;
+    //Load all necesary DATA => Video
+    //-------------------------------------------------------------------
     final videoData = Provider.of<VideosProvider>(context, listen: false);
     final video = videoData.video
         .where((element) => element.release.contains(release))
         .toList();
+    //-------------------------------------------------------------------
+    //END Load all necesary DATA => Video
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

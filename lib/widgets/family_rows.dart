@@ -6,16 +6,21 @@ import 'package:google_fonts/google_fonts.dart';
 import '../providers/video_provider.dart';
 import '../widgets/movie_card_upcoming.dart';
 
+//Return family recommendations
 class FamilyRows extends StatelessWidget {
   final String age;
 
   FamilyRows({required this.age});
 
   Widget build(BuildContext context) {
-    final titleWidth = MediaQuery.of(context).size.width;
+    //Load all necesary DATA => Video
+    //-------------------------------------------------------------------
     final videoData = Provider.of<VideosProvider>(context, listen: false);
     final video =
-        videoData.video.where((element) => element.age.contains(age)).toList();
+        videoData.video.where((element) => element.age == age).toList();
+    //-------------------------------------------------------------------
+    //END Load all necesary DATA => Video
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [

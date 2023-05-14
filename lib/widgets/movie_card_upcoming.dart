@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:enefty_icons/enefty_icons.dart';
 
 //Providers
 import '../objects/video.dart';
-import '../providers/video_provider.dart';
 
 //Screens
 import '../description_screen/movie_description.dart';
@@ -35,6 +33,7 @@ class _UpcommingVideoCardState extends State<UpcommingVideoCard> {
 
     return GestureDetector(
       onTap: () {
+        //If touched, go to the movies description screen
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: ((context) => MovieDescriptionScreen(

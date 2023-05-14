@@ -36,9 +36,9 @@ class _MovieGridState extends State<MovieGrid> {
         },
         gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 140,
-          crossAxisSpacing: 1,
-          mainAxisSpacing: 2,
-          mainAxisExtent: 160,
+          crossAxisSpacing: 0,
+          mainAxisSpacing: 10,
+          mainAxisExtent: 150,
         ),
       ),
     );

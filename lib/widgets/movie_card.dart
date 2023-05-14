@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 //Providers
 import '../objects/video.dart';
-import '../providers/video_provider.dart';
 
 //Screens
 import '../description_screen/movie_description.dart';
 
+//Movies card widget
 class MovieCard extends StatefulWidget {
   final Video video;
   final VoidCallback? onTap;
@@ -26,9 +25,9 @@ class MovieCard extends StatefulWidget {
 class _MovieCardState extends State<MovieCard> {
   @override
   Widget build(BuildContext context) {
-    final titleWidth = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () {
+        //If touched, go to the movies description screen
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: ((context) => MovieDescriptionScreen(
@@ -76,6 +75,7 @@ class _MovieCardState extends State<MovieCard> {
     );
   }
 
+  //Error loading IMAGE
   Widget errorLoadingImage() {
     return Container(
       decoration: BoxDecoration(

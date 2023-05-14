@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
+//Video overlay and pause
 class OverlayWidget extends StatelessWidget {
   final VideoPlayerController controller;
 
@@ -29,6 +30,7 @@ class OverlayWidget extends StatelessWidget {
     );
   }
 
+  //Play/pause
   Widget buildPlay() {
     return controller.value.isPlaying
         ? Container()

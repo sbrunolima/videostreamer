@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 //Providers
 import '../objects/video.dart';
-import '../providers/video_provider.dart';
 
 //Screens
 import '../description_screen/movie_description.dart';
 
+//Recomended trailers widget
 class MovieCardRecommend extends StatefulWidget {
   final Video video;
   final VoidCallback? onTap;
@@ -26,9 +25,9 @@ class MovieCardRecommend extends StatefulWidget {
 class _MovieCardRecommendState extends State<MovieCardRecommend> {
   @override
   Widget build(BuildContext context) {
-    final titleWidth = MediaQuery.of(context).size.width;
     return GestureDetector(
       onTap: () {
+        //If touched, go to the movies description screen
         Navigator.of(context).push(
           MaterialPageRoute(
             builder: ((context) => MovieDescriptionScreen(
@@ -46,7 +45,7 @@ class _MovieCardRecommendState extends State<MovieCardRecommend> {
             decoration: BoxDecoration(
               border: Border.all(color: Colors.transparent),
               borderRadius: BorderRadius.circular(5),
-              color: Colors.grey.shade900,
+              color: Colors.grey.shade800,
             ),
             child: Stack(
               children: [
@@ -76,6 +75,7 @@ class _MovieCardRecommendState extends State<MovieCardRecommend> {
     );
   }
 
+  //Error loading image widget
   Widget errorLoadingImage() {
     return Container(
       decoration: BoxDecoration(

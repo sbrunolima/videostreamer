@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:jumping_dot/jumping_dot.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+//Loading page while the data is not loaded
 class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
