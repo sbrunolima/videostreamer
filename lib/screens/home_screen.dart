@@ -21,6 +21,7 @@ import '../widgets/my_app_bar.dart';
 import '../widgets/top_imdb_rows.dart';
 import '../widgets/featured_rows.dart';
 import '../widgets/family_rows.dart';
+import '../errors screen/try_reconnect.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -82,46 +83,48 @@ class _HomeScreenState extends State<HomeScreen> {
     //------------------------------------------------------------------
     //END Load and Set - Videos
 
-    return video.isNotEmpty
-        ? SafeArea(
-            child: Scaffold(
-              backgroundColor: Colors.black54,
-              body: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    sizedBox,
-                    MyAppBar(),
-                    sizedBox,
-                    CarouselWidget(),
-                    FeaturedRows(release: '2023'),
-                    lineHeight,
-                    GenreRows(movieGenre: 'Crime'),
-                    lineHeight,
-                    GenreRows(movieGenre: 'Adventure'),
-                    lineHeight,
-                    GenreRows(movieGenre: 'Comedy'),
-                    lineHeight,
-                    GenreRows(movieGenre: 'Sci-Fi'),
-                    lineHeight,
-                    TopIMDbRows(rate: 7.0),
-                    lineHeight,
-                    GenreRows(movieGenre: 'Horror'),
-                    lineHeight,
-                    GenreRows(movieGenre: 'Animation'),
-                    lineHeight,
-                    GenreRows(movieGenre: 'Drama'),
-                    lineHeight,
-                    FamilyRows(age: 'PG'),
-                    lineHeight,
-                    GenreRows(movieGenre: 'Fantasy'),
-                    lineHeight,
-                    GenreRows(movieGenre: 'Mystery'),
-                    const SizedBox(height: 40),
-                  ],
-                ),
+    return Scaffold(
+      backgroundColor: Colors.black54,
+      body: video.isEmpty
+          ? TryReconnect(pageID: '0')
+          : SafeArea(
+              child: SingleChildScrollView(
+                child: _isLoading
+                    ? Loading()
+                    : Column(
+                        children: [
+                          sizedBox,
+                          MyAppBar(),
+                          sizedBox,
+                          CarouselWidget(),
+                          FeaturedRows(release: '2023'),
+                          lineHeight,
+                          GenreRows(movieGenre: 'Crime'),
+                          lineHeight,
+                          GenreRows(movieGenre: 'Adventure'),
+                          lineHeight,
+                          GenreRows(movieGenre: 'Comedy'),
+                          lineHeight,
+                          GenreRows(movieGenre: 'Sci-Fi'),
+                          lineHeight,
+                          TopIMDbRows(rate: 7.0),
+                          lineHeight,
+                          GenreRows(movieGenre: 'Horror'),
+                          lineHeight,
+                          GenreRows(movieGenre: 'Animation'),
+                          lineHeight,
+                          GenreRows(movieGenre: 'Drama'),
+                          lineHeight,
+                          FamilyRows(age: 'PG'),
+                          lineHeight,
+                          GenreRows(movieGenre: 'Fantasy'),
+                          lineHeight,
+                          GenreRows(movieGenre: 'Mystery'),
+                          const SizedBox(height: 40),
+                        ],
+                      ),
               ),
             ),
-          )
-        : Loading();
+    );
   }
 }

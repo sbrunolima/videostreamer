@@ -21,6 +21,9 @@ import './providers/comment_like_provider.dart';
 import './providers/reply_provider.dart';
 import './providers/reply_like_provider.dart';
 
+//Widgets
+import '../widgets/loading.dart';
+
 Future main() async {
   runApp(VideoStreamer());
 
@@ -92,6 +95,9 @@ class _VideoStreamerState extends State<VideoStreamer> {
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: ((context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Loading();
+            }
             if (snapshot.hasData) {
               return StartScreen();
             }

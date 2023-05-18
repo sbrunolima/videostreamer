@@ -21,6 +21,7 @@ class StartScreen extends StatefulWidget {
 
 class _StartScreenState extends State<StartScreen> {
   int _pageIndex = 0;
+  var _isInit = true;
 
   //All the screens on the bottm navbar
   final _screens = [
@@ -30,8 +31,24 @@ class _StartScreenState extends State<StartScreen> {
     ProfileScreen(),
   ];
 
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
+    //Receive the page index ID from try reconnect
+    if (_isInit) {
+      final pageID = ModalRoute.of(context)!.settings.arguments;
+      String arg = pageID.toString();
+      if (pageID != null) {
+        _pageIndex = int.parse(arg.toString());
+      }
+    }
+
+    _isInit = false;
+  }
+
   //Responsible for refreshing the UI
-  Future<void> _refreshSongs(BuildContext context) async {
+  Future<void> _refreshVideos(BuildContext context) async {
     await Provider.of<VideosProvider>(context, listen: false).loadVideos();
   }
 
