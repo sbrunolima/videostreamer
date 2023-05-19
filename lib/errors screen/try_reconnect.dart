@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:colours/colours.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 //Screens
 import '../screens/start_screen.dart';
@@ -21,9 +22,10 @@ import '../providers/reply_like_provider.dart';
 import '../widgets/loading.dart';
 
 class TryReconnect extends StatefulWidget {
-  final String pageID;
+  //Callback function to refresh the page
+  final Function(bool) callback;
 
-  TryReconnect({required this.pageID});
+  TryReconnect({required this.callback});
 
   @override
   State<TryReconnect> createState() => _TryReconnectState();
@@ -54,11 +56,6 @@ class _TryReconnectState extends State<TryReconnect> {
     _isInit = false;
   }
 
-  //Responsible for refreshing the UI
-  Future<void> _refreshVideos(BuildContext context) async {
-    await Provider.of<VideosProvider>(context, listen: false).loadVideos();
-  }
-
   @override
   Widget build(BuildContext context) {
     final videoData = Provider.of<VideosProvider>(context, listen: false);
@@ -73,27 +70,33 @@ class _TryReconnectState extends State<TryReconnect> {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('TEST'),
+                    Image.asset(
+                      'assets/nointernet.png',
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                    ),
                   ],
                 ),
                 const SizedBox(height: 12),
                 Text(
                   'No Internet Connection',
-                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                      ),
+                  style: GoogleFonts.openSans(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 18,
+                  ),
                 ),
                 const SizedBox(height: 4),
                 Container(
                   width: 300,
                   child: Text(
                     'Check your internet connection and try again.',
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          color: Colors.white,
-                          fontSize: 14,
-                        ),
+                    style: GoogleFonts.openSans(
+                      color: Colors.white54,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -101,41 +104,46 @@ class _TryReconnectState extends State<TryReconnect> {
                 SizedBox(
                   height: 50,
                   width: 200,
-                  child: OutlinedButton(
-                    onPressed: () async {
-                      setState(() {
-                        _isLoading = true;
-                      });
-
-                      //Call _refreshSongs to try load the DATA
-                      _refreshVideos(context);
-
-                      //Await 5 seconds before try to load the page again
-                      Future.delayed(const Duration(seconds: 5)).then((_) {
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.transparent),
+                      borderRadius: BorderRadius.circular(5),
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          Colours.aquamarine,
+                          Colours.aqua,
+                        ],
+                      ),
+                    ),
+                    child: OutlinedButton(
+                      onPressed: () async {
                         setState(() {
-                          _isLoading = false;
+                          _isLoading = true;
                         });
 
-                        Navigator.of(context).popAndPushNamed(
-                          StartScreen.routeName,
-                          arguments: widget.pageID,
-                        );
-                      });
-                    },
-                    child: Text(
-                      'TRY AGAIN',
-                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                            color: Colors.white,
-                            fontSize: 16,
-                          ),
-                    ),
-                    style: OutlinedButton.styleFrom(
-                      backgroundColor: Colors.grey.shade700,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(40),
-                      ),
-                      side: const BorderSide(
-                        color: Colors.transparent,
+                        // try load the DATA
+                        await Provider.of<VideosProvider>(context,
+                                listen: false)
+                            .loadVideos();
+
+                        //Await 5 seconds before try to load the page again
+                        Future.delayed(const Duration(seconds: 5)).then((_) {
+                          setState(() {
+                            _isLoading = false;
+                          });
+
+                          widget.callback(true);
+                        });
+                      },
+                      child: Text(
+                        'TRY AGAIN',
+                        style: GoogleFonts.openSans(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 18,
+                        ),
                       ),
                     ),
                   ),

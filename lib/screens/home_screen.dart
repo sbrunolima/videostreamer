@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:colours/colours.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 //Providers
 import '../providers/video_provider.dart';
@@ -86,7 +88,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: Colors.black54,
       body: video.isEmpty
-          ? TryReconnect(pageID: '0')
+          ? TryReconnect(
+              callback: (value) {
+                setState(() {
+                  _isInit = value;
+                });
+              },
+            )
           : SafeArea(
               child: SingleChildScrollView(
                 child: _isLoading
@@ -125,6 +133,97 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
               ),
             ),
+    );
+  }
+
+  Widget tryReconnect() {
+    return Center(
+      child: (!_isLoading)
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/nointernet.png',
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'No Internet Connection',
+                  style: GoogleFonts.openSans(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 18,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Container(
+                  width: 300,
+                  child: Text(
+                    'Check your internet connection and try again.',
+                    style: GoogleFonts.openSans(
+                      color: Colors.white54,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(height: 17),
+                SizedBox(
+                  height: 50,
+                  width: 200,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.transparent),
+                      borderRadius: BorderRadius.circular(5),
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          Colours.aquamarine,
+                          Colours.aqua,
+                        ],
+                      ),
+                    ),
+                    child: OutlinedButton(
+                      onPressed: () async {
+                        setState(() {
+                          _isLoading = true;
+                        });
+
+                        // try load the DATA
+                        await Provider.of<VideosProvider>(context,
+                                listen: false)
+                            .loadVideos();
+
+                        //Await 5 seconds before try to load the page again
+                        Future.delayed(const Duration(seconds: 5)).then((_) {
+                          setState(() {
+                            _isLoading = false;
+                          });
+                        });
+                      },
+                      child: Text(
+                        'TRY AGAIN',
+                        style: GoogleFonts.openSans(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          : Loading(),
     );
   }
 }

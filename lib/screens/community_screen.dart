@@ -2,12 +2,15 @@ import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:colours/colours.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 //Widgets
 import '../community_screen/post_item.dart';
 import '../community_screen/add_post.dart';
 import '../widgets/loading.dart';
 import '../widgets/my_title.dart';
+import '../errors screen/try_reconnect.dart';
 
 //Providers
 import '../providers/user_provider.dart';
@@ -17,6 +20,7 @@ import '../providers/post_likes_provider.dart';
 import '../providers/reply_provider.dart';
 import '../providers/comment_like_provider.dart';
 import '../providers/reply_like_provider.dart';
+import '../providers/video_provider.dart';
 
 class CommunutyScreen extends StatefulWidget {
   @override
@@ -57,6 +61,7 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
             .loadLikes();
         await Provider.of<ReplyLikeProvider>(context, listen: false)
             .loadLikes();
+        await Provider.of<VideosProvider>(context, listen: false).loadVideos();
 
         setState(() {
           _isLoading = false;
@@ -68,93 +73,195 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //Load and Set - Posts, Users
+    //Load and Set - Posts, Users, Videos
     //------------------------------------------------------------------
+    final videoData = Provider.of<VideosProvider>(context, listen: false);
     final postsData = Provider.of<PostProvider>(context, listen: false);
     final usersData = Provider.of<UserPovider>(context, listen: false);
+    final video = videoData.video;
     final post = postsData.posts;
     final user = usersData.user
         .where((loadedUser) => loadedUser.userID == _userId.toString())
         .toList();
     //------------------------------------------------------------------
-    //END Load and Set - Posts, Users
+    //END Load and Set - Posts, Users,  Videos
 
-    return Scaffold(
-      backgroundColor: Colors.black54,
-      appBar: AppBar(
-        backgroundColor: Color.fromARGB(0, 0, 0, 0),
-        elevation: 0,
-        title: MyTitle(title: 'Community'),
-      ),
-      body: _isLoading
-          ? Loading()
-          : SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 10),
-                  //Load a list with all posts
-                  ListView.builder(
-                    physics: NeverScrollableScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: post.length,
-                    itemBuilder: (context, index) {
-                      return Column(
-                        children: [
-                          PostItem(
-                            post: post[index],
-                            //Receive a BOOL value from Post Item
-                            //And refresh the screen according the BOOL value
-                            callback: (value) {
-                              setState(() {
-                                _isInit = value;
-                              });
-                            },
-                          ),
-                          const Divider(),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ),
+    return video.isEmpty
+        ? TryReconnect(
+            callback: (value) {
+              setState(() {
+                _isInit = value;
+              });
+            },
+          )
+        : Scaffold(
+            backgroundColor: Colors.black54,
+            appBar: AppBar(
+              backgroundColor: Color.fromARGB(0, 0, 0, 0),
+              elevation: 0,
+              title: MyTitle(title: 'Community'),
             ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          EneftyIcons.add_outline,
-          color: Colors.white,
-          size: 40,
-        ),
-        onPressed: () {
-          //Show a Bottom Modal Sheet to add a new POST
-          showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            backgroundColor: Colors.transparent,
-            builder: (context) => DraggableScrollableSheet(
-              initialChildSize: 0.9,
-              minChildSize: 0.5,
-              maxChildSize: 0.9,
-              builder: (_, controller) => Container(
-                decoration: BoxDecoration(
-                  color: Colors.grey.shade900,
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(10),
+            body: _isLoading
+                ? Loading()
+                : SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 10),
+                        //Load a list with all posts
+                        ListView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: post.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                PostItem(
+                                  post: post[index],
+                                  //Receive a BOOL value from Post Item
+                                  //And refresh the screen according the BOOL value
+                                  callback: (value) {
+                                    setState(() {
+                                      _isInit = value;
+                                    });
+                                  },
+                                ),
+                                const Divider(),
+                              ],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                child: AddPost(
-                  user: user[0],
-                  //Send a call back to refresh the screen
-                  callback: (value) {
-                    setState(() {
-                      _isInit = value;
-                    });
-                  },
-                ),
+            floatingActionButton: FloatingActionButton(
+              child: Icon(
+                EneftyIcons.add_outline,
+                color: Colors.white,
+                size: 40,
               ),
+              onPressed: () {
+                //Show a Bottom Modal Sheet to add a new POST
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  backgroundColor: Colors.transparent,
+                  builder: (context) => DraggableScrollableSheet(
+                    initialChildSize: 0.9,
+                    minChildSize: 0.5,
+                    maxChildSize: 0.9,
+                    builder: (_, controller) => Container(
+                      decoration: BoxDecoration(
+                        color: Colors.grey.shade900,
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(10),
+                        ),
+                      ),
+                      child: AddPost(
+                        user: user[0],
+                        //Send a call back to refresh the screen
+                        callback: (value) {
+                          setState(() {
+                            _isInit = value;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           );
-        },
-      ),
+  }
+
+  //try reconnect th BackEnd
+  Widget tryReconnect() {
+    return Center(
+      child: (!_isLoading)
+          ? Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'assets/nointernet.png',
+                      height: 100,
+                      width: 100,
+                      fit: BoxFit.cover,
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  'No Internet Connection',
+                  style: GoogleFonts.openSans(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 18,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Container(
+                  width: 300,
+                  child: Text(
+                    'Check your internet connection and try again.',
+                    style: GoogleFonts.openSans(
+                      color: Colors.white54,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                const SizedBox(height: 17),
+                SizedBox(
+                  height: 50,
+                  width: 200,
+                  child: DecoratedBox(
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.transparent),
+                      borderRadius: BorderRadius.circular(5),
+                      gradient: LinearGradient(
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                        colors: [
+                          Colours.aquamarine,
+                          Colours.aqua,
+                        ],
+                      ),
+                    ),
+                    child: OutlinedButton(
+                      onPressed: () async {
+                        setState(() {
+                          _isLoading = true;
+                        });
+
+                        // try load the DATA
+                        await Provider.of<VideosProvider>(context,
+                                listen: false)
+                            .loadVideos();
+
+                        //Await 5 seconds before try to load the page again
+                        Future.delayed(const Duration(seconds: 5)).then((_) {
+                          setState(() {
+                            _isLoading = false;
+                          });
+                        });
+                      },
+                      child: Text(
+                        'TRY AGAIN',
+                        style: GoogleFonts.openSans(
+                          color: Colors.white,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            )
+          : Loading(),
     );
   }
 }
