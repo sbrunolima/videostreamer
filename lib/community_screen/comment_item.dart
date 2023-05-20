@@ -60,6 +60,7 @@ class _CommentItemState extends State<CommentItem> {
     final user = usersData.user
         .where((loadedUser) => loadedUser.userID == widget.comment.userID)
         .toList();
+    final hasLike = likeData.like;
     final likes = likeData.like
         .where((loadLikes) =>
             loadLikes.commentID == widget.comment.id &&
@@ -70,9 +71,17 @@ class _CommentItemState extends State<CommentItem> {
         .toList();
 
     //If the likes is not empty on the server, set likes to the server value
-    if (likes.isNotEmpty) {
+    if (hasLike.isNotEmpty) {
+      if (likes.isNotEmpty) {
+        setState(() {
+          _liked = likes[0].favorite;
+        });
+      } else {
+        setState(() {
+          _liked = false;
+        });
+      }
       setState(() {
-        _liked = likes[0].favorite;
         _like = likeLength.length;
       });
     }
@@ -251,7 +260,7 @@ class _CommentItemState extends State<CommentItem> {
                                 ? EneftyIcons.heart_bold
                                 : EneftyIcons.heart_outline,
                             color: _liked ? Colors.redAccent[400] : Colors.grey,
-                            size: 16,
+                            size: 20,
                           ),
                         ),
                       //Identify it is empty and load the server likes count
@@ -293,7 +302,7 @@ class _CommentItemState extends State<CommentItem> {
                                 ? EneftyIcons.heart_bold
                                 : EneftyIcons.heart_outline,
                             color: _liked ? Colors.redAccent[400] : Colors.grey,
-                            size: 16,
+                            size: 20,
                           ),
                         ),
                       const SizedBox(width: 4),

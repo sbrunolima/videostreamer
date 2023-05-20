@@ -40,6 +40,7 @@ class _ReplyItemState extends State<ReplyItem> {
     final user = usersData.user
         .where((loadedUser) => loadedUser.userID == widget.reply.userID)
         .toList();
+    final hasLike = likeData.like;
     final likes = likeData.like
         .where((loadLikes) =>
             loadLikes.replyID == widget.reply.id &&
@@ -49,11 +50,18 @@ class _ReplyItemState extends State<ReplyItem> {
         .where((loadLikes) => loadLikes.replyID == widget.reply.id)
         .toList();
 
-    //Verify if the likes is not empty
-    if (likes.isNotEmpty) {
-      //If is not empty, set _liked to the same value the server
+    //If the likes is not empty on the server, set likes to the server value
+    if (hasLike.isNotEmpty) {
+      if (likes.isNotEmpty) {
+        setState(() {
+          _liked = likes[0].favorite;
+        });
+      } else {
+        setState(() {
+          _liked = false;
+        });
+      }
       setState(() {
-        _liked = likes[0].favorite;
         _like = likeLength.length;
       });
     }
@@ -227,7 +235,7 @@ class _ReplyItemState extends State<ReplyItem> {
                                 ? EneftyIcons.heart_bold
                                 : EneftyIcons.heart_outline,
                             color: _liked ? Colors.redAccent[400] : Colors.grey,
-                            size: 16,
+                            size: 20,
                           ),
                         ),
                       //Identify it is empty and load the server likes count
@@ -268,7 +276,7 @@ class _ReplyItemState extends State<ReplyItem> {
                                 ? EneftyIcons.heart_bold
                                 : EneftyIcons.heart_outline,
                             color: _liked ? Colors.redAccent[400] : Colors.grey,
-                            size: 16,
+                            size: 20,
                           ),
                         ),
                       const SizedBox(width: 4),

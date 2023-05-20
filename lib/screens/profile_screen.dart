@@ -43,7 +43,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         _isLoading = true;
       });
 
-      //Load all users and videos
+      //Load all necessary data from firebase to show on screen
       Provider.of<UserPovider>(context, listen: false)
           .loadUsers()
           .then((_) async {

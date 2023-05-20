@@ -51,7 +51,7 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
       Provider.of<UserPovider>(context, listen: false)
           .loadUsers()
           .then((_) async {
-        await Provider.of<PostProvider>(context, listen: false).loadPosts();
+        await Provider.of<VideosProvider>(context, listen: false).loadVideos();
         await Provider.of<PostProvider>(context, listen: false).loadPosts();
         await Provider.of<CommentProvider>(context, listen: false)
             .loadComments();
@@ -61,7 +61,6 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
             .loadLikes();
         await Provider.of<ReplyLikeProvider>(context, listen: false)
             .loadLikes();
-        await Provider.of<VideosProvider>(context, listen: false).loadVideos();
 
         setState(() {
           _isLoading = false;
@@ -133,43 +132,45 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
                       ],
                     ),
                   ),
-            floatingActionButton: FloatingActionButton(
-              child: Icon(
-                EneftyIcons.add_outline,
-                color: Colors.white,
-                size: 40,
-              ),
-              onPressed: () {
-                //Show a Bottom Modal Sheet to add a new POST
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  backgroundColor: Colors.transparent,
-                  builder: (context) => DraggableScrollableSheet(
-                    initialChildSize: 0.9,
-                    minChildSize: 0.5,
-                    maxChildSize: 0.9,
-                    builder: (_, controller) => Container(
-                      decoration: BoxDecoration(
-                        color: Colors.grey.shade900,
-                        borderRadius: BorderRadius.vertical(
-                          top: Radius.circular(10),
-                        ),
-                      ),
-                      child: AddPost(
-                        user: user[0],
-                        //Send a call back to refresh the screen
-                        callback: (value) {
-                          setState(() {
-                            _isInit = value;
-                          });
-                        },
-                      ),
+            floatingActionButton: !_isLoading
+                ? FloatingActionButton(
+                    child: Icon(
+                      EneftyIcons.add_outline,
+                      color: Colors.white,
+                      size: 40,
                     ),
-                  ),
-                );
-              },
-            ),
+                    onPressed: () {
+                      //Show a Bottom Modal Sheet to add a new POST
+                      showModalBottomSheet(
+                        context: context,
+                        isScrollControlled: true,
+                        backgroundColor: Colors.transparent,
+                        builder: (context) => DraggableScrollableSheet(
+                          initialChildSize: 0.9,
+                          minChildSize: 0.5,
+                          maxChildSize: 0.9,
+                          builder: (_, controller) => Container(
+                            decoration: BoxDecoration(
+                              color: Colors.grey.shade900,
+                              borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(10),
+                              ),
+                            ),
+                            child: AddPost(
+                              user: user[0],
+                              //Send a call back to refresh the screen
+                              callback: (value) {
+                                setState(() {
+                                  _isInit = value;
+                                });
+                              },
+                            ),
+                          ),
+                        ),
+                      );
+                    },
+                  )
+                : SizedBox(),
           );
   }
 

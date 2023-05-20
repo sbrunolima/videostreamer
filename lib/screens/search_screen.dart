@@ -38,31 +38,12 @@ class _SearchScreenState extends State<SearchScreen> {
         _isLoading = true;
       });
 
-      Provider.of<CarouselProvider>(context, listen: false).loadCarousel().then(
-        (_) async {
-          await Provider.of<VideosProvider>(context, listen: false)
-              .loadVideos();
-          await Provider.of<ImagesProvider>(context, listen: false)
-              .loadProfileImages();
-          await Provider.of<UserPovider>(context, listen: false).loadUsers();
-          await Provider.of<PostProvider>(context, listen: false).loadPosts();
-          await Provider.of<CommentProvider>(context, listen: false)
-              .loadComments();
-          await Provider.of<ReplyProvider>(context, listen: false).loadReply();
-          await Provider.of<PostLikeProvider>(context, listen: false)
-              .loadLikes();
-          await Provider.of<CommentLikeProvider>(context, listen: false)
-              .loadLikes();
-          await Provider.of<ReplyLikeProvider>(context, listen: false)
-              .loadLikes();
+      //Load all necessary data from firebase to show on screen
+      Provider.of<VideosProvider>(context, listen: false).loadVideos();
 
-          Future.delayed(const Duration(seconds: 2)).then((_) {
-            setState(() {
-              _isLoading = false;
-            });
-          });
-        },
-      );
+      setState(() {
+        _isLoading = false;
+      });
     }
 
     _isInit = false;
@@ -83,21 +64,21 @@ class _SearchScreenState extends State<SearchScreen> {
     //------------------------------------------------------------------
     //END Load and Set - Videos
 
-    return Scaffold(
-      backgroundColor: Colors.black54,
-      body: video.isEmpty
-          ? TryReconnect(
-              callback: (value) {
-                setState(() {
-                  _isInit = value;
-                });
-              },
-            )
-          : SafeArea(
-              child: SingleChildScrollView(
-                child: _isLoading
-                    ? Loading()
-                    : Padding(
+    return video.isEmpty
+        ? TryReconnect(
+            callback: (value) {
+              setState(() {
+                _isInit = value;
+              });
+            },
+          )
+        : Scaffold(
+            backgroundColor: Colors.black54,
+            body: _isLoading
+                ? Loading()
+                : SafeArea(
+                    child: SingleChildScrollView(
+                      child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: Column(
                           children: [
@@ -148,9 +129,9 @@ class _SearchScreenState extends State<SearchScreen> {
                           ],
                         ),
                       ),
-              ),
-            ),
-    );
+                    ),
+                  ),
+          );
   }
 
   Widget tryReconnect() {
