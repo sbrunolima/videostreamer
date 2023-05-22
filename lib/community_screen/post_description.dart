@@ -83,15 +83,20 @@ class _PostDescriptionState extends State<PostDescription> {
     //Load all DATA FROM FIREBASE => Comment, Users, Likes
     //-------------------------------------------------------------------------
     final commentData = Provider.of<CommentProvider>(context, listen: false);
-    final likeData = Provider.of<PostLikeProvider>(context, listen: false);
+    final postLikeData = Provider.of<PostLikeProvider>(context, listen: false);
     final usersData = Provider.of<UserPovider>(context, listen: false);
+    final replyData = Provider.of<ReplyProvider>(context, listen: false);
+    final replyLikeData =
+        Provider.of<ReplyLikeProvider>(context, listen: false);
+    final allReplyLikes = replyLikeData.like;
+    final allReplies = replyData.reply;
     final user = usersData.user
         .where((loadedUser) => loadedUser.userID == _userId)
         .toList();
     final comment = commentData.comments
         .where((loadPost) => loadPost.postID == widget.post.id)
         .toList();
-    final likes = likeData.like
+    final likes = postLikeData.like
         .where((loadlikes) =>
             loadlikes.postID == widget.post.id && loadlikes.userID == _userId)
         .toList();
@@ -122,13 +127,47 @@ class _PostDescriptionState extends State<PostDescription> {
                     color: Colors.white70,
                   ),
                   onPressed: () async {
-                    await Provider.of<PostProvider>(context, listen: false)
-                        .deletePost(postID: widget.post.id);
-
-                    //Return true to Post Item Widget
+                    //Return true to POST ITEM Widget
                     widget.callback(true);
 
+                    //Close the screen
                     Navigator.of(context).pop();
+
+                    //Deletes the POST
+                    await Provider.of<PostProvider>(context, listen: false)
+                        .deletePost(postID: widget.post.id)
+                        .then((_) async {
+                      //Deletes all COMMENTS
+                      await Provider.of<CommentProvider>(context, listen: false)
+                          .deletePostComments(postID: widget.post.id);
+
+                      //Deletes all COMMENTS LIKES
+                      for (int i = 0; i < comment.length; i++) {
+                        await Provider.of<CommentLikeProvider>(context,
+                                listen: false)
+                            .deletePostCommentLikes(commentID: comment[i].id);
+                      }
+
+                      //Deletes all POST LIKES
+                      for (int i = 0; i < likes.length; i++) {
+                        await Provider.of<PostLikeProvider>(context,
+                                listen: false)
+                            .deletePostLikes(postID: widget.post.id);
+                      }
+
+                      //Deletes all REPLIES
+                      for (int i = 0; i < allReplies.length; i++) {
+                        await Provider.of<ReplyProvider>(context, listen: false)
+                            .deleteReplyComment(commentID: comment[i].id);
+                      }
+
+                      //Deletes all REPLIES LIKES
+                      for (int i = 0; i < allReplyLikes.length; i++) {
+                        await Provider.of<ReplyLikeProvider>(context,
+                                listen: false)
+                            .deleteCommentReplyLikes(replyID: allReplies[i].id);
+                      }
+                    });
                   },
                 )
               : const SizedBox(width: 20),

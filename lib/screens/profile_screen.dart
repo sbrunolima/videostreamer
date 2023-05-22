@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 //Providers
 import '../providers/user_provider.dart';
 import '../providers/video_provider.dart';
+import '../providers/images_provider.dart';
 
 //Widgets
 import '../profile_screen/exit_button.dart';
@@ -48,6 +49,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           .loadUsers()
           .then((_) async {
         await Provider.of<VideosProvider>(context, listen: false).loadVideos();
+        await Provider.of<ImagesProvider>(context, listen: false)
+            .loadProfileImages();
         setState(() {
           _isLoading = false;
         });

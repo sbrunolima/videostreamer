@@ -56,7 +56,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
     //If is empty, sow oading Widget
     //Else, load the carousel
     return banner.isEmpty
-        ? loadingData()
+        ? loadingData(mediaQuery.height, mediaQuery.width)
         : Column(
             children: [
               CarouselSlider.builder(
@@ -82,12 +82,15 @@ class _CarouselWidgetState extends State<CarouselWidget> {
           );
   }
 
-  Widget loadingData() {
+  //Sowed while loading the banners
+  Widget loadingData(double height, double width) {
     return Container(
-      height: 595,
-      child: const JumpingDots(
-        color: Colors.white54,
-        radius: 6,
+      height: height - 400,
+      width: width - 68,
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.transparent),
+        borderRadius: BorderRadius.circular(6),
+        color: Colors.grey.shade900,
       ),
     );
   }

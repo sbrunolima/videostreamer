@@ -55,15 +55,13 @@ class _ReplyItemState extends State<ReplyItem> {
       if (likes.isNotEmpty) {
         setState(() {
           _liked = likes[0].favorite;
+          _like = likeLength.length;
         });
       } else {
         setState(() {
-          _liked = false;
+          _like = likeLength.length;
         });
       }
-      setState(() {
-        _like = likeLength.length;
-      });
     }
     //END Load all DATA FROM FIREBASE => Users, Likes
     //-------------------------------------------------------------------------
@@ -182,19 +180,6 @@ class _ReplyItemState extends State<ReplyItem> {
                               _liked = !_liked;
                             });
 
-                            //Verify if the user alread liked and add or remove according
-                            if (_liked) {
-                              setState(() {
-                                _like = _like + 1;
-                              });
-                            }
-                            if (!_liked && _like > 0) {
-                              _like = _like - 1;
-                            }
-                            if (!_liked && _like == 0) {
-                              _like = 0;
-                            }
-
                             //Add likes count
                             if (likes.isEmpty) {
                               //Access the ReplyLikeProvider and call the addLike
@@ -213,13 +198,6 @@ class _ReplyItemState extends State<ReplyItem> {
                               if (likes.isNotEmpty &&
                                   likes[i].replyID == widget.reply.id &&
                                   likes[i].userID == widget.user.userID) {
-                                //Remove the user like
-                                if (!_liked && _like == 0) {
-                                  setState(() {
-                                    _like = 0;
-                                  });
-                                }
-
                                 //Access the ReplyLikeProvider and call the deleteLike
                                 //Remove the user like to firebase
                                 await Provider.of<ReplyLikeProvider>(context,
@@ -247,19 +225,6 @@ class _ReplyItemState extends State<ReplyItem> {
                             setState(() {
                               _liked = !_liked;
                             });
-
-                            //Verify if the user alread liked and add or remove according
-                            if (_liked) {
-                              setState(() {
-                                _like = _like + 1;
-                              });
-                            }
-                            if (!_liked && _like > 0) {
-                              _like = _like - 1;
-                            }
-                            if (!_liked && _like == 0) {
-                              _like = 0;
-                            }
 
                             //Access the ReplyLikeProvider and call the addLike
                             //Send the user like to firebase

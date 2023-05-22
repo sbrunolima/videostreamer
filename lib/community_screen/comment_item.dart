@@ -75,15 +75,13 @@ class _CommentItemState extends State<CommentItem> {
       if (likes.isNotEmpty) {
         setState(() {
           _liked = likes[0].favorite;
+          _like = likeLength.length;
         });
       } else {
         setState(() {
-          _liked = false;
+          _like = likeLength.length;
         });
       }
-      setState(() {
-        _like = likeLength.length;
-      });
     }
     //END Load all DATA FROM FIREBASE => Reply, Users, Likes
     //-------------------------------------------------------------------------
@@ -196,30 +194,13 @@ class _CommentItemState extends State<CommentItem> {
                     children: [
                       //Identify it is not empty and load the server likes count
                       //And sum with the user new like
-                      if (likes.isNotEmpty)
+                      if (hasLike.isNotEmpty)
                         GestureDetector(
                           onTap: () async {
                             //Set the _liked to true or false
                             setState(() {
                               _liked = !_liked;
                             });
-
-                            //Verify if the user alread liked and add or remove according
-                            if (_liked) {
-                              setState(() {
-                                _like = _like + 1;
-                              });
-                            }
-                            if (!_liked && _like > 0) {
-                              setState(() {
-                                _like = _like - 1;
-                              });
-                            }
-                            if (!_liked && _like == 0) {
-                              setState(() {
-                                _like = 0;
-                              });
-                            }
 
                             if (likes.isEmpty) {
                               //Access the CommentLikeProvider and call the addLike
@@ -238,13 +219,6 @@ class _CommentItemState extends State<CommentItem> {
                               if (likes.isNotEmpty &&
                                   likes[i].commentID == widget.comment.id &&
                                   likes[i].userID == widget.user.userID) {
-                                //Remove the user like
-                                if (!_liked && _like == 0) {
-                                  setState(() {
-                                    _like = 0;
-                                  });
-                                }
-
                                 //Access the CommentLikeProvider and call the deleteLike
                                 //Remove the user like to firebase
                                 await Provider.of<CommentLikeProvider>(context,
@@ -265,7 +239,7 @@ class _CommentItemState extends State<CommentItem> {
                         ),
                       //Identify it is empty and load the server likes count
                       //And add new like
-                      if (likes.isEmpty)
+                      if (hasLike.isEmpty)
                         GestureDetector(
                           onTap: () async {
                             //Set the _liked to true or false
@@ -273,19 +247,6 @@ class _CommentItemState extends State<CommentItem> {
                             setState(() {
                               _liked = !_liked;
                             });
-
-                            //Verify if the user alread liked and add or remove according
-                            if (_liked) {
-                              setState(() {
-                                _like = _like + 1;
-                              });
-                            }
-                            if (!_liked && _like > 0) {
-                              _like = _like - 1;
-                            }
-                            if (!_liked && _like == 0) {
-                              _like = 0;
-                            }
 
                             //Access the CommentLikeProvider and all the addLike
                             //Send the user like to firebase
