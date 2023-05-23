@@ -56,7 +56,7 @@ class _CarouselWidgetState extends State<CarouselWidget> {
     //If is empty, sow oading Widget
     //Else, load the carousel
     return banner.isEmpty
-        ? loadingData(mediaQuery.height, mediaQuery.width)
+        ? loadingData(mediaQuery.height)
         : Column(
             children: [
               CarouselSlider.builder(
@@ -83,15 +83,24 @@ class _CarouselWidgetState extends State<CarouselWidget> {
   }
 
   //Sowed while loading the banners
-  Widget loadingData(double height, double width) {
-    return Container(
-      height: height - 400,
-      width: width - 68,
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.transparent),
-        borderRadius: BorderRadius.circular(6),
-        color: Colors.grey.shade900,
-      ),
+  Widget loadingData(double height) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 18,
+          ),
+          child: Container(
+            height: height - 400,
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.transparent),
+              borderRadius: BorderRadius.circular(6),
+              color: Colors.grey.shade900,
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+      ],
     );
   }
 }

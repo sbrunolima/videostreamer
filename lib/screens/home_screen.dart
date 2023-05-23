@@ -70,13 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
     //END Load and Set - Videos
 
     return video.isEmpty
-        ? TryReconnect(
-            callback: (value) {
-              setState(() {
-                _isInit = value;
-              });
-            },
-          )
+        ? TryReconnect()
         : Scaffold(
             backgroundColor: Colors.black54,
             body: _isLoading

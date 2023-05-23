@@ -76,13 +76,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     //END Load and Set - Users, Videos
 
     return video.isEmpty
-        ? TryReconnect(
-            callback: (value) {
-              setState(() {
-                _isInit = value;
-              });
-            },
-          )
+        ? TryReconnect()
         : Scaffold(
             backgroundColor: Colors.black54,
             appBar: AppBar(

@@ -49,7 +49,19 @@ class _StartScreenState extends State<StartScreen> {
         return false;
       },
       child: Scaffold(
-        body: _screens[_pageIndex],
+        body: Stack(
+          children: _screens
+              .asMap()
+              .map((i, screen) => MapEntry(
+                    i,
+                    Offstage(
+                      offstage: _pageIndex != i,
+                      child: screen,
+                    ),
+                  ))
+              .values
+              .toList(),
+        ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(
             boxShadow: <BoxShadow>[

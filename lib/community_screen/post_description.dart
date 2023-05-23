@@ -260,74 +260,117 @@ class _PostDescriptionState extends State<PostDescription> {
             ),
       //Add comment BUTTOM
       persistentFooterButtons: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 40,
-              width: MediaQuery.of(context).size.width - 80,
-              child: OutlinedButton(
-                onPressed: () {
-                  //Open a BOTTOM SHEET to add the comment
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) => DraggableScrollableSheet(
-                      initialChildSize: 0.7,
-                      minChildSize: 0.5,
-                      maxChildSize: 0.9,
-                      builder: (_, controller) => Container(
-                        decoration: BoxDecoration(
-                          color: Colors.grey.shade900,
-                          borderRadius: BorderRadius.vertical(
-                            top: Radius.circular(10),
+        if (!_isLoading)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 40,
+                width: MediaQuery.of(context).size.width - 80,
+                child: OutlinedButton(
+                  onPressed: () {
+                    //Open a BOTTOM SHEET to add the comment
+                    showModalBottomSheet(
+                      context: context,
+                      isScrollControlled: true,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => DraggableScrollableSheet(
+                        initialChildSize: 0.7,
+                        minChildSize: 0.5,
+                        maxChildSize: 0.9,
+                        builder: (_, controller) => Container(
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade900,
+                            borderRadius: BorderRadius.vertical(
+                              top: Radius.circular(10),
+                            ),
+                          ),
+                          child: AddComment(
+                            user: user[0],
+                            post: widget.post,
+                            //Set _isInit to true after add the comment to refreshe the screen
+                            callback: (value) {
+                              setState(() {
+                                _isInit = value;
+                              });
+                            },
                           ),
                         ),
-                        child: AddComment(
-                          user: user[0],
-                          post: widget.post,
-                          //Set _isInit to true after add the comment to refreshe the screen
-                          callback: (value) {
-                            setState(() {
-                              _isInit = value;
-                            });
-                          },
-                        ),
                       ),
+                    );
+                  },
+                  style: OutlinedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
                     ),
-                  );
-                },
-                style: OutlinedButton.styleFrom(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
                   ),
-                ),
-                child: Text(
-                  'Comment',
-                  style: GoogleFonts.openSans(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 16,
+                  child: Text(
+                    'Comment',
+                    style: GoogleFonts.openSans(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
+                    ),
                   ),
                 ),
               ),
-            ),
-            const SizedBox(width: 10),
-            //POST Like buttom
-            //Identify it is not empty and load the server likes count
-            //And sum with the user new like
-            if (likes.isNotEmpty)
-              IconButton(
-                onPressed: () async {
-                  //Set the _liked to true or false
-                  setState(() {
-                    _liked = !_liked;
-                  });
+              const SizedBox(width: 10),
+              //POST Like buttom
+              //Identify it is not empty and load the server likes count
+              //And sum with the user new like
+              if (likes.isNotEmpty)
+                IconButton(
+                  onPressed: () async {
+                    //Set the _liked to true or false
+                    setState(() {
+                      _liked = !_liked;
+                    });
 
-                  //Identify it is empty and load the server likes count
-                  //And add new like
-                  if (likes.isEmpty) {
+                    //Identify it is empty and load the server likes count
+                    //And add new like
+                    if (likes.isEmpty) {
+                      //Access the PostLikeProvider and call the addLike
+                      //Send the user like to firebase
+                      await Provider.of<PostLikeProvider>(context,
+                              listen: false)
+                          .addLike(
+                        _userId,
+                        widget.post.id,
+                      );
+                    }
+
+                    //Load all likes
+                    for (int i = 0; i < likes.length; i++)
+                      //If the user alread liked, and he click aggain, it will remove the like
+                      if (likes.isNotEmpty &&
+                          likes[i].postID == widget.post.id &&
+                          likes[i].userID == _userId) {
+                        //Access the PostLikeProvider and call the deleteLike
+                        //Remove the user like to firebase
+                        await Provider.of<PostLikeProvider>(context,
+                                listen: false)
+                            .deleteLike(
+                          likes[i].id,
+                        );
+                      }
+                  },
+                  //Identfy if the user like or not and set the colors RED/GREY
+                  icon: Icon(
+                    _liked ? EneftyIcons.heart_bold : EneftyIcons.heart_outline,
+                    color: _liked ? Colors.redAccent[400] : Colors.grey,
+                    size: 26,
+                  ),
+                ),
+              //Identify it is empty and load the server likes count
+              //And add new like
+              if (likes.isEmpty)
+                IconButton(
+                  onPressed: () async {
+                    //Set the _liked to true or false
+                    setState(() {
+                      _liked = !_liked;
+                    });
+
                     //Access the PostLikeProvider and call the addLike
                     //Send the user like to firebase
                     await Provider.of<PostLikeProvider>(context, listen: false)
@@ -335,57 +378,16 @@ class _PostDescriptionState extends State<PostDescription> {
                       _userId,
                       widget.post.id,
                     );
-                  }
-
-                  //Load all likes
-                  for (int i = 0; i < likes.length; i++)
-                    //If the user alread liked, and he click aggain, it will remove the like
-                    if (likes.isNotEmpty &&
-                        likes[i].postID == widget.post.id &&
-                        likes[i].userID == _userId) {
-                      //Access the PostLikeProvider and call the deleteLike
-                      //Remove the user like to firebase
-                      await Provider.of<PostLikeProvider>(context,
-                              listen: false)
-                          .deleteLike(
-                        likes[i].id,
-                      );
-                    }
-                },
-                //Identfy if the user like or not and set the colors RED/GREY
-                icon: Icon(
-                  _liked ? EneftyIcons.heart_bold : EneftyIcons.heart_outline,
-                  color: _liked ? Colors.redAccent[400] : Colors.grey,
-                  size: 26,
+                  },
+                  //Identfy if the user like or not and set the colors RED/GREY
+                  icon: Icon(
+                    _liked ? EneftyIcons.heart_bold : EneftyIcons.heart_outline,
+                    color: _liked ? Colors.redAccent[400] : Colors.grey,
+                    size: 26,
+                  ),
                 ),
-              ),
-            //Identify it is empty and load the server likes count
-            //And add new like
-            if (likes.isEmpty)
-              IconButton(
-                onPressed: () async {
-                  //Set the _liked to true or false
-                  setState(() {
-                    _liked = !_liked;
-                  });
-
-                  //Access the PostLikeProvider and call the addLike
-                  //Send the user like to firebase
-                  await Provider.of<PostLikeProvider>(context, listen: false)
-                      .addLike(
-                    _userId,
-                    widget.post.id,
-                  );
-                },
-                //Identfy if the user like or not and set the colors RED/GREY
-                icon: Icon(
-                  _liked ? EneftyIcons.heart_bold : EneftyIcons.heart_outline,
-                  color: _liked ? Colors.redAccent[400] : Colors.grey,
-                  size: 26,
-                ),
-              ),
-          ],
-        ),
+            ],
+          ),
       ],
     );
   }

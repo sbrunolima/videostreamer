@@ -55,12 +55,7 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
         await Provider.of<PostProvider>(context, listen: false).loadPosts();
         await Provider.of<CommentProvider>(context, listen: false)
             .loadComments();
-        await Provider.of<ReplyProvider>(context, listen: false).loadReply();
         await Provider.of<PostLikeProvider>(context, listen: false).loadLikes();
-        await Provider.of<CommentLikeProvider>(context, listen: false)
-            .loadLikes();
-        await Provider.of<ReplyLikeProvider>(context, listen: false)
-            .loadLikes();
 
         setState(() {
           _isLoading = false;
@@ -86,13 +81,7 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
     //END Load and Set - Posts, Users,  Videos
 
     return video.isEmpty
-        ? TryReconnect(
-            callback: (value) {
-              setState(() {
-                _isInit = value;
-              });
-            },
-          )
+        ? TryReconnect()
         : Scaffold(
             backgroundColor: Colors.black54,
             appBar: AppBar(

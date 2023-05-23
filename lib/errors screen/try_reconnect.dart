@@ -8,25 +8,11 @@ import '../screens/start_screen.dart';
 
 //Providers
 import '../providers/video_provider.dart';
-import '../providers/images_provider.dart';
-import '../providers/user_provider.dart';
-import '../providers/carousel_provider.dart';
-import '../providers/post_provider.dart';
-import '../providers/comments_provider.dart';
-import '../providers/post_likes_provider.dart';
-import '../providers/reply_provider.dart';
-import '../providers/comment_like_provider.dart';
-import '../providers/reply_like_provider.dart';
 
 //Widgets
 import '../widgets/loading.dart';
 
 class TryReconnect extends StatefulWidget {
-  //Callback function to refresh the page
-  final Function(bool) callback;
-
-  TryReconnect({required this.callback});
-
   @override
   State<TryReconnect> createState() => _TryReconnectState();
 }
@@ -134,15 +120,16 @@ class _TryReconnectState extends State<TryReconnect> {
                             _isLoading = false;
                           });
 
-                          widget.callback(true);
+                          Navigator.of(context)
+                              .popAndPushNamed(StartScreen.routeName);
                         });
                       },
                       child: Text(
                         'TRY AGAIN',
                         style: GoogleFonts.openSans(
                           color: Colors.white,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
                         ),
                       ),
                     ),

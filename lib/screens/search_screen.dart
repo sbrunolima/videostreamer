@@ -39,10 +39,12 @@ class _SearchScreenState extends State<SearchScreen> {
       });
 
       //Load all necessary data from firebase to show on screen
-      Provider.of<VideosProvider>(context, listen: false).loadVideos();
-
-      setState(() {
-        _isLoading = false;
+      Provider.of<VideosProvider>(context, listen: false)
+          .loadVideos()
+          .then((_) {
+        setState(() {
+          _isLoading = false;
+        });
       });
     }
 
@@ -65,13 +67,7 @@ class _SearchScreenState extends State<SearchScreen> {
     //END Load and Set - Videos
 
     return video.isEmpty
-        ? TryReconnect(
-            callback: (value) {
-              setState(() {
-                _isInit = value;
-              });
-            },
-          )
+        ? TryReconnect()
         : Scaffold(
             backgroundColor: Colors.black54,
             body: _isLoading
@@ -118,9 +114,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                 // },
                                 onChanged: (value) {
                                   //Take the value string and check if the movie exists
-                                  setState(() {
-                                    _searchForm(value.toString());
-                                  });
+                                  _searchForm(value.toString());
+                                  setState(() {});
                                 },
                               ),
                             ),
