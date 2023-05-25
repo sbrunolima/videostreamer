@@ -20,6 +20,7 @@ import '../widgets/my_app_bar.dart';
 import '../search_screen/movies_grid.dart';
 import '../errors screen/try_reconnect.dart';
 import '../widgets/loading.dart';
+import '../search_screen/search_bar.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -81,44 +82,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             mySizedBox,
                             MyAppBar(),
                             mySizedBox,
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: TextField(
-                                style: const TextStyle(color: Colors.white),
-                                decoration: InputDecoration(
-                                  filled: true,
-                                  fillColor: Colors.white24,
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderSide: const BorderSide(
-                                      color: Colors.transparent,
-                                    ),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.circular(5),
-                                    borderSide: const BorderSide(
-                                      color: Colors.transparent,
-                                    ),
-                                  ),
-                                  prefixIcon: const Icon(Icons.search,
-                                      color: Colors.grey),
-                                  hintText: 'What trailer you looking for?',
-                                  hintStyle:
-                                      const TextStyle(color: Colors.grey),
-                                ),
-                                // onSubmitted: (value) {
-                                //   setState(() {
-                                //     videoData.findVideo(value.toString());
-                                //   });
-                                // },
-                                onChanged: (value) {
-                                  //Take the value string and check if the movie exists
-                                  _searchForm(value.toString());
-                                  setState(() {});
-                                },
-                              ),
-                            ),
+                            SearchBar(),
                             const SizedBox(height: 20),
                             MovieGrid(),
                           ],
@@ -127,96 +91,5 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                   ),
           );
-  }
-
-  Widget tryReconnect() {
-    return Center(
-      child: (!_isLoading)
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/nointernet.png',
-                      height: 100,
-                      width: 100,
-                      fit: BoxFit.cover,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  'No Internet Connection',
-                  style: GoogleFonts.openSans(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Container(
-                  width: 300,
-                  child: Text(
-                    'Check your internet connection and try again.',
-                    style: GoogleFonts.openSans(
-                      color: Colors.white54,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                const SizedBox(height: 17),
-                SizedBox(
-                  height: 50,
-                  width: 200,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5),
-                      gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [
-                          Colours.aquamarine,
-                          Colours.aqua,
-                        ],
-                      ),
-                    ),
-                    child: OutlinedButton(
-                      onPressed: () async {
-                        setState(() {
-                          _isLoading = true;
-                        });
-
-                        // try load the DATA
-                        await Provider.of<VideosProvider>(context,
-                                listen: false)
-                            .loadVideos();
-
-                        //Await 5 seconds before try to load the page again
-                        Future.delayed(const Duration(seconds: 5)).then((_) {
-                          setState(() {
-                            _isLoading = false;
-                          });
-                        });
-                      },
-                      child: Text(
-                        'TRY AGAIN',
-                        style: GoogleFonts.openSans(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          : Loading(),
-    );
   }
 }

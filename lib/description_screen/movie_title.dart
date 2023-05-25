@@ -134,7 +134,7 @@ class MovieTitle extends StatelessWidget {
   //Relese Widget
   Widget release() => genreText(video.release.toString());
 
-  //Genre Widget
+  //Genre Text Formating
   Widget genreList() => Row(
         children: [
           for (int i = 0; i < video.genre.length; i++)

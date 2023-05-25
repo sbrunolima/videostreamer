@@ -45,7 +45,7 @@ class _HomeScreenState extends State<HomeScreen> {
       //Load all necessary data from firebase to show on screen
       Provider.of<VideosProvider>(context, listen: false)
           .loadVideos()
-          .then((_) {
+          .then((_) async {
         Provider.of<CarouselProvider>(context, listen: false).loadCarousel();
 
         setState(() {

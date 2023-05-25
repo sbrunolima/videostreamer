@@ -18,7 +18,7 @@ class _MovieGridState extends State<MovieGrid> {
     //Load all necesary DATA => Video
     //-------------------------------------------------------------------
     final videoData = Provider.of<VideosProvider>(context, listen: false);
-    final video = videoData.findedVideo;
+    final video = videoData.video;
     //-------------------------------------------------------------------
     //END Load all necesary DATA => Video
 
