@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../providers/video_provider.dart';
 
 //Widgets
-import '../widgets/movie_card.dart';
+import '../movies_cards/movie_card.dart';
 
 //Return trailers by the genre
 class GenreRows extends StatelessWidget {

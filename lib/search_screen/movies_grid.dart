@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../providers/video_provider.dart';
 
 //Widgets
-import '../widgets/movie_card.dart';
+import '../movies_cards/movie_card.dart';
 
 class MovieGrid extends StatefulWidget {
   @override

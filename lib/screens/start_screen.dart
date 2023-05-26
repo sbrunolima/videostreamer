@@ -7,10 +7,19 @@ import 'package:flutter/services.dart';
 import '../screens/home_screen.dart';
 import '../screens/profile_screen.dart';
 import '../screens/community_screen.dart';
+import '../screens/search_screen.dart';
 
 //Providers
 import '../providers/video_provider.dart';
-import '../screens/search_screen.dart';
+import '../providers/images_provider.dart';
+import '../providers/user_provider.dart';
+import '../providers/carousel_provider.dart';
+import '../providers/post_provider.dart';
+import '../providers/comments_provider.dart';
+import '../providers/post_likes_provider.dart';
+import '../providers/reply_provider.dart';
+import '../providers/comment_like_provider.dart';
+import '../providers/reply_like_provider.dart';
 
 class StartScreen extends StatefulWidget {
   static const routeName = '/start-screen';
@@ -29,6 +38,15 @@ class _StartScreenState extends State<StartScreen> {
     CommunutyScreen(),
     ProfileScreen(),
   ];
+
+  Future<void> _refreshPages(BuildContext context) async {
+    //Load all necessary data from firebase to show on screen
+    Provider.of<VideosProvider>(context, listen: false)
+        .loadVideos()
+        .then((_) async {
+      Provider.of<CarouselProvider>(context, listen: false).loadCarousel();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -49,18 +67,21 @@ class _StartScreenState extends State<StartScreen> {
         return false;
       },
       child: Scaffold(
-        body: Stack(
-          children: _screens
-              .asMap()
-              .map((i, screen) => MapEntry(
-                    i,
-                    Offstage(
-                      offstage: _pageIndex != i,
-                      child: screen,
-                    ),
-                  ))
-              .values
-              .toList(),
+        body: RefreshIndicator(
+          onRefresh: () => _refreshPages(context),
+          child: Stack(
+            children: _screens
+                .asMap()
+                .map((i, screen) => MapEntry(
+                      i,
+                      Offstage(
+                        offstage: _pageIndex != i,
+                        child: screen,
+                      ),
+                    ))
+                .values
+                .toList(),
+          ),
         ),
         bottomNavigationBar: Container(
           decoration: BoxDecoration(

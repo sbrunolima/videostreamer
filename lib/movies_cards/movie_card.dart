@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-//Providers
+//Objects
 import '../objects/video.dart';
 
 //Screens

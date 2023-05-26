@@ -52,10 +52,6 @@ class _SearchScreenState extends State<SearchScreen> {
     _isInit = false;
   }
 
-  Future<void> _searchForm(String query) async {
-    await Provider.of<VideosProvider>(context, listen: false).findVideo(query);
-  }
-
   @override
   Widget build(BuildContext context) {
     //Create a const sizedBox to load only one time

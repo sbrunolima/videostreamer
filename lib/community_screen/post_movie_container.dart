@@ -1,3 +1,4 @@
+import 'package:enefty_icons/enefty_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -24,8 +25,8 @@ class PostMovieContainer extends StatelessWidget {
           children: [
             const SizedBox(width: 5),
             Icon(
-              Icons.movie_filter_sharp,
-              color: Colors.greenAccent,
+              EneftyIcons.clipboard_outline,
+              color: Colors.lightGreenAccent,
             ),
             const SizedBox(width: 5),
             Container(

@@ -65,6 +65,25 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
     _isInit = false;
   }
 
+  Future<void> _refreshCommunity(BuildContext context) async {
+    setState(() {
+      _isLoading = true;
+    });
+    await //Load all necessary data from firebase to show on screen
+        Provider.of<UserPovider>(context, listen: false)
+            .loadUsers()
+            .then((_) async {
+      await Provider.of<VideosProvider>(context, listen: false).loadVideos();
+      await Provider.of<PostProvider>(context, listen: false).loadPosts();
+      await Provider.of<CommentProvider>(context, listen: false).loadComments();
+      await Provider.of<PostLikeProvider>(context, listen: false).loadLikes();
+
+      setState(() {
+        _isLoading = false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     //Load and Set - Posts, Users, Videos
@@ -88,6 +107,25 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
               backgroundColor: Color.fromARGB(0, 0, 0, 0),
               elevation: 0,
               title: MyTitle(title: 'Community'),
+              actions: [
+                GestureDetector(
+                  onTap: () {
+                    _refreshCommunity(context);
+                  },
+                  child: Row(
+                    children: [
+                      refreshText('Refresh'),
+                      const SizedBox(width: 5),
+                      Icon(
+                        EneftyIcons.refresh_2_bold,
+                        size: 26,
+                        color: Colors.lightGreenAccent,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+              ],
             ),
             body: _isLoading
                 ? Loading()
@@ -163,95 +201,14 @@ class _CommunutyScreenState extends State<CommunutyScreen> {
           );
   }
 
-  //try reconnect th BackEnd
-  Widget tryReconnect() {
-    return Center(
-      child: (!_isLoading)
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/nointernet.png',
-                      height: 100,
-                      width: 100,
-                      fit: BoxFit.cover,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  'No Internet Connection',
-                  style: GoogleFonts.openSans(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Container(
-                  width: 300,
-                  child: Text(
-                    'Check your internet connection and try again.',
-                    style: GoogleFonts.openSans(
-                      color: Colors.white54,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                const SizedBox(height: 17),
-                SizedBox(
-                  height: 50,
-                  width: 200,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5),
-                      gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [
-                          Colours.aquamarine,
-                          Colours.aqua,
-                        ],
-                      ),
-                    ),
-                    child: OutlinedButton(
-                      onPressed: () async {
-                        setState(() {
-                          _isLoading = true;
-                        });
-
-                        // try load the DATA
-                        await Provider.of<VideosProvider>(context,
-                                listen: false)
-                            .loadVideos();
-
-                        //Await 5 seconds before try to load the page again
-                        Future.delayed(const Duration(seconds: 5)).then((_) {
-                          setState(() {
-                            _isLoading = false;
-                          });
-                        });
-                      },
-                      child: Text(
-                        'TRY AGAIN',
-                        style: GoogleFonts.openSans(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          : Loading(),
+  Widget refreshText(String title) {
+    return Text(
+      title,
+      style: GoogleFonts.openSans(
+        color: Colors.lightGreenAccent,
+        fontWeight: FontWeight.w400,
+        fontSize: 14,
+      ),
     );
   }
 }

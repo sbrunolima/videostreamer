@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import '../providers/video_provider.dart';
 
 //Widgets
-import '../widgets/movie_card_recommend.dart';
+import '../movies_cards/movie_card_recommend.dart';
 
 class RecomendedMoviesWidget extends StatelessWidget {
   final List<String> movieGenre;

@@ -17,30 +17,6 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  var _isLoading = false;
-  var _isInit = true;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_isInit) {
-      setState(() {
-        _isLoading = true;
-      });
-
-      //Load all necessary data from firebase to show on screen
-      Provider.of<VideosProvider>(context, listen: false)
-          .loadVideos()
-          .then((_) {
-        setState(() {
-          _isLoading = false;
-        });
-      });
-    }
-
-    _isInit = false;
-  }
-
   //Find the trailer on the server
   Future<void> _searchForm(String query) async {
     await Provider.of<VideosProvider>(context, listen: false).findVideo(query);
@@ -67,42 +43,33 @@ class _SearchPageState extends State<SearchPage> {
             child: Column(
               children: [
                 mySizedBox,
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 5),
-                  child: TextField(
-                    style: const TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Colors.white24,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                        ),
+                TextField(
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white24,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: const BorderSide(
+                        color: Colors.transparent,
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
-                        borderSide: const BorderSide(
-                          color: Colors.transparent,
-                        ),
-                      ),
-                      prefixIcon: const Icon(Icons.search, color: Colors.grey),
-                      hintText: 'What trailer you looking for?',
-                      hintStyle: const TextStyle(color: Colors.grey),
                     ),
-                    onChanged: (value) {
-                      //Take the value string and check if the movie exists
-                      if (value.toString().length > 0) {
-                        setState(() {
-                          _searchForm(value.toString());
-                        });
-                      } else {
-                        setState(() {
-                          _searchForm('');
-                        });
-                      }
-                    },
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(5),
+                      borderSide: const BorderSide(
+                        color: Colors.transparent,
+                      ),
+                    ),
+                    prefixIcon: const Icon(Icons.search, color: Colors.grey),
+                    hintText: 'What trailer you looking for?',
+                    hintStyle: const TextStyle(color: Colors.grey),
                   ),
+                  onChanged: (value) {
+                    //Take the value string and check if the movie exists
+                    setState(() {
+                      _searchForm(value.toString());
+                    });
+                  },
                 ),
                 const SizedBox(height: 20),
                 //Load the finded video and show to the user

@@ -17,12 +17,12 @@ import '../providers/reply_like_provider.dart';
 
 //Widgets
 import '../widgets/loading.dart';
-import '../widgets/genre_rows.dart';
-import '../widgets/carousel_widget.dart';
+import '../home_screen/genre_rows.dart';
+import '../home_screen/carousel_widget.dart';
 import '../widgets/my_app_bar.dart';
-import '../widgets/top_imdb_rows.dart';
-import '../widgets/featured_rows.dart';
-import '../widgets/family_rows.dart';
+import '../home_screen/top_imdb_rows.dart';
+import '../home_screen/featured_rows.dart';
+import '../home_screen/family_rows.dart';
 import '../errors screen/try_reconnect.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -112,96 +112,5 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
           );
-  }
-
-  Widget tryReconnect() {
-    return Center(
-      child: (!_isLoading)
-          ? Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'assets/nointernet.png',
-                      height: 100,
-                      width: 100,
-                      fit: BoxFit.cover,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 12),
-                Text(
-                  'No Internet Connection',
-                  style: GoogleFonts.openSans(
-                    color: Colors.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 18,
-                  ),
-                ),
-                const SizedBox(height: 4),
-                Container(
-                  width: 300,
-                  child: Text(
-                    'Check your internet connection and try again.',
-                    style: GoogleFonts.openSans(
-                      color: Colors.white54,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 16,
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                const SizedBox(height: 17),
-                SizedBox(
-                  height: 50,
-                  width: 200,
-                  child: DecoratedBox(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.transparent),
-                      borderRadius: BorderRadius.circular(5),
-                      gradient: LinearGradient(
-                        begin: Alignment.centerLeft,
-                        end: Alignment.centerRight,
-                        colors: [
-                          Colours.aquamarine,
-                          Colours.aqua,
-                        ],
-                      ),
-                    ),
-                    child: OutlinedButton(
-                      onPressed: () async {
-                        setState(() {
-                          _isLoading = true;
-                        });
-
-                        // try load the DATA
-                        await Provider.of<VideosProvider>(context,
-                                listen: false)
-                            .loadVideos();
-
-                        //Await 5 seconds before try to load the page again
-                        Future.delayed(const Duration(seconds: 5)).then((_) {
-                          setState(() {
-                            _isLoading = false;
-                          });
-                        });
-                      },
-                      child: Text(
-                        'TRY AGAIN',
-                        style: GoogleFonts.openSans(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 14,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          : Loading(),
-    );
   }
 }

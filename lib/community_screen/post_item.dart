@@ -59,7 +59,7 @@ class _PostItemState extends State<PostItem> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 8),
         child: Container(
-          height: 170,
+          height: 150,
           width: MediaQuery.of(context).size.width,
           color: Colors.transparent,
           child: Column(
@@ -75,7 +75,7 @@ class _PostItemState extends State<PostItem> {
                     Text(
                       //Post Title preview
                       widget.post.postTitle,
-                      maxLines: 2,
+                      maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: GoogleFonts.openSans(
                         color: Colors.white,
