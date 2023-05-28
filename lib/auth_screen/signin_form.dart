@@ -82,10 +82,7 @@ class _SigninFormState extends State<SigninForm> {
                 TextFormField(
                   key: const ValueKey('email'),
                   validator: (value) {
-                    if (value.toString().isEmpty ||
-                        !value.toString().contains('@')) {
-                      return 'Enter a valid email address.';
-                    }
+
                     return null;
                   },
                   keyboardType: TextInputType.emailAddress,

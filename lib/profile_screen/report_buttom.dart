@@ -19,7 +19,7 @@ class _ReportButtomState extends State<ReportButtom> {
   List<String> attachments = [];
   bool isHTML = false;
   //Set the recipient email
-  final String _recipientController = 'sbrunolima@outlook.com';
+  final String _recipientController = '';
   //Set the subject title
   String _subjectController = 'New Report';
   String _bodyController = '';

@@ -57,7 +57,7 @@ class _CommentItemState extends State<CommentItem> {
     final reply = replyData.reply
         .where((loadedReplies) => loadedReplies.commentID == widget.comment.id)
         .toList();
-    final user = usersData.user
+    final loadedUser = usersData.user
         .where((loadedUser) => loadedUser.userID == widget.comment.userID)
         .toList();
     final hasLike = likeData.like;
@@ -96,7 +96,7 @@ class _CommentItemState extends State<CommentItem> {
             ClipRRect(
               borderRadius: BorderRadius.circular(50),
               child: Image.network(
-                user[0].imageUrl,
+                loadedUser[0].imageUrl,
                 height: 25,
                 width: 25,
                 fit: BoxFit.cover,
@@ -132,7 +132,7 @@ class _CommentItemState extends State<CommentItem> {
                         children: [
                           //User NAME
                           Text(
-                            user[0].username,
+                            loadedUser[0].username,
                             style: GoogleFonts.openSans(
                               color: Colors.white60,
                               fontSize: 12,
@@ -272,7 +272,7 @@ class _CommentItemState extends State<CommentItem> {
                       ),
                       const SizedBox(width: 17),
                       //Open the reply screen
-                      ReplyButton(comment: widget.comment, user: user[0])
+                      ReplyButton(comment: widget.comment, user: widget.user)
                     ],
                   ),
                 ),

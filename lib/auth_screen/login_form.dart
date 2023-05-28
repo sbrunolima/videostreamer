@@ -80,10 +80,7 @@ class _LoginFormState extends State<LoginForm> {
                 TextFormField(
                   key: const ValueKey('email'),
                   validator: (value) {
-                    if (value.toString().isEmpty ||
-                        !value.toString().contains('@')) {
-                      return 'Enter a valid email address.';
-                    }
+
                     return null;
                   },
                   keyboardType: TextInputType.emailAddress,
@@ -104,10 +101,7 @@ class _LoginFormState extends State<LoginForm> {
                 TextFormField(
                   key: const ValueKey('password'),
                   validator: (value) {
-                    if (value.toString().isEmpty ||
-                        value.toString().length < 8) {
-                      return 'Enter a 8 character or more password.';
-                    }
+
                     return null;
                   },
                   obscureText: _showPassword ? true : false,
